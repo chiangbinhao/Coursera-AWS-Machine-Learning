@@ -1,0 +1,1098 @@
+WEBVTT
+
+1
+00:00:03.590 --> 00:00:06.270
+Hello my name's
+Vikram Madan and I'm
+
+2
+00:00:06.270 --> 00:00:07.770
+a senior product manager here at
+
+3
+00:00:07.770 --> 00:00:09.810
+AWS on the deep learning team.
+
+4
+00:00:09.810 --> 00:00:11.370
+Today, I want to tell you about
+
+5
+00:00:11.370 --> 00:00:13.725
+Amazon Sage Maker Ground Truth.
+
+6
+00:00:13.725 --> 00:00:16.500
+Ground Truth is a
+new capability of
+
+7
+00:00:16.500 --> 00:00:19.980
+Amazon Sage Maker that
+makes it easy for you to
+
+8
+00:00:19.980 --> 00:00:22.785
+efficiently and accurately label
+
+9
+00:00:22.785 --> 00:00:24.810
+the datasets that are required
+
+10
+00:00:24.810 --> 00:00:27.015
+for training machine
+learning systems.
+
+11
+00:00:27.015 --> 00:00:30.000
+Ground Truth can automatically
+labels some part of
+
+12
+00:00:30.000 --> 00:00:31.980
+the training dataset
+and then sends
+
+13
+00:00:31.980 --> 00:00:34.305
+the rest to human
+workers for labeling.
+
+14
+00:00:34.305 --> 00:00:37.830
+Ground Truth also uses
+innovative algorithms and
+
+15
+00:00:37.830 --> 00:00:40.290
+user experience
+techniques to improve
+
+16
+00:00:40.290 --> 00:00:42.500
+the accuracy of the labeling
+
+17
+00:00:42.500 --> 00:00:45.240
+that's sent to human workers.
+
+18
+00:00:45.250 --> 00:00:48.905
+So the current
+method for building
+
+19
+00:00:48.905 --> 00:00:52.160
+a training dataset involves
+a lot of manual effort,
+
+20
+00:00:52.160 --> 00:00:53.855
+and is prone to errors.
+
+21
+00:00:53.855 --> 00:00:55.970
+It often involves distributing
+
+22
+00:00:55.970 --> 00:00:59.795
+labeling tasks across a large
+number of human workers.
+
+23
+00:00:59.795 --> 00:01:02.495
+This can add
+significant overhead,
+
+24
+00:01:02.495 --> 00:01:07.420
+and cost, and leave room
+for human error and bias.
+
+25
+00:01:07.420 --> 00:01:09.830
+Additionally, an
+operation like this is
+
+26
+00:01:09.830 --> 00:01:12.440
+extremely complex to manage,
+
+27
+00:01:12.440 --> 00:01:14.645
+and can take months to process.
+
+28
+00:01:14.645 --> 00:01:17.815
+So how does Ground Truth
+actually fix this problem?
+
+29
+00:01:17.815 --> 00:01:20.930
+It makes it easy to
+efficiently perform
+
+30
+00:01:20.930 --> 00:01:22.910
+highly accurate
+data labeling using
+
+31
+00:01:22.910 --> 00:01:25.960
+your data stored in Amazon S3.
+
+32
+00:01:25.960 --> 00:01:28.010
+Ground Truth provides a managed
+
+33
+00:01:28.010 --> 00:01:29.675
+experience where you can set up
+
+34
+00:01:29.675 --> 00:01:33.590
+an end-to-end labeling job
+with just a few clicks.
+
+35
+00:01:33.590 --> 00:01:37.945
+You simply need to provide a
+pointer to your data in S3,
+
+36
+00:01:37.945 --> 00:01:39.950
+Ground Truth then offers a set of
+
+37
+00:01:39.950 --> 00:01:42.710
+templates for common
+labeling tasks,
+
+38
+00:01:42.710 --> 00:01:43.835
+where you only need to click
+
+39
+00:01:43.835 --> 00:01:45.890
+a few choices and then provide
+
+40
+00:01:45.890 --> 00:01:48.050
+some minimal instructions to
+
+41
+00:01:48.050 --> 00:01:50.710
+the human workers to
+get your data labeled.
+
+42
+00:01:50.710 --> 00:01:55.475
+Then you select one of the
+three workforce options,
+
+43
+00:01:55.475 --> 00:01:59.360
+and then on completion
+of a labeling job,
+
+44
+00:01:59.360 --> 00:02:00.560
+Ground Truth will send
+
+45
+00:02:00.560 --> 00:02:04.295
+the outputted labeled
+data to your S3 bucket.
+
+46
+00:02:04.295 --> 00:02:08.370
+So when selecting a workforce
+to perform labeling,
+
+47
+00:02:08.370 --> 00:02:11.165
+you have three choices.
+
+48
+00:02:11.165 --> 00:02:13.535
+You can send a labeling task to
+
+49
+00:02:13.535 --> 00:02:16.865
+the Public Mechanical Turk
+Crowdsource Workforce,
+
+50
+00:02:16.865 --> 00:02:20.840
+you can use one of this
+pre-approved third-party vendors
+
+51
+00:02:20.840 --> 00:02:23.600
+that are listed on
+the AWS marketplace,
+
+52
+00:02:23.600 --> 00:02:27.300
+and you can even bring
+your own internal workers,
+
+53
+00:02:27.300 --> 00:02:30.664
+and what that actually
+means is that we host
+
+54
+00:02:30.664 --> 00:02:33.060
+a labeling application on
+
+55
+00:02:33.060 --> 00:02:35.495
+which you can onboard
+these workers.
+
+56
+00:02:35.495 --> 00:02:38.245
+So now, let's talk about how
+
+57
+00:02:38.245 --> 00:02:40.250
+ground-truth helps you improve
+
+58
+00:02:40.250 --> 00:02:42.410
+the accuracy of
+your data labeling.
+
+59
+00:02:42.410 --> 00:02:44.870
+There's two core aspects here.
+
+60
+00:02:44.870 --> 00:02:49.040
+The first are innovative UX
+techniques that are directly
+
+61
+00:02:49.040 --> 00:02:51.150
+built into these templates that
+
+62
+00:02:51.150 --> 00:02:54.155
+you can use for common
+labeling tasks.
+
+63
+00:02:54.155 --> 00:02:57.170
+In addition, Ground
+Truth provides
+
+64
+00:02:57.170 --> 00:03:00.005
+a set of built-in
+algorithms that help
+
+65
+00:03:00.005 --> 00:03:04.895
+improve the accuracy
+of labeling by taking
+
+66
+00:03:04.895 --> 00:03:07.130
+in the inputs of
+
+67
+00:03:07.130 --> 00:03:11.170
+workers and outputting
+high fidelity label.
+
+68
+00:03:11.170 --> 00:03:13.470
+Next, let's talk about how
+
+69
+00:03:13.470 --> 00:03:18.305
+Ground Truth improves the
+efficiency of data labeling.
+
+70
+00:03:18.305 --> 00:03:20.240
+Ground Truth has
+
+71
+00:03:20.240 --> 00:03:23.164
+innovative feature called
+Automatic Labeling,
+
+72
+00:03:23.164 --> 00:03:25.355
+which actually
+automatically labels
+
+73
+00:03:25.355 --> 00:03:27.395
+a subset of your dataset.
+
+74
+00:03:27.395 --> 00:03:29.210
+A portion of your dataset will
+
+75
+00:03:29.210 --> 00:03:31.685
+still be labeled by humans.
+
+76
+00:03:31.685 --> 00:03:34.535
+But next, let's
+double-click on how
+
+77
+00:03:34.535 --> 00:03:38.075
+Automatic Labeling
+actually works.
+
+78
+00:03:38.075 --> 00:03:41.990
+It uses an innovative
+ML technique
+
+79
+00:03:41.990 --> 00:03:43.400
+called Active Learning,
+
+80
+00:03:43.400 --> 00:03:46.760
+that helps us understand
+which data is
+
+81
+00:03:46.760 --> 00:03:48.620
+well understood and can
+
+82
+00:03:48.620 --> 00:03:50.865
+be potentially
+automatically labeled,
+
+83
+00:03:50.865 --> 00:03:53.444
+and then which data is
+not well understood,
+
+84
+00:03:53.444 --> 00:03:56.600
+and may need to be looked
+at humans for labeling.
+
+85
+00:03:56.600 --> 00:04:02.060
+What happens is that Ground
+Truth can actually look at
+
+86
+00:04:02.060 --> 00:04:04.165
+your training dataset and
+
+87
+00:04:04.165 --> 00:04:07.860
+identify which data is not
+well understood and thus,
+
+88
+00:04:07.860 --> 00:04:09.875
+needs to be sent to humans.
+
+89
+00:04:09.875 --> 00:04:12.590
+It also can identify
+which data is
+
+90
+00:04:12.590 --> 00:04:16.385
+very well understood and can
+be automatically labeled.
+
+91
+00:04:16.385 --> 00:04:20.805
+Now, how all the magic works
+is that under the hood,
+
+92
+00:04:20.805 --> 00:04:22.740
+Ground Truth is actually training
+
+93
+00:04:22.740 --> 00:04:26.035
+an ML model in your
+SageMaker account.
+
+94
+00:04:26.035 --> 00:04:28.500
+This whole process is iterative,
+
+95
+00:04:28.500 --> 00:04:30.710
+and Ground Truth breaks
+up your data into
+
+96
+00:04:30.710 --> 00:04:33.155
+batches and repeats this cycle
+
+97
+00:04:33.155 --> 00:04:35.440
+until all your data is labeled.
+
+98
+00:04:35.440 --> 00:04:38.030
+Okay. So now, let's
+take a step back and
+
+99
+00:04:38.030 --> 00:04:40.850
+understand what all of
+this means for you.
+
+100
+00:04:40.850 --> 00:04:42.440
+First and foremost,
+
+101
+00:04:42.440 --> 00:04:45.050
+Ground Truth makes
+data labeling easy.
+
+102
+00:04:45.050 --> 00:04:47.690
+It also helps you lower
+your total cost of
+
+103
+00:04:47.690 --> 00:04:50.895
+data labeling by
+up to 70 percent.
+
+104
+00:04:50.895 --> 00:04:52.580
+Ground Truth enables you to
+
+105
+00:04:52.580 --> 00:04:54.770
+securely manage your datasets,
+
+106
+00:04:54.770 --> 00:04:56.930
+and it can help you increase
+
+107
+00:04:56.930 --> 00:04:59.525
+the accuracy of
+your labeled data.
+
+108
+00:04:59.525 --> 00:05:01.940
+Now, let's take a look
+at Ground Truth in
+
+109
+00:05:01.940 --> 00:05:05.675
+action to get a better
+feel for these features.
+
+110
+00:05:05.675 --> 00:05:08.720
+So now, I'm going
+to walk through on
+
+111
+00:05:08.720 --> 00:05:11.405
+how to create a
+data labeling job,
+
+112
+00:05:11.405 --> 00:05:14.240
+and it's just a few
+clicks and a handful of
+
+113
+00:05:14.240 --> 00:05:15.770
+informational fields and we can
+
+114
+00:05:15.770 --> 00:05:18.435
+essentially kickoff
+a data labeling job.
+
+115
+00:05:18.435 --> 00:05:21.710
+Now, there's three aspects
+to data labeling job.
+
+116
+00:05:21.710 --> 00:05:24.515
+First of all, you need to
+provide us the input dataset.
+
+117
+00:05:24.515 --> 00:05:26.150
+Then you need to tell
+us when it needs to be
+
+118
+00:05:26.150 --> 00:05:28.490
+performed on that datasets.
+
+119
+00:05:28.490 --> 00:05:30.725
+So the actual labeling task,
+
+120
+00:05:30.725 --> 00:05:34.100
+and then finally, you need
+to configure a workforce.
+
+121
+00:05:34.100 --> 00:05:35.960
+So I'll walk through each of
+
+122
+00:05:35.960 --> 00:05:41.360
+those three pieces and this
+is all in the context of me
+
+123
+00:05:41.360 --> 00:05:46.070
+having 10 pictures and
+I want to be able to
+
+124
+00:05:46.070 --> 00:05:49.235
+identify if my family dog
+
+125
+00:05:49.235 --> 00:05:53.365
+whose name is Freckles
+is in those pictures.
+
+126
+00:05:53.365 --> 00:05:57.420
+Now, we'll walk through
+the first part,
+
+127
+00:05:57.420 --> 00:05:59.209
+the input dataset first,
+
+128
+00:05:59.209 --> 00:06:00.905
+and here you see we've actually
+
+129
+00:06:00.905 --> 00:06:02.930
+already prepped that here.
+
+130
+00:06:02.930 --> 00:06:05.960
+So you provide us
+an input manifest,
+
+131
+00:06:05.960 --> 00:06:07.940
+which is a JSON document and you
+
+132
+00:06:07.940 --> 00:06:10.430
+can see a Freckles manifest here.
+
+133
+00:06:10.430 --> 00:06:12.680
+You also provide us where we
+
+134
+00:06:12.680 --> 00:06:15.760
+will output the labeled data,
+
+135
+00:06:15.760 --> 00:06:19.040
+and this is the same
+bucket as here.
+
+136
+00:06:19.040 --> 00:06:21.725
+So let's quickly take a look at
+
+137
+00:06:21.725 --> 00:06:24.440
+what that manifest looks like.
+
+138
+00:06:24.440 --> 00:06:26.915
+So here we have
+
+139
+00:06:26.915 --> 00:06:29.150
+the input manifest and this is
+
+140
+00:06:29.150 --> 00:06:31.430
+a simple JSON lines document.
+
+141
+00:06:31.430 --> 00:06:33.965
+So you can see each
+of the images,
+
+142
+00:06:33.965 --> 00:06:35.825
+it's its own line,
+
+143
+00:06:35.825 --> 00:06:40.970
+and you provide the S3
+URL for that image.
+
+144
+00:06:40.970 --> 00:06:43.280
+So that's how the input manifests
+
+145
+00:06:43.280 --> 00:06:45.425
+looks and I'm going
+to minimize this now,
+
+146
+00:06:45.425 --> 00:06:48.800
+and that we're just
+providing a pointer
+
+147
+00:06:48.800 --> 00:06:52.195
+to here and in it's S3.
+
+148
+00:06:52.195 --> 00:06:55.805
+So now, we also you have to
+give access to the service,
+
+149
+00:06:55.805 --> 00:06:58.340
+to these S3 locations.
+
+150
+00:06:58.340 --> 00:07:02.330
+That's as simple as creating
+a role for those S3 buckets.
+
+151
+00:07:02.330 --> 00:07:04.400
+So here I've already
+provisioned a role,
+
+152
+00:07:04.400 --> 00:07:05.975
+that if I had to
+create a new one,
+
+153
+00:07:05.975 --> 00:07:07.985
+I could just go to
+the create role,
+
+154
+00:07:07.985 --> 00:07:09.560
+and provide the names of
+
+155
+00:07:09.560 --> 00:07:12.530
+the S3 buckets that I
+want to give access to.
+
+156
+00:07:12.530 --> 00:07:14.765
+I'm not going to
+create that here.
+
+157
+00:07:14.765 --> 00:07:18.150
+But I'm going to move on
+to the next step now.
+
+158
+00:07:18.150 --> 00:07:22.190
+So now, we finished
+the first aspect
+
+159
+00:07:22.190 --> 00:07:23.660
+of the data labeling job which
+
+160
+00:07:23.660 --> 00:07:26.440
+is providing the input dataset,
+
+161
+00:07:26.440 --> 00:07:29.150
+and we're going to select
+the actual task type.
+
+162
+00:07:29.150 --> 00:07:32.135
+So this is what's going to
+be performed on the task,
+
+163
+00:07:32.135 --> 00:07:34.115
+on the input dataset,
+
+164
+00:07:34.115 --> 00:07:35.660
+and if you remember,
+
+165
+00:07:35.660 --> 00:07:38.270
+I'm actually trying
+to identify whether
+
+166
+00:07:38.270 --> 00:07:40.880
+my family dog named Freckles
+
+167
+00:07:40.880 --> 00:07:44.240
+is actually in one of the
+images that I provided.
+
+168
+00:07:44.240 --> 00:07:47.150
+So I'm actually going to do
+an image classification task
+
+169
+00:07:47.150 --> 00:07:48.200
+and this is pretty simple.
+
+170
+00:07:48.200 --> 00:07:51.530
+Basically, I want to
+show an image and ask,
+
+171
+00:07:51.530 --> 00:07:53.255
+is Freckles in this image?
+
+172
+00:07:53.255 --> 00:07:56.190
+Or as Freckles not in this image?
+
+173
+00:07:57.250 --> 00:08:00.520
+We're going to move to next
+
+174
+00:08:00.520 --> 00:08:04.670
+and we're going to move
+from that second step,
+
+175
+00:08:04.670 --> 00:08:06.470
+which is the labeling task to
+
+176
+00:08:06.470 --> 00:08:08.525
+actually configuring
+the workforce,
+
+177
+00:08:08.525 --> 00:08:10.504
+and here, you see I've already
+
+178
+00:08:10.504 --> 00:08:13.955
+decided to use the Public
+Mechanical Turk Work Force.
+
+179
+00:08:13.955 --> 00:08:15.590
+I have to ensure that there's
+
+180
+00:08:15.590 --> 00:08:19.730
+no adult content in my images.
+
+181
+00:08:19.730 --> 00:08:22.130
+I also need to make sure
+that I'm not sending
+
+182
+00:08:22.130 --> 00:08:25.190
+any sensitive data to
+the public workforce,
+
+183
+00:08:25.190 --> 00:08:27.440
+because these will be
+publicly accessible and
+
+184
+00:08:27.440 --> 00:08:31.850
+shown to a globally
+distributed public workforce.
+
+185
+00:08:31.850 --> 00:08:35.135
+So I've clicked those two aspects
+
+186
+00:08:35.135 --> 00:08:39.030
+and I've configured
+the public workforce.
+
+187
+00:08:40.140 --> 00:08:46.310
+Now, I'm going to return
+to the task setup and I'm
+
+188
+00:08:46.310 --> 00:08:47.780
+actually going to configure
+
+189
+00:08:47.780 --> 00:08:52.925
+the actual task that the
+labeling workforce will see.
+
+190
+00:08:52.925 --> 00:08:59.165
+Here is essentially
+the task prompt.
+
+191
+00:08:59.165 --> 00:09:00.485
+These are the options.
+
+192
+00:09:00.485 --> 00:09:02.930
+This is Freckles,
+this is not Freckles,
+
+193
+00:09:02.930 --> 00:09:05.990
+and then we have actually
+
+194
+00:09:05.990 --> 00:09:08.030
+the informational
+panel that will be
+
+195
+00:09:08.030 --> 00:09:10.780
+shown to the labelers So
+here's a good example.
+
+196
+00:09:10.780 --> 00:09:13.650
+Freckles is a black cocker
+spaniel, with white spots,
+
+197
+00:09:13.650 --> 00:09:17.165
+she's 17 years old and she
+has red heart-shaped tag.
+
+198
+00:09:17.165 --> 00:09:19.205
+This is a bad example.
+
+199
+00:09:19.205 --> 00:09:22.270
+Please make sure that dogs
+that are not Freckles,
+
+200
+00:09:22.270 --> 00:09:25.000
+please label them as
+this is not Freckles.
+
+201
+00:09:25.000 --> 00:09:27.020
+So let's actually take a look at
+
+202
+00:09:27.020 --> 00:09:29.880
+what the labeler will see.
+
+203
+00:09:35.710 --> 00:09:39.440
+So this is actually what
+the label or will see,
+
+204
+00:09:39.440 --> 00:09:41.720
+the image that we will have in
+
+205
+00:09:41.720 --> 00:09:44.195
+the dataset will
+be rendered here,
+
+206
+00:09:44.195 --> 00:09:48.300
+and then, if I select that
+this is Freckles, basically,
+
+207
+00:09:48.300 --> 00:09:50.700
+I can submit this and voila,
+
+208
+00:09:50.700 --> 00:09:52.970
+you have a task completed.
+
+209
+00:09:52.970 --> 00:09:54.450
+But this is just a preview,
+
+210
+00:09:54.450 --> 00:09:56.635
+we'll go back to the workflow,
+
+211
+00:09:56.635 --> 00:10:00.095
+and now we're ready to
+kick off this workflow.
+
+212
+00:10:00.095 --> 00:10:02.330
+I did want to show one more thing
+
+213
+00:10:02.330 --> 00:10:04.870
+in terms of the automatic
+labeling feature.
+
+214
+00:10:04.870 --> 00:10:08.200
+It's as simple as
+clicking a check box,
+
+215
+00:10:08.200 --> 00:10:09.735
+and with that checkbox,
+
+216
+00:10:09.735 --> 00:10:13.385
+you essentially have
+enabled automatic labeling.
+
+217
+00:10:13.385 --> 00:10:16.730
+Ground Truth will then
+essentially easily be
+
+218
+00:10:16.730 --> 00:10:20.425
+able to automatically
+label the data.
+
+219
+00:10:20.425 --> 00:10:22.305
+So now that we're ready,
+
+220
+00:10:22.305 --> 00:10:25.835
+we can submit this and
+it will be sent out to
+
+221
+00:10:25.835 --> 00:10:27.050
+the public Mechanical Turk
+
+222
+00:10:27.050 --> 00:10:29.850
+Workforce, and then, basically,
+
+223
+00:10:29.850 --> 00:10:32.800
+once the data labeling
+job is completed,
+
+224
+00:10:32.800 --> 00:10:35.550
+it will take the
+outputted labels,
+
+225
+00:10:35.550 --> 00:10:39.065
+augment that initial
+manifest that you provided,
+
+226
+00:10:39.065 --> 00:10:41.615
+and drop that into
+your S3 bucket,
+
+227
+00:10:41.615 --> 00:10:43.879
+and we can take a look at quickly
+
+228
+00:10:43.879 --> 00:10:47.000
+how that augmented
+manifests looks like.
+
+229
+00:10:47.000 --> 00:10:48.490
+So here, if you remember,
+
+230
+00:10:48.490 --> 00:10:53.040
+we have all the images that
+we had in that manifest,
+
+231
+00:10:53.040 --> 00:10:57.500
+and we have the
+associated label with
+
+232
+00:10:57.500 --> 00:11:02.210
+that and associated
+metadata with that label.
+
+233
+00:11:02.210 --> 00:11:04.280
+You have a confidence score.
+
+234
+00:11:04.280 --> 00:11:06.440
+You also have what
+
+235
+00:11:06.440 --> 00:11:10.175
+the actual label
+category will look like.
+
+236
+00:11:10.175 --> 00:11:12.405
+As well as other
+information are like,
+
+237
+00:11:12.405 --> 00:11:16.295
+whether it was human
+annotated or auto annotated.
+
+238
+00:11:16.295 --> 00:11:19.300
+Thank you for learning
+about Ground Truth today.
+
+239
+00:11:19.300 --> 00:11:20.910
+My name's Vikram Madan,
+
+240
+00:11:20.910 --> 00:11:22.990
+and thanks for watching.

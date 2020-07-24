@@ -1,0 +1,1998 @@
+WEBVTT
+
+1
+00:00:10.790 --> 00:00:16.620
+Hi, I'm Dan Mbanga with AWS
+Training and Certification.
+
+2
+00:00:16.620 --> 00:00:19.830
+Welcome to our introduction
+to Artificial Intelligence.
+
+3
+00:00:19.830 --> 00:00:22.920
+I have been with AWS
+for four years and I'm
+
+4
+00:00:22.920 --> 00:00:24.930
+currently responsible
+for Business Development
+
+5
+00:00:24.930 --> 00:00:26.655
+in Machine Learning
+and Deep Learning.
+
+6
+00:00:26.655 --> 00:00:30.495
+As part of the Business
+Development team in Amazon AI,
+
+7
+00:00:30.495 --> 00:00:32.490
+I have contributed to helping
+
+8
+00:00:32.490 --> 00:00:34.950
+our customers bringing
+their strategy
+
+9
+00:00:34.950 --> 00:00:40.005
+from conception to realization
+on the AWS environment.
+
+10
+00:00:40.005 --> 00:00:42.060
+In this video, you will learn
+
+11
+00:00:42.060 --> 00:00:43.815
+what Artificial Intelligence is,
+
+12
+00:00:43.815 --> 00:00:46.790
+how it adds value to
+different businesses,
+
+13
+00:00:46.790 --> 00:00:49.655
+and how Amazon uses
+AI in its products.
+
+14
+00:00:49.655 --> 00:00:51.365
+We'll look at a use case
+
+15
+00:00:51.365 --> 00:00:53.530
+where AI plays an important role,
+
+16
+00:00:53.530 --> 00:00:56.575
+and you'll learn about
+some AWS services
+
+17
+00:00:56.575 --> 00:01:00.215
+that you can use to develop
+an AI ready application.
+
+18
+00:01:00.215 --> 00:01:04.535
+Simply stated, AI is intelligent
+behavior by machines,
+
+19
+00:01:04.535 --> 00:01:07.445
+that means any device
+that can perceive
+
+20
+00:01:07.445 --> 00:01:11.730
+its environment and take
+actions accordingly, has AI.
+
+21
+00:01:11.730 --> 00:01:14.060
+By using AI, a machine
+
+22
+00:01:14.060 --> 00:01:16.685
+can mimic cognitive
+human functions,
+
+23
+00:01:16.685 --> 00:01:19.955
+like learning and
+problem-solving.
+
+24
+00:01:19.955 --> 00:01:22.250
+A common example of using
+
+25
+00:01:22.250 --> 00:01:24.320
+Artificial Intelligence is giving
+
+26
+00:01:24.320 --> 00:01:26.510
+machines the ability to scan
+
+27
+00:01:26.510 --> 00:01:28.910
+and interpret their
+physical environment,
+
+28
+00:01:28.910 --> 00:01:30.680
+so that they can handle moving
+
+29
+00:01:30.680 --> 00:01:33.725
+around and even up
+and down the stairs.
+
+30
+00:01:33.725 --> 00:01:37.040
+To make the machines act
+and react like humans,
+
+31
+00:01:37.040 --> 00:01:38.630
+we need to provide them with
+
+32
+00:01:38.630 --> 00:01:40.700
+information from the real world,
+
+33
+00:01:40.700 --> 00:01:43.760
+in order to mimic
+human intelligence AI
+
+34
+00:01:43.760 --> 00:01:46.915
+relies on something called
+knowledge engineering.
+
+35
+00:01:46.915 --> 00:01:48.900
+Knowledge engineering is
+
+36
+00:01:48.900 --> 00:01:51.360
+the key component of AI research,
+
+37
+00:01:51.360 --> 00:01:53.270
+machines with AI are
+
+38
+00:01:53.270 --> 00:01:55.880
+expected to solve problems
+like humans would.
+
+39
+00:01:55.880 --> 00:01:57.710
+To do that, machines
+
+40
+00:01:57.710 --> 00:02:00.740
+need extensive knowledge
+of the real world.
+
+41
+00:02:00.740 --> 00:02:03.540
+In other words, they need
+to understand things
+
+42
+00:02:03.540 --> 00:02:06.860
+like the relationships between
+objects and situations,
+
+43
+00:02:06.860 --> 00:02:08.960
+the properties of an event,
+
+44
+00:02:08.960 --> 00:02:11.750
+cause and effect, and more.
+
+45
+00:02:11.750 --> 00:02:13.710
+This data is then processed
+
+46
+00:02:13.710 --> 00:02:16.130
+and fed to software
+programs that in
+
+47
+00:02:16.130 --> 00:02:18.320
+turn analyze the data and come
+
+48
+00:02:18.320 --> 00:02:20.870
+up with decisions for
+a particular problem,
+
+49
+00:02:20.870 --> 00:02:22.670
+the way humans do.
+
+50
+00:02:22.670 --> 00:02:25.080
+In short, the goal is to
+
+51
+00:02:25.080 --> 00:02:28.060
+transfer human expertise
+to a software program,
+
+52
+00:02:28.060 --> 00:02:30.710
+that can take in the
+same data and come
+
+53
+00:02:30.710 --> 00:02:33.475
+to the same conclusions
+as humans would.
+
+54
+00:02:33.475 --> 00:02:35.540
+This process of feeding data to
+
+55
+00:02:35.540 --> 00:02:37.730
+a software program and coming up
+
+56
+00:02:37.730 --> 00:02:39.740
+with human-like decisions is also
+
+57
+00:02:39.740 --> 00:02:42.005
+known as the modeling process.
+
+58
+00:02:42.005 --> 00:02:46.100
+The model, which is basically
+your software algorithm is
+
+59
+00:02:46.100 --> 00:02:48.410
+consistently refined
+until its decisions
+
+60
+00:02:48.410 --> 00:02:50.885
+are close to those a
+human would come up with.
+
+61
+00:02:50.885 --> 00:02:53.630
+If the decision for a
+particular problem is
+
+62
+00:02:53.630 --> 00:02:56.995
+inconsistent with what a
+human decision would be,
+
+63
+00:02:56.995 --> 00:02:58.875
+then we go back to
+
+64
+00:02:58.875 --> 00:03:01.325
+the model and debug it
+until we improve it.
+
+65
+00:03:01.325 --> 00:03:02.795
+As you might expect,
+
+66
+00:03:02.795 --> 00:03:05.200
+this is an iterative process.
+
+67
+00:03:05.200 --> 00:03:07.130
+AI presents us with
+
+68
+00:03:07.130 --> 00:03:10.310
+new possibilities and
+promotes growth in business,
+
+69
+00:03:10.310 --> 00:03:13.985
+all kinds of companies
+are using AI to innovate.
+
+70
+00:03:13.985 --> 00:03:17.120
+Companies are making
+significant investment to
+
+71
+00:03:17.120 --> 00:03:20.315
+improve their products
+based on user satisfaction,
+
+72
+00:03:20.315 --> 00:03:23.270
+feedback, trends and more,
+
+73
+00:03:23.270 --> 00:03:25.210
+and they are using AI to do it.
+
+74
+00:03:25.210 --> 00:03:29.005
+Here are a few examples of
+how AI is being used today,
+
+75
+00:03:29.005 --> 00:03:32.485
+detecting and deterring
+security threats and fraud,
+
+76
+00:03:32.485 --> 00:03:34.840
+resolving users technology issues
+
+77
+00:03:34.840 --> 00:03:37.879
+through automated call
+center or chatbot,
+
+78
+00:03:37.879 --> 00:03:42.060
+automating repeatable tasks
+such as payroll, data entry,
+
+79
+00:03:42.060 --> 00:03:44.130
+and audit, anticipating
+
+80
+00:03:44.130 --> 00:03:46.965
+users' actions and
+providing recommendations,
+
+81
+00:03:46.965 --> 00:03:49.060
+monitoring social media comments,
+
+82
+00:03:49.060 --> 00:03:52.940
+and tailoring advertising
+content as per search trends.
+
+83
+00:03:52.940 --> 00:03:55.440
+Once you start learning about AI,
+
+84
+00:03:55.440 --> 00:03:57.030
+you start seeing terms like
+
+85
+00:03:57.030 --> 00:03:59.385
+Machine Learning
+and Deep Learning.
+
+86
+00:03:59.385 --> 00:04:01.065
+Machine Learning also called
+
+87
+00:04:01.065 --> 00:04:03.780
+ML and Deep Learning
+also called DL,
+
+88
+00:04:03.780 --> 00:04:05.690
+are really subsets of AI.
+
+89
+00:04:05.690 --> 00:04:08.370
+You can create an AI system with
+
+90
+00:04:08.370 --> 00:04:10.725
+the help of ML and DL algorithms,
+
+91
+00:04:10.725 --> 00:04:13.100
+for example a software program
+
+92
+00:04:13.100 --> 00:04:15.170
+to predict user
+actions and suggest
+
+93
+00:04:15.170 --> 00:04:17.960
+recommendations or a
+system that understands
+
+94
+00:04:17.960 --> 00:04:21.485
+thoughts and sentences spoken
+by a human like Alexa.
+
+95
+00:04:21.485 --> 00:04:23.705
+Let's talk about these fields
+
+96
+00:04:23.705 --> 00:04:25.880
+and how they differ
+from each other.
+
+97
+00:04:25.880 --> 00:04:28.895
+Machine Learning is
+often deployed where
+
+98
+00:04:28.895 --> 00:04:32.345
+explicit programming is
+too rigid or impractical.
+
+99
+00:04:32.345 --> 00:04:34.330
+Unlike regular computer code,
+
+100
+00:04:34.330 --> 00:04:36.290
+Machine Learning uses
+data to generate
+
+101
+00:04:36.290 --> 00:04:39.815
+statistical code that will
+output the right result,
+
+102
+00:04:39.815 --> 00:04:41.765
+based on the pattern recognized
+
+103
+00:04:41.765 --> 00:04:44.015
+from previous examples of input.
+
+104
+00:04:44.015 --> 00:04:46.110
+Machine Learning starts
+with the data it
+
+105
+00:04:46.110 --> 00:04:48.360
+already has about a situation.
+
+106
+00:04:48.360 --> 00:04:51.090
+It processes data
+using algorithms to
+
+107
+00:04:51.090 --> 00:04:54.585
+recognize patterns of a
+behavior and outcomes,
+
+108
+00:04:54.585 --> 00:04:56.540
+it then interprets those patterns
+
+109
+00:04:56.540 --> 00:04:58.525
+to predict the future outcomes.
+
+110
+00:04:58.525 --> 00:05:01.190
+These predictions are
+used to make a decision
+
+111
+00:05:01.190 --> 00:05:04.615
+about the next step for the
+Machine Learning to take.
+
+112
+00:05:04.615 --> 00:05:07.220
+That decision produces results,
+
+113
+00:05:07.220 --> 00:05:11.590
+which are then evaluated and
+added into the pool of data,
+
+114
+00:05:11.590 --> 00:05:14.735
+the new data would
+influence the predictions
+
+115
+00:05:14.735 --> 00:05:18.305
+and subsequent decisions
+made going forward,
+
+116
+00:05:18.305 --> 00:05:22.205
+this is how Machine
+Learning learns over time.
+
+117
+00:05:22.205 --> 00:05:26.530
+Machine Learning can make
+predictions from huge datasets,
+
+118
+00:05:26.530 --> 00:05:30.459
+optimize utility functions,
+and extract hidden patterns
+
+119
+00:05:30.459 --> 00:05:34.465
+and structures from the
+datasets by classifying data.
+
+120
+00:05:34.465 --> 00:05:36.730
+This enables a
+software program to
+
+121
+00:05:36.730 --> 00:05:39.500
+learn and make predictions
+in the future.
+
+122
+00:05:39.500 --> 00:05:42.795
+Deep Learning takes Machine
+Learning a step further.
+
+123
+00:05:42.795 --> 00:05:44.710
+Rather than telling the machine
+
+124
+00:05:44.710 --> 00:05:47.080
+what features it
+needs to look for,
+
+125
+00:05:47.080 --> 00:05:49.060
+Deep Learning enables
+the machine to
+
+126
+00:05:49.060 --> 00:05:51.460
+define the features
+it needs to look
+
+127
+00:05:51.460 --> 00:05:56.160
+for itself based on the
+data it's being provided.
+
+128
+00:05:56.160 --> 00:05:57.800
+In this example,
+
+129
+00:05:57.800 --> 00:06:00.400
+traditional Machine
+Learning requires you to
+
+130
+00:06:00.400 --> 00:06:02.379
+tell the machine how
+to differentiate
+
+131
+00:06:02.379 --> 00:06:04.880
+between a rectangle and a circle.
+
+132
+00:06:04.880 --> 00:06:06.615
+Deep Learning on the other hand,
+
+133
+00:06:06.615 --> 00:06:09.750
+shows machines several
+examples of rectangles.
+
+134
+00:06:09.750 --> 00:06:12.610
+It analyzes those examples and
+
+135
+00:06:12.610 --> 00:06:15.740
+infers common features
+that define a rectangle.
+
+136
+00:06:15.740 --> 00:06:18.240
+At this point, it
+can identify on its
+
+137
+00:06:18.240 --> 00:06:21.790
+own whether it's
+looking at a rectangle.
+
+138
+00:06:21.790 --> 00:06:24.490
+In the same way our brains
+
+139
+00:06:24.490 --> 00:06:26.795
+process information
+using neurons,
+
+140
+00:06:26.795 --> 00:06:29.170
+Deep Learning processes
+information using
+
+141
+00:06:29.170 --> 00:06:32.270
+similar but artificial
+processing structures
+
+142
+00:06:32.270 --> 00:06:34.930
+known as artificial
+neural networks.
+
+143
+00:06:34.930 --> 00:06:38.455
+It builds these structures
+from the data it analyzes,
+
+144
+00:06:38.455 --> 00:06:40.715
+and then infers features about
+
+145
+00:06:40.715 --> 00:06:43.210
+its subject matter
+based on the data.
+
+146
+00:06:43.210 --> 00:06:44.920
+Then it weighs those features
+
+147
+00:06:44.920 --> 00:06:47.215
+according to certainty
+and commonality,
+
+148
+00:06:47.215 --> 00:06:49.700
+and organizes them into layers of
+
+149
+00:06:49.700 --> 00:06:52.985
+hierarchies and relationships
+with each order.
+
+150
+00:06:52.985 --> 00:06:56.245
+To return to the circle
+and rectangle example,
+
+151
+00:06:56.245 --> 00:06:58.170
+if the Deep Learning
+machine looks at
+
+152
+00:06:58.170 --> 00:07:01.365
+its reference data on
+what a rectangle is,
+
+153
+00:07:01.365 --> 00:07:03.560
+it can infer that
+rectangles are built
+
+154
+00:07:03.560 --> 00:07:06.110
+from four sides at right angles.
+
+155
+00:07:06.110 --> 00:07:07.780
+Unlike Machine Learning,
+
+156
+00:07:07.780 --> 00:07:09.710
+the Deep Learning
+machine doesn't have to
+
+157
+00:07:09.710 --> 00:07:13.355
+be told to look for the
+number or angle or sides,
+
+158
+00:07:13.355 --> 00:07:16.130
+instead, it recognizes
+the sides as
+
+159
+00:07:16.130 --> 00:07:19.430
+a common feature of the
+reference data on its own.
+
+160
+00:07:19.430 --> 00:07:21.995
+It can then look at the
+big blue rectangle,
+
+161
+00:07:21.995 --> 00:07:24.770
+see that it has four
+sides at right angles,
+
+162
+00:07:24.770 --> 00:07:27.170
+and determine with
+strong certainty
+
+163
+00:07:27.170 --> 00:07:28.810
+that it's a rectangle.
+
+164
+00:07:28.810 --> 00:07:30.645
+It can also determine that
+
+165
+00:07:30.645 --> 00:07:33.040
+the purple square is
+probably a rectangle,
+
+166
+00:07:33.040 --> 00:07:35.630
+since it also has four
+sides at right angles,
+
+167
+00:07:35.630 --> 00:07:38.660
+even though its four sides
+appear to be equal and
+
+168
+00:07:38.660 --> 00:07:40.190
+it's not of a color
+
+169
+00:07:40.190 --> 00:07:42.455
+that is included in
+the reference data.
+
+170
+00:07:42.455 --> 00:07:45.245
+To help understand the
+differences between AI,
+
+171
+00:07:45.245 --> 00:07:47.135
+Machine Learning,
+and Deep Learning,
+
+172
+00:07:47.135 --> 00:07:49.490
+let's go through a very
+high-level example
+
+173
+00:07:49.490 --> 00:07:50.510
+of how these three
+
+174
+00:07:50.510 --> 00:07:54.170
+might be applied to common
+task of facial recognition.
+
+175
+00:07:54.170 --> 00:07:56.930
+In this example, an Artificial
+Intelligence wouldn't
+
+176
+00:07:56.930 --> 00:08:00.515
+necessarily know that it was
+looking at three people,
+
+177
+00:08:00.515 --> 00:08:02.540
+unless it has been
+thought what to
+
+178
+00:08:02.540 --> 00:08:05.045
+look for in order to spot people.
+
+179
+00:08:05.045 --> 00:08:07.430
+This requires a lot
+of trial and error on
+
+180
+00:08:07.430 --> 00:08:10.149
+the part of the developers
+creating the algorithm,
+
+181
+00:08:10.149 --> 00:08:12.410
+and it doesn't involve
+the machine having to
+
+182
+00:08:12.410 --> 00:08:14.980
+learn anything about
+what humans look like,
+
+183
+00:08:14.980 --> 00:08:18.170
+other than what the developers
+tell it to look for.
+
+184
+00:08:18.170 --> 00:08:20.270
+The machine may be provided with
+
+185
+00:08:20.270 --> 00:08:23.410
+the ability to identify
+head shapes or skin tones,
+
+186
+00:08:23.410 --> 00:08:25.880
+but without the ability to learn,
+
+187
+00:08:25.880 --> 00:08:28.130
+the machine could fail simply
+
+188
+00:08:28.130 --> 00:08:29.780
+because of the wide range of
+
+189
+00:08:29.780 --> 00:08:31.820
+diversity in what
+humans look like.
+
+190
+00:08:31.820 --> 00:08:33.890
+For instance, it might not
+
+191
+00:08:33.890 --> 00:08:35.990
+recognize a person
+because of a beard,
+
+192
+00:08:35.990 --> 00:08:38.455
+which could generate
+a false negative.
+
+193
+00:08:38.455 --> 00:08:40.740
+With Machine Learning however,
+
+194
+00:08:40.740 --> 00:08:43.220
+you can give the machine
+a rough framework
+
+195
+00:08:43.220 --> 00:08:45.470
+for what a person looks like and
+
+196
+00:08:45.470 --> 00:08:47.510
+the ability to
+iteratively process and
+
+197
+00:08:47.510 --> 00:08:51.055
+learn other human appearances
+through experience.
+
+198
+00:08:51.055 --> 00:08:53.360
+So here the machine can
+
+199
+00:08:53.360 --> 00:08:56.710
+recognize the figure
+in the middle,
+
+200
+00:08:56.710 --> 00:09:00.260
+since it's the closest to the
+figure example it already
+
+201
+00:09:00.260 --> 00:09:03.950
+knows with a similar facial
+shape and hair shape.
+
+202
+00:09:03.950 --> 00:09:05.480
+Once it confirms that
+
+203
+00:09:05.480 --> 00:09:08.525
+these new appearance
+is a person's face,
+
+204
+00:09:08.525 --> 00:09:11.030
+it becomes more confident
+in its ability to
+
+205
+00:09:11.030 --> 00:09:14.450
+recognize humans based on
+facial and hair shape,
+
+206
+00:09:14.450 --> 00:09:17.900
+but less confident
+in brown hair color.
+
+207
+00:09:17.900 --> 00:09:20.465
+With this new information,
+
+208
+00:09:20.465 --> 00:09:23.120
+it might now be able to recognize
+
+209
+00:09:23.120 --> 00:09:25.640
+person three as its
+confidence in facial shape
+
+210
+00:09:25.640 --> 00:09:27.980
+is high enough to
+overcome its lack of
+
+211
+00:09:27.980 --> 00:09:29.780
+knowledge in other areas
+
+212
+00:09:29.780 --> 00:09:32.150
+such as hair-shape and skin tone.
+
+213
+00:09:32.150 --> 00:09:34.760
+But because the machine
+was not prepared
+
+214
+00:09:34.760 --> 00:09:37.430
+to recognize facial
+hair ahead of time,
+
+215
+00:09:37.430 --> 00:09:38.870
+it still doesn't have
+
+216
+00:09:38.870 --> 00:09:41.405
+the ability to
+recognize person one.
+
+217
+00:09:41.405 --> 00:09:43.010
+That's why deep learning is
+
+218
+00:09:43.010 --> 00:09:45.695
+such a popular choice
+for facial recognition.
+
+219
+00:09:45.695 --> 00:09:48.590
+With deep learning, the
+machine is provided
+
+220
+00:09:48.590 --> 00:09:51.335
+lots of facial
+reference data upfront,
+
+221
+00:09:51.335 --> 00:09:54.485
+and unlike traditional
+Machine Learning or AI,
+
+222
+00:09:54.485 --> 00:09:58.655
+it isn't always told exactly
+what features to look for.
+
+223
+00:09:58.655 --> 00:10:00.110
+It uses it's
+
+224
+00:10:00.110 --> 00:10:03.170
+highly advanced data
+processing capabilities and
+
+225
+00:10:03.170 --> 00:10:05.435
+neural networks to derive
+
+226
+00:10:05.435 --> 00:10:07.580
+the important features
+it needs to look
+
+227
+00:10:07.580 --> 00:10:09.800
+for from the data itself.
+
+228
+00:10:09.800 --> 00:10:11.930
+Rather than the
+developers telling
+
+229
+00:10:11.930 --> 00:10:14.780
+the machine ahead of time
+how to recognize specific,
+
+230
+00:10:14.780 --> 00:10:17.360
+how to define things
+like facial hair,
+
+231
+00:10:17.360 --> 00:10:20.240
+the machine simply looks
+for the common features
+
+232
+00:10:20.240 --> 00:10:23.150
+that define all of the
+humans in this data,
+
+233
+00:10:23.150 --> 00:10:25.625
+and looks for those in
+the things that it sees.
+
+234
+00:10:25.625 --> 00:10:27.740
+In other words, the
+machine defines
+
+235
+00:10:27.740 --> 00:10:29.030
+the essential features of
+
+236
+00:10:29.030 --> 00:10:32.090
+its subject rather
+than the developer.
+
+237
+00:10:32.090 --> 00:10:34.040
+That's what distinguishes
+deep learning
+
+238
+00:10:34.040 --> 00:10:36.185
+from the traditional
+machine learning.
+
+239
+00:10:36.185 --> 00:10:39.065
+Now that we understand
+what AI is,
+
+240
+00:10:39.065 --> 00:10:40.685
+let's talk about how to
+
+241
+00:10:40.685 --> 00:10:43.130
+establish an effective
+AI strategy.
+
+242
+00:10:43.130 --> 00:10:46.520
+You can establish an
+effective AI strategy in
+
+243
+00:10:46.520 --> 00:10:47.960
+your organization with the help
+
+244
+00:10:47.960 --> 00:10:49.880
+of fast computing environment,
+
+245
+00:10:49.880 --> 00:10:53.825
+data gathered from various
+sources such as social media,
+
+246
+00:10:53.825 --> 00:10:55.700
+browsing trends and more,
+
+247
+00:10:55.700 --> 00:10:58.565
+and advanced learning algorithms.
+
+248
+00:10:58.565 --> 00:11:00.725
+Let's start with the data.
+
+249
+00:11:00.725 --> 00:11:03.860
+More data means better analytics
+
+250
+00:11:03.860 --> 00:11:07.250
+and better analytics
+results in better products.
+
+251
+00:11:07.250 --> 00:11:10.415
+Better products means more users
+
+252
+00:11:10.415 --> 00:11:13.625
+and that in turn generates
+more data for you.
+
+253
+00:11:13.625 --> 00:11:17.210
+This in simple terms is
+the flywheel for data.
+
+254
+00:11:17.210 --> 00:11:19.670
+You can gather data
+from a number of
+
+255
+00:11:19.670 --> 00:11:22.865
+sources like clickstream
+and user activity,
+
+256
+00:11:22.865 --> 00:11:25.760
+then you can analyze it
+using tools like Hadoop,
+
+257
+00:11:25.760 --> 00:11:28.625
+and Spark, and Amazon
+Elastic search surveys.
+
+258
+00:11:28.625 --> 00:11:30.740
+Using the analysis, you
+
+259
+00:11:30.740 --> 00:11:32.570
+can feed the AI and
+machine learning
+
+260
+00:11:32.570 --> 00:11:33.830
+algorithms to form
+
+261
+00:11:33.830 --> 00:11:36.755
+pattern recognitions and
+generate predictions.
+
+262
+00:11:36.755 --> 00:11:39.170
+Then, you can use those
+predictions to make
+
+263
+00:11:39.170 --> 00:11:42.305
+your products better and
+drive more users do it.
+
+264
+00:11:42.305 --> 00:11:45.980
+By using a combination
+of programming models,
+
+265
+00:11:45.980 --> 00:11:47.900
+algorithms, data,
+
+266
+00:11:47.900 --> 00:11:49.430
+and hardware acceleration with
+
+267
+00:11:49.430 --> 00:11:51.485
+infrastructure such as GPUs,
+
+268
+00:11:51.485 --> 00:11:54.560
+you can develop a framework
+that helps with AI
+
+269
+00:11:54.560 --> 00:11:57.590
+enabled features like
+image understanding,
+
+270
+00:11:57.590 --> 00:11:59.255
+speech recognition,
+
+271
+00:11:59.255 --> 00:12:02.360
+natural language
+processing, and autonomy.
+
+272
+00:12:02.360 --> 00:12:05.840
+These combination of
+programming models, algorithms,
+
+273
+00:12:05.840 --> 00:12:08.270
+and data is usually what forms
+
+274
+00:12:08.270 --> 00:12:09.845
+the basis of machine learning
+
+275
+00:12:09.845 --> 00:12:11.420
+and deep learning frameworks,
+
+276
+00:12:11.420 --> 00:12:14.120
+and the underlying
+hardware infrastructure
+
+277
+00:12:14.120 --> 00:12:16.580
+supports the frameworks.
+
+278
+00:12:16.580 --> 00:12:20.480
+Today, AI is being used
+all across Amazon.
+
+279
+00:12:20.480 --> 00:12:23.360
+On amazon.com, users see
+
+280
+00:12:23.360 --> 00:12:24.770
+recommendations suggested by
+
+281
+00:12:24.770 --> 00:12:26.600
+Amazon's recommendation engine,
+
+282
+00:12:26.600 --> 00:12:28.730
+which improves their
+shopping experience.
+
+283
+00:12:28.730 --> 00:12:31.610
+We also use AI to spot trends in
+
+284
+00:12:31.610 --> 00:12:34.070
+the customer's experience
+so that we can
+
+285
+00:12:34.070 --> 00:12:37.325
+develop new products and
+enhance existing products.
+
+286
+00:12:37.325 --> 00:12:38.540
+In the fulfillment and
+
+287
+00:12:38.540 --> 00:12:41.570
+logistic departments,
+robots pick, pile,
+
+288
+00:12:41.570 --> 00:12:43.310
+sort, and move boxes
+
+289
+00:12:43.310 --> 00:12:46.115
+around so that they can
+be shipped to customers.
+
+290
+00:12:46.115 --> 00:12:49.835
+Our employees used to have
+to walk miles each day.
+
+291
+00:12:49.835 --> 00:12:52.640
+By using AI, we save time and
+
+292
+00:12:52.640 --> 00:12:55.985
+free up our staff to serve
+more customers faster.
+
+293
+00:12:55.985 --> 00:12:59.720
+Now AWS is making AI
+tools broadly available
+
+294
+00:12:59.720 --> 00:13:00.920
+so that businesses can
+
+295
+00:13:00.920 --> 00:13:03.545
+innovate and improve
+their products.
+
+296
+00:13:03.545 --> 00:13:08.300
+Amazon Web Services offers a
+range of services in AI by
+
+297
+00:13:08.300 --> 00:13:11.030
+leveraging Amazon's
+internal experience
+
+298
+00:13:11.030 --> 00:13:12.680
+with AI and machine learning.
+
+299
+00:13:12.680 --> 00:13:14.420
+These services are separated
+
+300
+00:13:14.420 --> 00:13:16.730
+here according to four layers,
+
+301
+00:13:16.730 --> 00:13:19.430
+AI services, AI platforms,
+
+302
+00:13:19.430 --> 00:13:22.355
+AI frameworks, and
+AI Infrastructure.
+
+303
+00:13:22.355 --> 00:13:25.040
+They organize from
+the least complex
+
+304
+00:13:25.040 --> 00:13:27.920
+to the most complex going
+from top to bottom.
+
+305
+00:13:27.920 --> 00:13:31.130
+Let's take a brief look
+into each of these layers.
+
+306
+00:13:31.130 --> 00:13:33.770
+Our AI services are each built to
+
+307
+00:13:33.770 --> 00:13:36.455
+handle specific common AI tasks.
+
+308
+00:13:36.455 --> 00:13:38.870
+These services enable
+developers to add
+
+309
+00:13:38.870 --> 00:13:41.450
+Intelligence to their
+applications through
+
+310
+00:13:41.450 --> 00:13:44.315
+an API called to
+pre-train services
+
+311
+00:13:44.315 --> 00:13:46.010
+rather than developing
+and training
+
+312
+00:13:46.010 --> 00:13:48.005
+their own deep learning models.
+
+313
+00:13:48.005 --> 00:13:50.330
+Amazon Recognition
+makes it easy to
+
+314
+00:13:50.330 --> 00:13:52.925
+add image analysis for
+your applications.
+
+315
+00:13:52.925 --> 00:13:55.040
+With recognition, you can
+
+316
+00:13:55.040 --> 00:13:57.575
+detect specific objects, scenes,
+
+317
+00:13:57.575 --> 00:14:00.020
+and faces like celebrities and
+
+318
+00:14:00.020 --> 00:14:02.660
+identify inappropriate
+content in images.
+
+319
+00:14:02.660 --> 00:14:05.480
+You can also search
+and compare faces.
+
+320
+00:14:05.480 --> 00:14:09.020
+Recognitions API enables
+you to quickly add
+
+321
+00:14:09.020 --> 00:14:11.900
+sophisticated deep
+learning-based visual search
+
+322
+00:14:11.900 --> 00:14:15.215
+and image classification
+to your applications.
+
+323
+00:14:15.215 --> 00:14:17.300
+Amazon Polly is a service that
+
+324
+00:14:17.300 --> 00:14:19.775
+turns texts into lifelike speech,
+
+325
+00:14:19.775 --> 00:14:23.180
+allowing you to create
+applications that talk and
+
+326
+00:14:23.180 --> 00:14:27.020
+build entirely new categories
+of speech enabled product.
+
+327
+00:14:27.020 --> 00:14:30.260
+Amazon Polly's
+text-to-speech service uses
+
+328
+00:14:30.260 --> 00:14:32.405
+advanced deep learning
+technologies to
+
+329
+00:14:32.405 --> 00:14:35.555
+synthesize speech that
+sounds like human voice.
+
+330
+00:14:35.555 --> 00:14:38.030
+Amazon Lex is a
+service for building
+
+331
+00:14:38.030 --> 00:14:40.910
+conversational interfaces
+into any application
+
+332
+00:14:40.910 --> 00:14:42.305
+using voice and text.
+
+333
+00:14:42.305 --> 00:14:45.680
+It provides automatic speech
+recognition for converting
+
+334
+00:14:45.680 --> 00:14:48.230
+speech-to-text and natural
+language understanding
+
+335
+00:14:48.230 --> 00:14:50.555
+to recognize the
+intent of the text.
+
+336
+00:14:50.555 --> 00:14:53.090
+That lets you build applications
+with highly engaging
+
+337
+00:14:53.090 --> 00:14:54.860
+user experiences and
+
+338
+00:14:54.860 --> 00:14:57.170
+life-like conversational
+interactions.
+
+339
+00:14:57.170 --> 00:15:01.010
+The AI platforms layer of the
+stack includes products and
+
+340
+00:15:01.010 --> 00:15:02.540
+frameworks that are designed to
+
+341
+00:15:02.540 --> 00:15:05.135
+support custom AI related tasks,
+
+342
+00:15:05.135 --> 00:15:06.470
+such as training and
+
+343
+00:15:06.470 --> 00:15:09.065
+Machine Learning model
+with your own data.
+
+344
+00:15:09.065 --> 00:15:11.690
+For customers who
+want to fully manage
+
+345
+00:15:11.690 --> 00:15:14.840
+platform for building models
+using their own data,
+
+346
+00:15:14.840 --> 00:15:17.075
+we have Amazon Machine Learning.
+
+347
+00:15:17.075 --> 00:15:20.000
+It's designed for developers
+and data scientists
+
+348
+00:15:20.000 --> 00:15:22.775
+who want to focus
+on building models.
+
+349
+00:15:22.775 --> 00:15:24.245
+The Platform removes
+
+350
+00:15:24.245 --> 00:15:26.810
+the undifferentiated
+overhead associated with
+
+351
+00:15:26.810 --> 00:15:29.015
+deploying and managing
+infrastructure
+
+352
+00:15:29.015 --> 00:15:31.130
+for training and hosting models.
+
+353
+00:15:31.130 --> 00:15:33.080
+It can analyze your data,
+
+354
+00:15:33.080 --> 00:15:36.830
+provide you with suggested
+transformations for the data,
+
+355
+00:15:36.830 --> 00:15:39.020
+train your model,
+and even help you
+
+356
+00:15:39.020 --> 00:15:41.735
+with evaluating your
+model for accuracy.
+
+357
+00:15:41.735 --> 00:15:44.240
+Amazon EMR is a flexible,
+
+358
+00:15:44.240 --> 00:15:47.615
+customizable, and manage big
+data processing platform.
+
+359
+00:15:47.615 --> 00:15:50.240
+It's a manage solution
+in that it can handle
+
+360
+00:15:50.240 --> 00:15:53.015
+things like scaling and
+high availability for you.
+
+361
+00:15:53.015 --> 00:15:56.000
+Amazon EMR does not require
+a deep understanding
+
+362
+00:15:56.000 --> 00:15:59.254
+of how to set up and
+administer Big Data Platforms,
+
+363
+00:15:59.254 --> 00:16:01.325
+you get a preconfigured cluster
+
+364
+00:16:01.325 --> 00:16:03.710
+ready to receive your
+analytics workload.
+
+365
+00:16:03.710 --> 00:16:07.760
+It is built for any Data
+Science Workload not just AI.
+
+366
+00:16:07.760 --> 00:16:10.295
+Apache Spark is an open-source,
+
+367
+00:16:10.295 --> 00:16:12.770
+distributed processing
+system commonly
+
+368
+00:16:12.770 --> 00:16:14.675
+used for Big Data workloads.
+
+369
+00:16:14.675 --> 00:16:19.100
+Apache Spark utilizes
+in-memory caching and optimize
+
+370
+00:16:19.100 --> 00:16:21.440
+execution for fast performance
+
+371
+00:16:21.440 --> 00:16:23.990
+and it supports general
+batch processing,
+
+372
+00:16:23.990 --> 00:16:26.225
+Streaming Analytics,
+Machine Learning,
+
+373
+00:16:26.225 --> 00:16:28.790
+graph database, and
+ad hoc queries.
+
+374
+00:16:28.790 --> 00:16:32.525
+It can be run and managed
+on Amazon EMR clusters.
+
+375
+00:16:32.525 --> 00:16:34.370
+The AI frameworks and
+
+376
+00:16:34.370 --> 00:16:35.960
+infrastructure layers are for
+
+377
+00:16:35.960 --> 00:16:37.850
+expert machine learning
+practitioners.
+
+378
+00:16:37.850 --> 00:16:39.950
+In other words,
+for the people who
+
+379
+00:16:39.950 --> 00:16:42.650
+are comfortable building
+deep learning models,
+
+380
+00:16:42.650 --> 00:16:44.825
+training them, doing predictions,
+
+381
+00:16:44.825 --> 00:16:46.205
+also known as inference,
+
+382
+00:16:46.205 --> 00:16:47.570
+and getting the data from
+
+383
+00:16:47.570 --> 00:16:49.805
+the models into
+production applications.
+
+384
+00:16:49.805 --> 00:16:51.935
+The underlying
+infrastructure consists
+
+385
+00:16:51.935 --> 00:16:54.349
+of Amazon EC2 P3 instances,
+
+386
+00:16:54.349 --> 00:16:55.580
+which are optimized for
+
+387
+00:16:55.580 --> 00:16:57.215
+machine learning
+and deep learning.
+
+388
+00:16:57.215 --> 00:16:59.750
+Amazon EC2 P3 instances provide
+
+389
+00:16:59.750 --> 00:17:03.935
+powerful NVIDIA GPUs to
+accelerate computations,
+
+390
+00:17:03.935 --> 00:17:06.530
+so that customers can
+train their models in
+
+391
+00:17:06.530 --> 00:17:09.380
+a fraction of the time
+required by traditional CPUs.
+
+392
+00:17:09.380 --> 00:17:12.500
+After training, Amazon EC2 C5
+
+393
+00:17:12.500 --> 00:17:16.190
+compute optimize and aim for
+general-purpose instances.
+
+394
+00:17:16.190 --> 00:17:18.980
+In addition to GPU
+based instances,
+
+395
+00:17:18.980 --> 00:17:20.630
+are well-suited for running
+
+396
+00:17:20.630 --> 00:17:22.820
+inferences with the
+training model.
+
+397
+00:17:22.820 --> 00:17:26.090
+AWS supports all the major
+deep-learning frameworks
+
+398
+00:17:26.090 --> 00:17:28.880
+and makes them easy to
+deploy without AWS,
+
+399
+00:17:28.880 --> 00:17:31.085
+deep-learning Amazon
+machine image,
+
+400
+00:17:31.085 --> 00:17:34.130
+which is available for
+Amazon Linux and Ubuntu,
+
+401
+00:17:34.130 --> 00:17:36.320
+so that you can create managed,
+
+402
+00:17:36.320 --> 00:17:38.720
+automatically
+scalable clusters of
+
+403
+00:17:38.720 --> 00:17:41.825
+GPUs for training and
+inference at any scale.
+
+404
+00:17:41.825 --> 00:17:44.240
+It comes pre-installed
+with technologies
+
+405
+00:17:44.240 --> 00:17:46.820
+like Apache MX net, tenser flow,
+
+406
+00:17:46.820 --> 00:17:49.730
+Cafe and Caffe2 and auto-populate
+
+407
+00:17:49.730 --> 00:17:51.470
+Machine Learning software such as
+
+408
+00:17:51.470 --> 00:17:54.035
+the Anaconda package
+for data science.
+
+409
+00:17:54.035 --> 00:17:57.005
+Now let's go through
+a few use cases.
+
+410
+00:17:57.005 --> 00:17:58.970
+Almost all industry domains are
+
+411
+00:17:58.970 --> 00:18:01.685
+now innovating with AWS AI.
+
+412
+00:18:01.685 --> 00:18:04.610
+For example, for
+fraud dot net uses
+
+413
+00:18:04.610 --> 00:18:05.960
+Amazon Machine Learning to
+
+414
+00:18:05.960 --> 00:18:08.435
+support its Machine
+Learning models.
+
+415
+00:18:08.435 --> 00:18:12.020
+The company uses
+Amazon DynamoDB and
+
+416
+00:18:12.020 --> 00:18:13.760
+AWS Lambda to run code
+
+417
+00:18:13.760 --> 00:18:16.160
+without provisioning
+and managing servers.
+
+418
+00:18:16.160 --> 00:18:19.880
+Fraud.net also uses Amazon
+Redshift for data analysis.
+
+419
+00:18:19.880 --> 00:18:22.265
+What are the benefits that
+they get from that setup?
+
+420
+00:18:22.265 --> 00:18:25.190
+Fraud.net lunches and trains
+Machine Learning models
+
+421
+00:18:25.190 --> 00:18:28.250
+in almost half the time it
+took on other platforms.
+
+422
+00:18:28.250 --> 00:18:30.230
+It reduces complexity and
+
+423
+00:18:30.230 --> 00:18:32.690
+makes sense of emerging
+Fraud patterns.
+
+424
+00:18:32.690 --> 00:18:36.680
+It saves customers about a
+million dollars each week.
+
+425
+00:18:36.680 --> 00:18:39.610
+To summarize, you can
+create an impact in
+
+426
+00:18:39.610 --> 00:18:43.980
+your business by automating
+repetitive and manual tasks,
+
+427
+00:18:43.980 --> 00:18:46.130
+engaging customers and optimizing
+
+428
+00:18:46.130 --> 00:18:48.170
+product quality using AI.
+
+429
+00:18:48.170 --> 00:18:50.030
+I hope you learned a
+little something and we'll
+
+430
+00:18:50.030 --> 00:18:52.055
+continue to explore
+all the courses.
+
+431
+00:18:52.055 --> 00:18:56.190
+I'm Dan Banger with AWS AI
+and thanks for watching.

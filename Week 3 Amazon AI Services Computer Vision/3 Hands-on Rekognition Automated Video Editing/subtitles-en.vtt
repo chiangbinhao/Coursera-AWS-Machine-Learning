@@ -1,0 +1,1817 @@
+WEBVTT
+
+1
+00:00:04.220 --> 00:00:07.035
+Hi. My name is John Rotenstein,
+
+2
+00:00:07.035 --> 00:00:09.510
+and I'm with AWS Training
+and Certification.
+
+3
+00:00:09.510 --> 00:00:12.810
+I'm here today to tell you
+about Amazon Rekognition.
+
+4
+00:00:12.810 --> 00:00:14.115
+I'll be doing it
+through a number of
+
+5
+00:00:14.115 --> 00:00:16.125
+hands-on demonstrations,
+
+6
+00:00:16.125 --> 00:00:17.580
+and at the end, there's even
+
+7
+00:00:17.580 --> 00:00:20.655
+a self-paced lab where you
+can try it for yourself.
+
+8
+00:00:20.655 --> 00:00:23.970
+My demonstration is divided
+into three sections.
+
+9
+00:00:23.970 --> 00:00:25.680
+First of all, I'll be
+telling you how to use
+
+10
+00:00:25.680 --> 00:00:27.525
+Rekognition with still images.
+
+11
+00:00:27.525 --> 00:00:29.640
+Take a photo, send
+it to Rekognition,
+
+12
+00:00:29.640 --> 00:00:33.150
+and recognize faces and even
+objects within the picture.
+
+13
+00:00:33.150 --> 00:00:35.520
+The second part will be
+showing you how you can
+
+14
+00:00:35.520 --> 00:00:37.845
+use Rekognition with video files.
+
+15
+00:00:37.845 --> 00:00:39.870
+So you can upload a video to S3,
+
+16
+00:00:39.870 --> 00:00:41.760
+send it to Rekognition,
+and you can say,
+
+17
+00:00:41.760 --> 00:00:44.935
+"Hey, I found these various
+people within the video."
+
+18
+00:00:44.935 --> 00:00:47.720
+The third part, we'll be
+working with streaming video,
+
+19
+00:00:47.720 --> 00:00:49.190
+where you can send
+streaming video to
+
+20
+00:00:49.190 --> 00:00:50.870
+Rekognition and it can detect
+
+21
+00:00:50.870 --> 00:00:52.640
+objects in that streaming video
+
+22
+00:00:52.640 --> 00:00:54.830
+and you can react
+to it in real-time.
+
+23
+00:00:54.830 --> 00:00:56.405
+So let's begin.
+
+24
+00:00:56.405 --> 00:00:57.710
+So in this first section,
+
+25
+00:00:57.710 --> 00:00:59.210
+I'll be showing you
+how you can use
+
+26
+00:00:59.210 --> 00:01:01.130
+still images with Rekognition.
+
+27
+00:01:01.130 --> 00:01:03.275
+To demonstrate features,
+I'll actually be sending
+
+28
+00:01:03.275 --> 00:01:04.970
+a continuous stream of images to
+
+29
+00:01:04.970 --> 00:01:07.070
+Rekognition to show
+you what it can do.
+
+30
+00:01:07.070 --> 00:01:08.415
+For my first demonstration,
+
+31
+00:01:08.415 --> 00:01:10.160
+I'll show you how Rekognition can
+
+32
+00:01:10.160 --> 00:01:12.170
+detect faces within an image.
+
+33
+00:01:12.170 --> 00:01:15.865
+So here I've got my computer
+capturing the video,
+
+34
+00:01:15.865 --> 00:01:17.100
+sending it to Rekognition,
+
+35
+00:01:17.100 --> 00:01:18.390
+and coming back and saying, "Hey,
+
+36
+00:01:18.390 --> 00:01:19.665
+I can see a face here."
+
+37
+00:01:19.665 --> 00:01:22.055
+It's drawing a border
+around my face
+
+38
+00:01:22.055 --> 00:01:25.565
+and if I smile, it turns green.
+
+39
+00:01:25.565 --> 00:01:29.190
+If I frown, it turns red.
+
+40
+00:01:29.410 --> 00:01:32.340
+Now, this also works
+for multiple people.
+
+41
+00:01:32.340 --> 00:01:33.610
+Folks, do you want
+to come on here?
+
+42
+00:01:33.610 --> 00:01:37.175
+So it can detect multiple
+faces within the same frame.
+
+43
+00:01:37.175 --> 00:01:39.960
+So everyone smile.
+
+44
+00:01:40.480 --> 00:01:49.050
+Look unhappy.
+Fantastic. Thank you.
+
+45
+00:01:49.050 --> 00:01:51.285
+So how did that
+demonstration work?
+
+46
+00:01:51.285 --> 00:01:52.970
+So here is a sample
+of the code that
+
+47
+00:01:52.970 --> 00:01:54.770
+I used for that.
+It's very simple.
+
+48
+00:01:54.770 --> 00:01:56.960
+What it does is it
+captures an image from
+
+49
+00:01:56.960 --> 00:02:00.205
+my built-in webcam on my
+computer, it then shrinks it.
+
+50
+00:02:00.205 --> 00:02:01.965
+The reason I shrink it is,
+
+51
+00:02:01.965 --> 00:02:04.130
+Rekognition only needs
+about 100 pixels
+
+52
+00:02:04.130 --> 00:02:05.810
+to be able to detect a face,
+
+53
+00:02:05.810 --> 00:02:07.280
+and there's no need to send
+
+54
+00:02:07.280 --> 00:02:09.470
+a big picture across
+all that bandwidth.
+
+55
+00:02:09.470 --> 00:02:10.925
+So I shrink it down in size,
+
+56
+00:02:10.925 --> 00:02:12.065
+I sent it to Rekognition,
+
+57
+00:02:12.065 --> 00:02:14.455
+and call the detect
+faces command.
+
+58
+00:02:14.455 --> 00:02:17.870
+Detect faces can either
+point to an image in
+
+59
+00:02:17.870 --> 00:02:21.530
+S3 or you can send it the
+actual image from your code.
+
+60
+00:02:21.530 --> 00:02:23.750
+Then Rekognition comes
+back with a whole load of
+
+61
+00:02:23.750 --> 00:02:26.120
+information about the
+faces it saw in the image.
+
+62
+00:02:26.120 --> 00:02:28.430
+Here is an example of the
+information that comes back.
+
+63
+00:02:28.430 --> 00:02:30.650
+In my case, I used
+a bounding box to
+
+64
+00:02:30.650 --> 00:02:32.960
+draw a rectangle around
+each of the phases,
+
+65
+00:02:32.960 --> 00:02:34.880
+but you also get
+information back about,
+
+66
+00:02:34.880 --> 00:02:36.800
+was a person wearing glasses,
+
+67
+00:02:36.800 --> 00:02:38.450
+were they smiling, do
+
+68
+00:02:38.450 --> 00:02:40.190
+they have a mustache,
+and what's the agenda?
+
+69
+00:02:40.190 --> 00:02:41.750
+So you can collect a lot of
+
+70
+00:02:41.750 --> 00:02:44.075
+information from
+just a still image.
+
+71
+00:02:44.075 --> 00:02:45.985
+So for my second demonstration,
+
+72
+00:02:45.985 --> 00:02:47.855
+I'd like to show you
+how you can recognize
+
+73
+00:02:47.855 --> 00:02:50.300
+a face within a picture.
+
+74
+00:02:50.300 --> 00:02:52.145
+You do this by building
+something called
+
+75
+00:02:52.145 --> 00:02:55.315
+a face collection.
+Let me demonstrate.
+
+76
+00:02:55.315 --> 00:02:58.170
+So here, I'm sending my
+picture to Rekognition,
+
+77
+00:02:58.170 --> 00:03:00.815
+and it's saying who it thinks
+it detects in the picture.
+
+78
+00:03:00.815 --> 00:03:02.660
+So in this case,
+it's saying John.
+
+79
+00:03:02.660 --> 00:03:04.220
+I might now ask somebody else to
+
+80
+00:03:04.220 --> 00:03:06.440
+come into the frame and
+see if we can detect.
+
+81
+00:03:06.440 --> 00:03:10.105
+It's saying, "Oh. I think that
+person is Sean" Fantastic.
+
+82
+00:03:10.105 --> 00:03:12.400
+Art, do you want to hop in?
+
+83
+00:03:12.770 --> 00:03:15.230
+It's saying Art. Now, if you have
+
+84
+00:03:15.230 --> 00:03:16.940
+more than one person
+in the picture,
+
+85
+00:03:16.940 --> 00:03:19.580
+it actually detects
+the largest face.
+
+86
+00:03:19.580 --> 00:03:22.055
+So if I come closer to
+the camera, it's John.
+
+87
+00:03:22.055 --> 00:03:24.690
+But if Art comes
+closer, it says, "No.
+
+88
+00:03:24.690 --> 00:03:26.535
+The biggest person is Art."
+
+89
+00:03:26.535 --> 00:03:30.200
+That's Searching faces
+from the face collection.
+
+90
+00:03:30.200 --> 00:03:33.440
+So here's the code behind
+that demonstration.
+
+91
+00:03:33.440 --> 00:03:36.215
+What it does is it captures
+that picture once again,
+
+92
+00:03:36.215 --> 00:03:37.940
+it then sends it
+across to Rekognition,
+
+93
+00:03:37.940 --> 00:03:41.110
+and calls the search
+faces by Image command.
+
+94
+00:03:41.110 --> 00:03:43.040
+It looks through a
+face collection.
+
+95
+00:03:43.040 --> 00:03:44.180
+I'll show you in a moment how to
+
+96
+00:03:44.180 --> 00:03:45.745
+put a face into a collection.
+
+97
+00:03:45.745 --> 00:03:48.840
+Rekognition then comes back
+with which face it saw,
+
+98
+00:03:48.840 --> 00:03:50.220
+the name of that face,
+
+99
+00:03:50.220 --> 00:03:53.580
+and I simply displayed on
+screen who it said it was.
+
+100
+00:03:53.580 --> 00:03:56.030
+If you have multiple people
+within the same frame,
+
+101
+00:03:56.030 --> 00:03:58.415
+it will only choose the
+person with the largest face.
+
+102
+00:03:58.415 --> 00:04:01.055
+The information comes back
+like this and it says, "Hey.
+
+103
+00:04:01.055 --> 00:04:02.480
+I found John and I'm
+
+104
+00:04:02.480 --> 00:04:05.345
+99 percent confident
+that it was John."
+
+105
+00:04:05.345 --> 00:04:08.240
+For my third demo,
+Rekognition has
+
+106
+00:04:08.240 --> 00:04:11.465
+the ability to detect
+text within the image.
+
+107
+00:04:11.465 --> 00:04:13.700
+So in this case, I'm
+going to show it
+
+108
+00:04:13.700 --> 00:04:16.805
+an image and it will read
+the text that it can see.
+
+109
+00:04:16.805 --> 00:04:19.670
+So now I'm sending the
+frame to Rekognition,
+
+110
+00:04:19.670 --> 00:04:21.635
+and it will detect
+text in the picture.
+
+111
+00:04:21.635 --> 00:04:23.285
+So here's my backpack.
+
+112
+00:04:23.285 --> 00:04:25.520
+Let's see what it
+can see on there.
+
+113
+00:04:25.520 --> 00:04:28.970
+So it's detecting the word
+Amazon on the backpack.
+
+114
+00:04:28.970 --> 00:04:32.560
+Fantastic or here is a
+white marker I've go.
+
+115
+00:04:32.560 --> 00:04:34.980
+It should be able
+to read also there.
+
+116
+00:04:34.980 --> 00:04:36.580
+It says whiteboard marker,
+
+117
+00:04:36.580 --> 00:04:38.990
+and as I move the pen
+around the screen,
+
+118
+00:04:38.990 --> 00:04:42.055
+it will track and move
+the text with it.
+
+119
+00:04:42.055 --> 00:04:43.910
+So in that demonstration,
+
+120
+00:04:43.910 --> 00:04:45.710
+you saw how I showed
+
+121
+00:04:45.710 --> 00:04:46.850
+some text on the screen that
+
+122
+00:04:46.850 --> 00:04:47.990
+was coming back from Rekognition.
+
+123
+00:04:47.990 --> 00:04:49.010
+It came back a bit like this.
+
+124
+00:04:49.010 --> 00:04:51.770
+It comes back in a JSON object
+and shows me the text that
+
+125
+00:04:51.770 --> 00:04:53.000
+was there and it shows
+
+126
+00:04:53.000 --> 00:04:54.820
+me where it was
+found on the screen.
+
+127
+00:04:54.820 --> 00:04:57.530
+Rekognition not only returns
+each individual word,
+
+128
+00:04:57.530 --> 00:04:59.270
+it can return a line of text.
+
+129
+00:04:59.270 --> 00:05:01.520
+So if you're not interested
+in where the text is placed,
+
+130
+00:05:01.520 --> 00:05:04.085
+be interested in everything
+that it's saying,
+
+131
+00:05:04.085 --> 00:05:06.680
+then it will return that
+information to you as well.
+
+132
+00:05:06.680 --> 00:05:09.890
+In all, Rekognition has quite
+a few API calls you can
+
+133
+00:05:09.890 --> 00:05:13.310
+make to find things in
+pictures for detecting faces,
+
+134
+00:05:13.310 --> 00:05:14.630
+detecting texts, and searching
+
+135
+00:05:14.630 --> 00:05:16.620
+faces by image. They're
+the ones I showed you.
+
+136
+00:05:16.620 --> 00:05:18.735
+It can also find
+objects in an image,
+
+137
+00:05:18.735 --> 00:05:21.020
+find me a skate board,
+find me a bottle.
+
+138
+00:05:21.020 --> 00:05:23.000
+It can also recognize
+celebrities.
+
+139
+00:05:23.000 --> 00:05:24.290
+So if you want to look through
+
+140
+00:05:24.290 --> 00:05:25.640
+video or look through picture,
+
+141
+00:05:25.640 --> 00:05:27.000
+and find somebody who's famous,
+
+142
+00:05:27.000 --> 00:05:28.010
+it can do that for you.
+
+143
+00:05:28.010 --> 00:05:30.470
+It can also detect
+adult contents.
+
+144
+00:05:30.470 --> 00:05:31.430
+So if you have a
+picture and you want to
+
+145
+00:05:31.430 --> 00:05:32.390
+make sure that it doesn't
+
+146
+00:05:32.390 --> 00:05:34.520
+have anything that shouldn't
+be shown to the public,
+
+147
+00:05:34.520 --> 00:05:36.140
+it can automatically do so.
+
+148
+00:05:36.140 --> 00:05:37.700
+So now in Part 2,
+
+149
+00:05:37.700 --> 00:05:39.590
+I'd like to show you how
+Rekognition can go through
+
+150
+00:05:39.590 --> 00:05:40.970
+a video file and detect
+
+151
+00:05:40.970 --> 00:05:43.225
+faces that it finds
+in that video.
+
+152
+00:05:43.225 --> 00:05:45.665
+The use case I'm showing
+here is I've got
+
+153
+00:05:45.665 --> 00:05:47.390
+a very large video file and
+
+154
+00:05:47.390 --> 00:05:49.850
+the file has lots of
+different people in there.
+
+155
+00:05:49.850 --> 00:05:52.355
+I would like to take
+that large video
+
+156
+00:05:52.355 --> 00:05:54.380
+and automatically
+create a new video,
+
+157
+00:05:54.380 --> 00:05:57.185
+which is just showing
+one particular person.
+
+158
+00:05:57.185 --> 00:05:58.920
+So to do this, Rekognition
+
+159
+00:05:58.920 --> 00:06:00.420
+will have to go
+through the video,
+
+160
+00:06:00.420 --> 00:06:02.875
+find each person,
+output the information,
+
+161
+00:06:02.875 --> 00:06:04.640
+and let me splice
+it together again.
+
+162
+00:06:04.640 --> 00:06:06.170
+I'll show you what it looks like.
+
+163
+00:06:06.170 --> 00:06:09.690
+Here, I have my source video.
+
+164
+00:06:09.710 --> 00:06:13.325
+You can see in here many
+different people's faces
+
+165
+00:06:13.325 --> 00:06:15.275
+are showing up in the video.
+
+166
+00:06:15.275 --> 00:06:18.470
+The output will be
+something like this.
+
+167
+00:06:18.470 --> 00:06:20.570
+Here is a video showing Eddie,
+
+168
+00:06:20.570 --> 00:06:23.590
+all the scenes with Eddie
+appearing in that video.
+
+169
+00:06:23.590 --> 00:06:25.950
+So how was it done?
+
+170
+00:06:25.950 --> 00:06:27.790
+Well, the first thing
+I did is I captured
+
+171
+00:06:27.790 --> 00:06:29.710
+a picture of each of
+the people that were in
+
+172
+00:06:29.710 --> 00:06:32.125
+the video and I use
+this command called
+
+173
+00:06:32.125 --> 00:06:35.035
+create-collection which
+created a face collection.
+
+174
+00:06:35.035 --> 00:06:37.055
+In this case, I
+call them trainers.
+
+175
+00:06:37.055 --> 00:06:39.715
+Then, I had a picture of
+each person and I added it
+
+176
+00:06:39.715 --> 00:06:42.385
+into the collection using
+this index-faces command,
+
+177
+00:06:42.385 --> 00:06:45.850
+which points to a picture in
+S3, and I give it a name.
+
+178
+00:06:45.850 --> 00:06:47.140
+In this case, John, saying,
+
+179
+00:06:47.140 --> 00:06:49.630
+this is a picture of John
+and Rekognition will
+
+180
+00:06:49.630 --> 00:06:53.500
+associate that external
+image ID with that picture.
+
+181
+00:06:53.500 --> 00:06:55.420
+It's also worth mentioning
+Rekognition does
+
+182
+00:06:55.420 --> 00:06:57.250
+not store that image,
+
+183
+00:06:57.250 --> 00:06:58.685
+rather it looks at the image,
+
+184
+00:06:58.685 --> 00:07:00.200
+it finds the face in the image,
+
+185
+00:07:00.200 --> 00:07:01.945
+and it looks at the
+attributes of the face.
+
+186
+00:07:01.945 --> 00:07:03.190
+Where are the eyes,
+
+187
+00:07:03.190 --> 00:07:04.860
+where's the nose,
+where's the mouth,
+
+188
+00:07:04.860 --> 00:07:07.690
+and it builds a
+mathematical vector of
+
+189
+00:07:07.690 --> 00:07:09.530
+the face and that is
+the only thing that
+
+190
+00:07:09.530 --> 00:07:11.635
+is stored in Rekognition.
+
+191
+00:07:11.635 --> 00:07:13.440
+Once Rekognition
+has those pictures,
+
+192
+00:07:13.440 --> 00:07:15.530
+I can then tell it to
+please analyze the video.
+
+193
+00:07:15.530 --> 00:07:16.560
+So I use this command,
+
+194
+00:07:16.560 --> 00:07:18.860
+which is the start
+face search command.
+
+195
+00:07:18.860 --> 00:07:21.035
+It says, "Please go off to S3,
+
+196
+00:07:21.035 --> 00:07:22.760
+grab this video for me,
+
+197
+00:07:22.760 --> 00:07:26.270
+and compare it to the face
+collection called trainers."
+
+198
+00:07:26.270 --> 00:07:27.830
+It then goes off and looks for
+
+199
+00:07:27.830 --> 00:07:29.570
+all of the faces
+within the video.
+
+200
+00:07:29.570 --> 00:07:31.250
+Let me demonstrate.
+
+201
+00:07:31.250 --> 00:07:34.295
+So the first step is to
+create a face collection,
+
+202
+00:07:34.295 --> 00:07:37.770
+and I'll do it with this
+create-collection command.
+
+203
+00:07:39.120 --> 00:07:41.695
+So this is saying
+please create me
+
+204
+00:07:41.695 --> 00:07:43.855
+a collection called trainers.
+
+205
+00:07:43.855 --> 00:07:47.680
+The next step is to take a
+face which is stored in S3,
+
+206
+00:07:47.680 --> 00:07:50.500
+and say please edit
+to the collection.
+
+207
+00:07:50.500 --> 00:07:52.990
+So here I have a
+command that is saying,
+
+208
+00:07:52.990 --> 00:07:55.735
+please take an image called John,
+
+209
+00:07:55.735 --> 00:07:59.365
+and load into that
+trainers collection,
+
+210
+00:07:59.365 --> 00:08:02.110
+and it comes back with a
+whole lot of information.
+
+211
+00:08:02.110 --> 00:08:04.390
+In this case it's
+saying I found a face
+
+212
+00:08:04.390 --> 00:08:07.135
+within that image and here
+is a bounding box around it.
+
+213
+00:08:07.135 --> 00:08:08.500
+Here is the nose.
+
+214
+00:08:08.500 --> 00:08:12.040
+Here's the mouth, also here
+is the pitch and yaw of
+
+215
+00:08:12.040 --> 00:08:13.810
+the face so it can tell
+if a face is looking
+
+216
+00:08:13.810 --> 00:08:15.775
+left looking right
+looking up etc.
+
+217
+00:08:15.775 --> 00:08:17.455
+This is very good for mapping
+
+218
+00:08:17.455 --> 00:08:19.120
+attributes on the face
+in case you want to make
+
+219
+00:08:19.120 --> 00:08:22.735
+it look like somebody is
+wearing a mask or a funny face.
+
+220
+00:08:22.735 --> 00:08:25.210
+So I have now loaded
+a number of faces.
+
+221
+00:08:25.210 --> 00:08:28.825
+You can see here there is
+an image tagged as John,
+
+222
+00:08:28.825 --> 00:08:30.580
+an image tagged as Edward,
+
+223
+00:08:30.580 --> 00:08:34.510
+and an image tagged
+with Karthik, and MJ.
+
+224
+00:08:34.510 --> 00:08:37.915
+So there are now four faces
+in my face collection.
+
+225
+00:08:37.915 --> 00:08:40.930
+So the next thing I have
+to do is ask rekognition
+
+226
+00:08:40.930 --> 00:08:43.975
+to please go through the
+video and find the faces,
+
+227
+00:08:43.975 --> 00:08:47.350
+and I do that with this
+start-face-search command.
+
+228
+00:08:47.350 --> 00:08:49.330
+This command tells rekognition
+
+229
+00:08:49.330 --> 00:08:50.725
+to stop a process in the video,
+
+230
+00:08:50.725 --> 00:08:52.210
+but it can take a long time so it
+
+231
+00:08:52.210 --> 00:08:54.369
+comes back with a job ID,
+
+232
+00:08:54.369 --> 00:08:55.810
+and I can go back to
+it later and say,
+
+233
+00:08:55.810 --> 00:08:59.215
+''Please give me the output
+for this particular job.''
+
+234
+00:08:59.215 --> 00:09:02.875
+So rekognition has now finished
+processing that video,
+
+235
+00:09:02.875 --> 00:09:05.350
+and I can run this
+get-face-search command
+
+236
+00:09:05.350 --> 00:09:07.765
+to retrieve the results
+of that search,
+
+237
+00:09:07.765 --> 00:09:11.380
+and lots of information
+appears here on screen.
+
+238
+00:09:11.380 --> 00:09:13.600
+What it's doing is it's
+
+239
+00:09:13.600 --> 00:09:16.975
+returning for various
+different timestamps,
+
+240
+00:09:16.975 --> 00:09:18.505
+who it has seen.
+
+241
+00:09:18.505 --> 00:09:20.890
+So here it saying it this
+particular timestamp,
+
+242
+00:09:20.890 --> 00:09:23.950
+I can see that Edward
+appeared in there and
+
+243
+00:09:23.950 --> 00:09:27.145
+rekognition is a 100 percent
+confident that he is there.
+
+244
+00:09:27.145 --> 00:09:28.660
+So it's now going to tell me for
+
+245
+00:09:28.660 --> 00:09:31.330
+each timestamp who
+appeared in the frame.
+
+246
+00:09:31.330 --> 00:09:32.950
+What it will give me once
+
+247
+00:09:32.950 --> 00:09:34.660
+it's finished is
+output like this,
+
+248
+00:09:34.660 --> 00:09:37.090
+and it's showing me
+for each timestamp
+
+249
+00:09:37.090 --> 00:09:40.000
+within the video who did it see.
+
+250
+00:09:40.000 --> 00:09:43.060
+Now there's lots and lots
+of timestamps in the video.
+
+251
+00:09:43.060 --> 00:09:44.170
+It's several minutes long, and
+
+252
+00:09:44.170 --> 00:09:45.370
+you can see from this output
+
+253
+00:09:45.370 --> 00:09:47.935
+that its giving me information
+every second or so.
+
+254
+00:09:47.935 --> 00:09:49.660
+So it will give me
+an awful lot of
+
+255
+00:09:49.660 --> 00:09:51.760
+information about who
+it saw in the video.
+
+256
+00:09:51.760 --> 00:09:54.190
+My challenge is to take all of
+
+257
+00:09:54.190 --> 00:09:56.560
+this information about where
+people appear in the video,
+
+258
+00:09:56.560 --> 00:09:58.075
+and output another video
+
+259
+00:09:58.075 --> 00:10:00.025
+just showing one
+particular person,
+
+260
+00:10:00.025 --> 00:10:02.680
+and to do that I'll be using
+an Amazon product called
+
+261
+00:10:02.680 --> 00:10:04.810
+Amazon Elastic
+Transcoder which is
+
+262
+00:10:04.810 --> 00:10:07.345
+a service that can
+transcode video files,
+
+263
+00:10:07.345 --> 00:10:10.795
+and one of the capabilities
+it has is clip stitching,
+
+264
+00:10:10.795 --> 00:10:12.640
+and what this means is I can say,
+
+265
+00:10:12.640 --> 00:10:16.000
+go to this video at this
+particular timestamp and
+
+266
+00:10:16.000 --> 00:10:20.325
+grab x seconds of video
+and keep doing it,
+
+267
+00:10:20.325 --> 00:10:22.230
+and so will grab different
+bits of video and
+
+268
+00:10:22.230 --> 00:10:25.920
+splice them together for
+me into one single video.
+
+269
+00:10:25.920 --> 00:10:29.355
+My challenge in this
+case is that rekognition
+
+270
+00:10:29.355 --> 00:10:32.220
+outputs the timestamps when
+it sees a particular person.
+
+271
+00:10:32.220 --> 00:10:35.530
+So it says John is
+here here here.
+
+272
+00:10:35.530 --> 00:10:37.510
+Whereas Elastic Transcoder
+just wants to know
+
+273
+00:10:37.510 --> 00:10:39.730
+when to begin and
+how long to record.
+
+274
+00:10:39.730 --> 00:10:41.485
+So I've got to convert
+this format of
+
+275
+00:10:41.485 --> 00:10:44.470
+timestamps into
+individual scenes.
+
+276
+00:10:44.470 --> 00:10:46.450
+So I wrote a little
+Python program that says,
+
+277
+00:10:46.450 --> 00:10:49.150
+hey John appears at these
+particular timestamps,
+
+278
+00:10:49.150 --> 00:10:50.950
+let's convert it into scenes.
+
+279
+00:10:50.950 --> 00:10:52.630
+If he disappears for more than a
+
+280
+00:10:52.630 --> 00:10:54.340
+second let's end that scene,
+
+281
+00:10:54.340 --> 00:10:56.575
+and start it again
+when he reappears,
+
+282
+00:10:56.575 --> 00:10:58.450
+or if he appears for less than
+
+283
+00:10:58.450 --> 00:11:00.100
+a second let's skip
+over that scene
+
+284
+00:11:00.100 --> 00:11:01.555
+because we don't
+want the video to be
+
+285
+00:11:01.555 --> 00:11:04.270
+too jerky cutting
+in and cutting out.
+
+286
+00:11:04.270 --> 00:11:06.610
+So the result of that was we
+
+287
+00:11:06.610 --> 00:11:08.965
+had an input video that
+had lots of people.
+
+288
+00:11:08.965 --> 00:11:11.530
+We created a face
+collection which taught
+
+289
+00:11:11.530 --> 00:11:14.185
+it the faces of the various
+people in that video.
+
+290
+00:11:14.185 --> 00:11:15.670
+We then said produce me
+
+291
+00:11:15.670 --> 00:11:18.370
+a new video with just
+one specific person,
+
+292
+00:11:18.370 --> 00:11:21.235
+and Elastic Transcoder
+gave me a video file.
+
+293
+00:11:21.235 --> 00:11:23.350
+One for each of the
+people I requested.
+
+294
+00:11:23.350 --> 00:11:25.450
+So pretty nice demonstration
+of how you can
+
+295
+00:11:25.450 --> 00:11:27.460
+recognize faces
+within rekognition,
+
+296
+00:11:27.460 --> 00:11:29.500
+and then use Elastic
+Transcoder to
+
+297
+00:11:29.500 --> 00:11:31.870
+create a new video from
+that source video.
+
+298
+00:11:31.870 --> 00:11:33.715
+If you're interested
+in how this worked,
+
+299
+00:11:33.715 --> 00:11:34.780
+there is a blog post
+
+300
+00:11:34.780 --> 00:11:36.805
+available on our machine
+learning blog posts.
+
+301
+00:11:36.805 --> 00:11:40.420
+It's called automated video
+editing with you as the star,
+
+302
+00:11:40.420 --> 00:11:42.220
+and that will give
+you an overview of
+
+303
+00:11:42.220 --> 00:11:44.470
+how this demonstration
+was produced,
+
+304
+00:11:44.470 --> 00:11:46.795
+and if you want to try
+it yourself we also have
+
+305
+00:11:46.795 --> 00:11:49.060
+a hands-on lab by the same name.
+
+306
+00:11:49.060 --> 00:11:50.200
+Where you can go off and try
+
+307
+00:11:50.200 --> 00:11:52.750
+the exact same steps that
+I have demonstrated.
+
+308
+00:11:52.750 --> 00:11:54.910
+Here is an overview
+of the commands
+
+309
+00:11:54.910 --> 00:11:57.055
+you can use with
+rekognition video.
+
+310
+00:11:57.055 --> 00:11:59.890
+I showed you the
+start-face-search command
+
+311
+00:11:59.890 --> 00:12:01.810
+where it looked for
+faces within the video.
+
+312
+00:12:01.810 --> 00:12:04.120
+You can also recognize
+celebrities,
+
+313
+00:12:04.120 --> 00:12:05.860
+look for objects within there,
+
+314
+00:12:05.860 --> 00:12:07.720
+and person tracking this way it
+
+315
+00:12:07.720 --> 00:12:09.655
+can say hey a person
+walked into the scene,
+
+316
+00:12:09.655 --> 00:12:11.230
+and they walked cross the screen.
+
+317
+00:12:11.230 --> 00:12:12.400
+They disappeared and then they
+
+318
+00:12:12.400 --> 00:12:13.975
+came back into the video again,
+
+319
+00:12:13.975 --> 00:12:15.580
+and you can track them throughout
+
+320
+00:12:15.580 --> 00:12:16.975
+that whole video process.
+
+321
+00:12:16.975 --> 00:12:21.925
+So that is using rekognition
+on video files stored in S3,
+
+322
+00:12:21.925 --> 00:12:24.415
+and the third part that
+I would like to show you
+
+323
+00:12:24.415 --> 00:12:27.115
+is using rekognition
+streaming video.
+
+324
+00:12:27.115 --> 00:12:28.900
+Now you don't stream
+
+325
+00:12:28.900 --> 00:12:30.400
+the video to rekognition
+you actually
+
+326
+00:12:30.400 --> 00:12:34.155
+stream video to our Amazon
+Kinesis Video product,
+
+327
+00:12:34.155 --> 00:12:36.885
+and Kinesis captures
+every video frame,
+
+328
+00:12:36.885 --> 00:12:39.075
+and it then sends that
+frame to rekognition,
+
+329
+00:12:39.075 --> 00:12:40.530
+and rekognition then performs
+
+330
+00:12:40.530 --> 00:12:42.780
+the same analysis that
+I've shown you so far.
+
+331
+00:12:42.780 --> 00:12:44.880
+So it might pass back
+and say hey I've just
+
+332
+00:12:44.880 --> 00:12:47.000
+seen John in that
+streaming video.
+
+333
+00:12:47.000 --> 00:12:48.625
+So to show you how this works
+
+334
+00:12:48.625 --> 00:12:49.870
+I'd like to give you
+a bit of a demo.
+
+335
+00:12:49.870 --> 00:12:51.295
+In this case we set up
+
+336
+00:12:51.295 --> 00:12:53.755
+a video camera showing
+people's faces.
+
+337
+00:12:53.755 --> 00:12:56.650
+We passed it through
+Amazon Video Rekognition
+
+338
+00:12:56.650 --> 00:12:58.600
+using Amazon Kinesis Video,
+
+339
+00:12:58.600 --> 00:13:01.885
+and used it to trigger a light.
+
+340
+00:13:01.885 --> 00:13:03.790
+Now why do you want
+to turn a light?
+
+341
+00:13:03.790 --> 00:13:05.950
+Imagine you might be opening
+a door to your home when you
+
+342
+00:13:05.950 --> 00:13:08.875
+show your face in front
+of the video camera,
+
+343
+00:13:08.875 --> 00:13:12.400
+and in this case I
+
+344
+00:13:12.400 --> 00:13:14.305
+have my fellow trainer Navjot
+
+345
+00:13:14.305 --> 00:13:15.640
+showing his face to the camera,
+
+346
+00:13:15.640 --> 00:13:17.500
+and you'll see if that
+the light turns on.
+
+347
+00:13:17.500 --> 00:13:20.230
+I then sit down showed my face,
+
+348
+00:13:20.230 --> 00:13:23.290
+and unfortunately the
+light did not turn on.
+
+349
+00:13:23.290 --> 00:13:24.970
+I can't gain access to the house,
+
+350
+00:13:24.970 --> 00:13:28.225
+and just to prove it works
+Navjot sat down once again,
+
+351
+00:13:28.225 --> 00:13:29.980
+and the light turned on.
+
+352
+00:13:29.980 --> 00:13:32.080
+So this gives you a bit
+of an idea of how you can
+
+353
+00:13:32.080 --> 00:13:34.330
+use streaming video
+to trigger things,
+
+354
+00:13:34.330 --> 00:13:37.900
+and there wasn't very much
+code at all to make this work.
+
+355
+00:13:37.900 --> 00:13:39.400
+The first step is we set up
+
+356
+00:13:39.400 --> 00:13:43.640
+a live video stream into
+Amazon Kinesis Video.
+
+357
+00:13:43.740 --> 00:13:46.600
+It then sent each frame to
+
+358
+00:13:46.600 --> 00:13:48.880
+Amazon Rekognition
+Video which analyzed
+
+359
+00:13:48.880 --> 00:13:51.835
+the frame and looked for
+certain people's faces.
+
+360
+00:13:51.835 --> 00:13:54.250
+It compared those faces against
+
+361
+00:13:54.250 --> 00:13:56.470
+the previously created
+face collection.
+
+362
+00:13:56.470 --> 00:13:59.005
+In this case with Navjot's face.
+
+363
+00:13:59.005 --> 00:14:01.855
+It then outputs that information
+
+364
+00:14:01.855 --> 00:14:03.520
+in an Amazon Kinesis Stream,
+
+365
+00:14:03.520 --> 00:14:05.605
+and that stream has
+all that information.
+
+366
+00:14:05.605 --> 00:14:07.270
+I saw a face on this location,
+
+367
+00:14:07.270 --> 00:14:10.000
+it was this particular
+person's face.
+
+368
+00:14:10.000 --> 00:14:13.735
+Then we used a feature called
+Amazon Kinesis Analytics,
+
+369
+00:14:13.735 --> 00:14:15.985
+and what it does is it looks
+at the streaming information
+
+370
+00:14:15.985 --> 00:14:18.595
+coming through the
+Amazon Kinesis stream,
+
+371
+00:14:18.595 --> 00:14:21.219
+and we said hey look
+for the name of Navjot
+
+372
+00:14:21.219 --> 00:14:23.905
+being successfully recognized
+in the video image.
+
+373
+00:14:23.905 --> 00:14:25.885
+When his face was detected,
+
+374
+00:14:25.885 --> 00:14:28.000
+we triggered an AWS Lambda
+
+375
+00:14:28.000 --> 00:14:29.830
+function that went out and said
+
+376
+00:14:29.830 --> 00:14:34.195
+hey IoT turn on the light
+bulb or open my front door.
+
+377
+00:14:34.195 --> 00:14:35.740
+Now you might want to be a little
+
+378
+00:14:35.740 --> 00:14:36.940
+bit careful because you could
+
+379
+00:14:36.940 --> 00:14:38.260
+theoretically open the front door
+
+380
+00:14:38.260 --> 00:14:39.520
+by holding up somebody's face.
+
+381
+00:14:39.520 --> 00:14:40.660
+So you might want
+to do it so they
+
+382
+00:14:40.660 --> 00:14:41.965
+have to rotate their face,
+
+383
+00:14:41.965 --> 00:14:43.360
+and make sure they're alive human
+
+384
+00:14:43.360 --> 00:14:45.670
+being before you let
+them into your house.
+
+385
+00:14:45.670 --> 00:14:47.380
+So hopefully you've
+learned something
+
+386
+00:14:47.380 --> 00:14:49.015
+about Amazon Rekognition today.
+
+387
+00:14:49.015 --> 00:14:52.045
+First of all we saw how you
+can use it with still images,
+
+388
+00:14:52.045 --> 00:14:54.745
+how you can use it with
+images stored in Amazon S3,
+
+389
+00:14:54.745 --> 00:14:57.325
+and how you can use it
+with streaming videos.
+
+390
+00:14:57.325 --> 00:15:00.130
+So hopefully you'll
+recognize me John,
+
+391
+00:15:00.130 --> 00:15:03.590
+as I walk down the street
+in future. Thank you.

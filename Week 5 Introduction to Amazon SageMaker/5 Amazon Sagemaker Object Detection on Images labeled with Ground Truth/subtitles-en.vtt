@@ -1,0 +1,6390 @@
+WEBVTT
+
+1
+00:00:04.820 --> 00:00:07.170
+Hi everyone. Welcome to
+
+2
+00:00:07.170 --> 00:00:09.199
+this course called
+Amazon SageMaker:
+
+3
+00:00:09.199 --> 00:00:11.170
+Build an Object
+Detection Model Using
+
+4
+00:00:11.170 --> 00:00:13.415
+Images Labeled with Ground Truth.
+
+5
+00:00:13.415 --> 00:00:15.075
+My name is Denis Batalov,
+
+6
+00:00:15.075 --> 00:00:17.850
+I'm a worldwide tech leader
+in Artificial Intelligence,
+
+7
+00:00:17.850 --> 00:00:19.615
+Machine Learning at AWS.
+
+8
+00:00:19.615 --> 00:00:22.765
+My twitter handle is shown
+here, please follow.
+
+9
+00:00:22.765 --> 00:00:24.790
+In this course, we're going to go
+
+10
+00:00:24.790 --> 00:00:26.500
+through an end-to-end example of
+
+11
+00:00:26.500 --> 00:00:28.390
+using Amazon SageMaker to
+
+12
+00:00:28.390 --> 00:00:30.040
+build an object detection model,
+
+13
+00:00:30.040 --> 00:00:32.110
+specifically identifying
+the location
+
+14
+00:00:32.110 --> 00:00:33.925
+of honey bees in photos.
+
+15
+00:00:33.925 --> 00:00:35.350
+To train the model,
+
+16
+00:00:35.350 --> 00:00:36.610
+we will use images that are
+
+17
+00:00:36.610 --> 00:00:38.815
+labeled by SageMaker
+Ground Truth,
+
+18
+00:00:38.815 --> 00:00:40.480
+and you will see how to go from
+
+19
+00:00:40.480 --> 00:00:43.435
+raw images to a trained
+and deployed model.
+
+20
+00:00:43.435 --> 00:00:45.320
+First, I will tell you about
+
+21
+00:00:45.320 --> 00:00:48.400
+the dataset and where to
+get images of honey bees.
+
+22
+00:00:48.400 --> 00:00:50.630
+Then, I will do a
+quick overview of
+
+23
+00:00:50.630 --> 00:00:52.880
+the SageMake and Ground
+Truth functionality,
+
+24
+00:00:52.880 --> 00:00:54.800
+giving us enough of foundation to
+
+25
+00:00:54.800 --> 00:00:57.005
+start the hands-on
+work with the tool.
+
+26
+00:00:57.005 --> 00:00:59.749
+We will use Ground
+Truth to identify
+
+27
+00:00:59.749 --> 00:01:03.425
+the exact location of bees on
+each image in the dataset.
+
+28
+00:01:03.425 --> 00:01:05.090
+I will then give an overview of
+
+29
+00:01:05.090 --> 00:01:07.175
+how object detection
+algorithms work.
+
+30
+00:01:07.175 --> 00:01:09.620
+This is because we will
+use the labeled images
+
+31
+00:01:09.620 --> 00:01:11.960
+to train an object detection
+machine-learning model
+
+32
+00:01:11.960 --> 00:01:14.240
+built into SageMaker so that bees
+
+33
+00:01:14.240 --> 00:01:17.105
+can be automatically
+identified in new images.
+
+34
+00:01:17.105 --> 00:01:21.065
+Finally, we will cover
+hyperparameter optimization or
+
+35
+00:01:21.065 --> 00:01:23.510
+automated model tuning
+showing you how to
+
+36
+00:01:23.510 --> 00:01:27.230
+find an optimal set of
+hyperparameters in a smart way.
+
+37
+00:01:27.230 --> 00:01:30.310
+Let us now talk about machine
+learning problem that
+
+38
+00:01:30.310 --> 00:01:33.110
+we'll be solving and the
+dataset that we'll use.
+
+39
+00:01:33.110 --> 00:01:34.960
+To begin, let's take a look at
+
+40
+00:01:34.960 --> 00:01:37.900
+a quick overview of typical
+tasks in computer vision.
+
+41
+00:01:37.900 --> 00:01:39.610
+It's not an exhaustive list,
+
+42
+00:01:39.610 --> 00:01:41.575
+but gives you a good
+idea of the domain.
+
+43
+00:01:41.575 --> 00:01:43.450
+At the simpler end
+of the spectrum,
+
+44
+00:01:43.450 --> 00:01:45.610
+we want to merely determine
+if the image does
+
+45
+00:01:45.610 --> 00:01:47.950
+or does not contain a
+certain single object,
+
+46
+00:01:47.950 --> 00:01:49.345
+in this case a kitten.
+
+47
+00:01:49.345 --> 00:01:51.820
+The next level of
+complexity is actually
+
+48
+00:01:51.820 --> 00:01:54.370
+identifying where in the
+image the object is,
+
+49
+00:01:54.370 --> 00:01:57.005
+for example, with a
+simple bounding box.
+
+50
+00:01:57.005 --> 00:01:59.840
+More generally, instead
+of a single object,
+
+51
+00:01:59.840 --> 00:02:01.450
+we would like to identify as
+
+52
+00:02:01.450 --> 00:02:04.090
+many different objects
+in a scene as possible,
+
+53
+00:02:04.090 --> 00:02:06.760
+giving rise to the object
+detection problem.
+
+54
+00:02:06.760 --> 00:02:09.880
+This is precisely what
+we're after in this course.
+
+55
+00:02:09.880 --> 00:02:11.540
+Though we would be
+focusing only on
+
+56
+00:02:11.540 --> 00:02:14.435
+one object class
+namely honeybees.
+
+57
+00:02:14.435 --> 00:02:16.430
+In some applications, it might
+
+58
+00:02:16.430 --> 00:02:18.095
+be necessary to be more precise
+
+59
+00:02:18.095 --> 00:02:20.870
+than the rectangular bounding
+box and this leads to
+
+60
+00:02:20.870 --> 00:02:23.600
+an instance segmentation
+task where each pixel is
+
+61
+00:02:23.600 --> 00:02:25.310
+classified as either belonging or
+
+62
+00:02:25.310 --> 00:02:27.440
+not belonging to a
+particular object.
+
+63
+00:02:27.440 --> 00:02:29.120
+For the purposes of this course,
+
+64
+00:02:29.120 --> 00:02:32.405
+we will use 500
+photos of honeybees.
+
+65
+00:02:32.405 --> 00:02:34.600
+Where can we get such photos?
+
+66
+00:02:34.600 --> 00:02:36.080
+There's an easier way than
+
+67
+00:02:36.080 --> 00:02:38.030
+spending a lot of
+time near a beehive.
+
+68
+00:02:38.030 --> 00:02:39.380
+Turns out there's
+
+69
+00:02:39.380 --> 00:02:42.500
+an iNaturalist crowd sourcing
+project that comes with
+
+70
+00:02:42.500 --> 00:02:44.675
+a website and a
+handy smartphone app
+
+71
+00:02:44.675 --> 00:02:47.090
+allowing people to upload
+their photos of plants,
+
+72
+00:02:47.090 --> 00:02:51.315
+animals, mushrooms, tagged
+with location, date, etc.
+
+73
+00:02:51.315 --> 00:02:53.975
+Here, you see an image
+of the California puppy
+
+74
+00:02:53.975 --> 00:02:56.795
+that I have submitted via
+the app earlier this year.
+
+75
+00:02:56.795 --> 00:02:59.330
+The purpose is to
+record the sighting,
+
+76
+00:02:59.330 --> 00:03:02.015
+but also to help identify
+the species based on
+
+77
+00:03:02.015 --> 00:03:04.460
+established biological
+taxonomy relying
+
+78
+00:03:04.460 --> 00:03:06.085
+on community of experts.
+
+79
+00:03:06.085 --> 00:03:08.075
+iNaturalists also exposes
+
+80
+00:03:08.075 --> 00:03:10.820
+a handy expert functionality
+where you can download
+
+81
+00:03:10.820 --> 00:03:12.650
+the observation details based on
+
+82
+00:03:12.650 --> 00:03:16.805
+selection criteria such as
+species, the geography, etc.
+
+83
+00:03:16.805 --> 00:03:20.545
+This is exactly how I
+obtained the 500 bee images.
+
+84
+00:03:20.545 --> 00:03:22.400
+When people upload their photos,
+
+85
+00:03:22.400 --> 00:03:25.370
+they choose what license they
+prefer to share them under.
+
+86
+00:03:25.370 --> 00:03:27.050
+For the purposes of this course,
+
+87
+00:03:27.050 --> 00:03:30.094
+I only used photos
+with the CC0 license,
+
+88
+00:03:30.094 --> 00:03:33.350
+known as Creative Commons
+public domain license.
+
+89
+00:03:33.350 --> 00:03:35.855
+Here is the iNaturalist website
+
+90
+00:03:35.855 --> 00:03:38.000
+and if you choose to
+explore the observations,
+
+91
+00:03:38.000 --> 00:03:39.740
+you can get to the export screen
+
+92
+00:03:39.740 --> 00:03:41.465
+by clicking the download button.
+
+93
+00:03:41.465 --> 00:03:45.100
+Say we want to get all images
+of honeybees in Canada,
+
+94
+00:03:45.100 --> 00:03:47.450
+we can specify additional filters
+
+95
+00:03:47.450 --> 00:03:50.750
+insisting on observations
+that do have images.
+
+96
+00:03:50.750 --> 00:03:52.835
+When it comes to downloading,
+
+97
+00:03:52.835 --> 00:03:54.380
+we can choose all the desired
+
+98
+00:03:54.380 --> 00:03:56.045
+attributes of an observation.
+
+99
+00:03:56.045 --> 00:03:57.840
+For instance, to know under
+
+100
+00:03:57.840 --> 00:03:59.805
+which license the
+images are provided,
+
+101
+00:03:59.805 --> 00:04:01.980
+you should choose the
+license attribute.
+
+102
+00:04:01.980 --> 00:04:04.475
+Here's the iNaturalist website.
+
+103
+00:04:04.475 --> 00:04:07.925
+You can choose to
+explore observations
+
+104
+00:04:07.925 --> 00:04:12.270
+by specifying the species
+that you're looking for,
+
+105
+00:04:12.270 --> 00:04:14.895
+honey bees in our case,
+
+106
+00:04:14.895 --> 00:04:19.240
+and then the location say Canada,
+
+107
+00:04:19.550 --> 00:04:25.970
+and additionally, you can
+specify more filters.
+
+108
+00:04:25.970 --> 00:04:30.185
+You can insist on observations
+that have photos,
+
+109
+00:04:30.185 --> 00:04:34.080
+and finally, you can
+choose to download.
+
+110
+00:04:34.570 --> 00:04:37.835
+You get kicked to the screen
+
+111
+00:04:37.835 --> 00:04:40.640
+where you can provide
+additional details.
+
+112
+00:04:40.640 --> 00:04:43.070
+You could see the
+count of observations,
+
+113
+00:04:43.070 --> 00:04:45.710
+1,600 roughly speaking,
+
+114
+00:04:45.710 --> 00:04:50.970
+and you can choose
+specific attributes.
+
+115
+00:04:51.140 --> 00:04:55.060
+If you're looking for a license,
+
+116
+00:04:55.060 --> 00:04:56.735
+make sure you select
+
+117
+00:04:56.735 --> 00:04:59.750
+the license under which
+the images are exported.
+
+118
+00:04:59.750 --> 00:05:03.530
+There are many useful
+attributes as you can see.
+
+119
+00:05:03.530 --> 00:05:05.814
+Then finally, create the export,
+
+120
+00:05:05.814 --> 00:05:08.135
+you will obtain the excel file
+
+121
+00:05:08.135 --> 00:05:10.895
+that contains all the
+information that you need.
+
+122
+00:05:10.895 --> 00:05:13.310
+Before we jump into
+the hands-on part,
+
+123
+00:05:13.310 --> 00:05:15.050
+let's spend a few
+minutes reviewing
+
+124
+00:05:15.050 --> 00:05:17.030
+the Amazon SageMaker service and
+
+125
+00:05:17.030 --> 00:05:19.895
+it's Ground Truth
+functionality specifically.
+
+126
+00:05:19.895 --> 00:05:23.030
+Amazon SageMaker is
+designed to eliminate
+
+127
+00:05:23.030 --> 00:05:24.890
+the heavy lifting from all parts
+
+128
+00:05:24.890 --> 00:05:26.990
+of a typical process
+for a building,
+
+129
+00:05:26.990 --> 00:05:29.675
+training, and deploying
+machine-learning models.
+
+130
+00:05:29.675 --> 00:05:31.520
+First off, it comes with
+
+131
+00:05:31.520 --> 00:05:32.765
+a Jupyter notebook server
+
+132
+00:05:32.765 --> 00:05:34.445
+that lets you manage note books.
+
+133
+00:05:34.445 --> 00:05:36.830
+There are dozens of pre-built
+notebooks to help you
+
+134
+00:05:36.830 --> 00:05:39.355
+start solving many common
+machine learning problems.
+
+135
+00:05:39.355 --> 00:05:41.395
+You can customize
+this to your task,
+
+136
+00:05:41.395 --> 00:05:44.450
+taking advantage of the many
+built-in ML algorithms,
+
+137
+00:05:44.450 --> 00:05:47.030
+or create your own machine
+learning recipe using one of
+
+138
+00:05:47.030 --> 00:05:49.415
+many popular ML
+frameworks such as
+
+139
+00:05:49.415 --> 00:05:52.205
+MXNet, TensorFlow or PyTorch.
+
+140
+00:05:52.205 --> 00:05:54.530
+Second, you can kick
+off training of
+
+141
+00:05:54.530 --> 00:05:55.910
+a developed model using
+
+142
+00:05:55.910 --> 00:05:57.650
+as much computational
+power as you
+
+143
+00:05:57.650 --> 00:06:00.410
+need by choosing the right
+size cluster of GPU or
+
+144
+00:06:00.410 --> 00:06:03.680
+CPU based machines
+available in the AWS cloud.
+
+145
+00:06:03.680 --> 00:06:06.080
+Even the most
+sophisticated algorithms
+
+146
+00:06:06.080 --> 00:06:07.580
+still have many parameters,
+
+147
+00:06:07.580 --> 00:06:10.460
+one must specify in
+order to start training.
+
+148
+00:06:10.460 --> 00:06:12.710
+Finding the right values
+for such parameters
+
+149
+00:06:12.710 --> 00:06:15.530
+feels often more like
+an art than science.
+
+150
+00:06:15.530 --> 00:06:17.540
+This is why SageMaker provides
+
+151
+00:06:17.540 --> 00:06:20.075
+the so-called hyperparameter
+optimization,
+
+152
+00:06:20.075 --> 00:06:24.910
+abbreviated as HPO, also known
+as automated model tuning.
+
+153
+00:06:24.910 --> 00:06:28.670
+Finally, once a satisfactory
+model is trained,
+
+154
+00:06:28.670 --> 00:06:30.710
+SageMaker makes it easy to create
+
+155
+00:06:30.710 --> 00:06:32.930
+a scalable production
+inference endpoint
+
+156
+00:06:32.930 --> 00:06:35.210
+by taking care of
+model deployment.
+
+157
+00:06:35.210 --> 00:06:38.015
+As you have come to
+expect from AWS,
+
+158
+00:06:38.015 --> 00:06:40.670
+autoscaling is supported
+out of the box.
+
+159
+00:06:40.670 --> 00:06:44.390
+SageMaker is a powerful
+tool and that's the reason
+
+160
+00:06:44.390 --> 00:06:46.175
+many customers choose to adopt it
+
+161
+00:06:46.175 --> 00:06:49.560
+including the well-known
+companies shown on screen.
+
+162
+00:06:50.120 --> 00:06:53.480
+In addition to the three
+main functional blocks
+
+163
+00:06:53.480 --> 00:06:55.190
+in SageMaker of notebooks,
+
+164
+00:06:55.190 --> 00:06:56.825
+training, and inference,
+
+165
+00:06:56.825 --> 00:06:59.635
+many additional features
+are built into the servers.
+
+166
+00:06:59.635 --> 00:07:01.350
+In this course, we will use
+
+167
+00:07:01.350 --> 00:07:03.030
+the SageMaker Ground Truth to
+
+168
+00:07:03.030 --> 00:07:04.930
+label the raw image dataset,
+
+169
+00:07:04.930 --> 00:07:09.020
+identifying the exact location
+of honeybees in each.
+
+170
+00:07:09.020 --> 00:07:10.910
+For many practical problems,
+
+171
+00:07:10.910 --> 00:07:13.850
+we may have collected the
+data needed for training,
+
+172
+00:07:13.850 --> 00:07:15.905
+yet this data is missing
+the correct target
+
+173
+00:07:15.905 --> 00:07:18.305
+attribute which is required
+for machine learning.
+
+174
+00:07:18.305 --> 00:07:21.275
+In our case, such
+a target attribute
+
+175
+00:07:21.275 --> 00:07:23.330
+is the bounding box or generally,
+
+176
+00:07:23.330 --> 00:07:26.885
+many bounding boxes around
+each honeybee in an image.
+
+177
+00:07:26.885 --> 00:07:29.990
+Labeling a dataset
+requires human input.
+
+178
+00:07:29.990 --> 00:07:31.550
+After all, we're training
+
+179
+00:07:31.550 --> 00:07:34.295
+a machine learning model
+to mimic human decisions.
+
+180
+00:07:34.295 --> 00:07:35.690
+Not only is there
+
+181
+00:07:35.690 --> 00:07:38.450
+the labor cost involved
+in labeling each image,
+
+182
+00:07:38.450 --> 00:07:41.600
+but we want to involve many
+human labelers in parallel
+
+183
+00:07:41.600 --> 00:07:43.040
+so that a large dataset can be
+
+184
+00:07:43.040 --> 00:07:45.395
+processed as fast as possible.
+
+185
+00:07:45.395 --> 00:07:48.110
+SageMaker Ground Truth
+makes all of this
+
+186
+00:07:48.110 --> 00:07:51.410
+possible and that is why for
+many real life problems,
+
+187
+00:07:51.410 --> 00:07:53.030
+Ground Truth lets you turn
+
+188
+00:07:53.030 --> 00:07:55.220
+a potential intractable
+problem due
+
+189
+00:07:55.220 --> 00:07:59.075
+to cost and needed orchestration
+into a solvable one,
+
+190
+00:07:59.075 --> 00:08:02.005
+enabling more and more machine
+learning applications.
+
+191
+00:08:02.005 --> 00:08:04.100
+SageMaker Ground Truth supports
+
+192
+00:08:04.100 --> 00:08:06.410
+these labeling tasks
+straight out of the box.
+
+193
+00:08:06.410 --> 00:08:07.820
+You will recognize the three
+
+194
+00:08:07.820 --> 00:08:09.875
+different image-based
+tasks namely,
+
+195
+00:08:09.875 --> 00:08:11.405
+image classification,
+
+196
+00:08:11.405 --> 00:08:14.450
+object detection, and
+semantic segmentation.
+
+197
+00:08:14.450 --> 00:08:16.880
+This includes the
+labeling user interfaces
+
+198
+00:08:16.880 --> 00:08:18.455
+required for such tasks.
+
+199
+00:08:18.455 --> 00:08:20.480
+Additionally, Ground
+Truth supports
+
+200
+00:08:20.480 --> 00:08:22.520
+labeling jobs for
+text classification,
+
+201
+00:08:22.520 --> 00:08:23.900
+and if you have different need,
+
+202
+00:08:23.900 --> 00:08:27.340
+SageMaker also lets you build
+a custom labeling workflow.
+
+203
+00:08:27.340 --> 00:08:29.630
+For example, you may
+need to simultaneously
+
+204
+00:08:29.630 --> 00:08:32.210
+label an image and a
+related piece of text.
+
+205
+00:08:32.210 --> 00:08:34.010
+An accustomed labeling template
+
+206
+00:08:34.010 --> 00:08:35.900
+would be required in such a case.
+
+207
+00:08:35.900 --> 00:08:40.100
+The UI can be constructed
+using crowd HTML elements,
+
+208
+00:08:40.100 --> 00:08:43.065
+tag library defined by
+Amazon Mechanical Turk.
+
+209
+00:08:43.065 --> 00:08:46.220
+Moreover, you can provide
+logic in the form of
+
+210
+00:08:46.220 --> 00:08:47.660
+Lambda functions that do
+
+211
+00:08:47.660 --> 00:08:50.555
+pre and post-processing
+of labeling data.
+
+212
+00:08:50.555 --> 00:08:52.790
+For example, you may want to use
+
+213
+00:08:52.790 --> 00:08:54.290
+a custom algorithm to score
+
+214
+00:08:54.290 --> 00:08:56.225
+the results of the labeling task.
+
+215
+00:08:56.225 --> 00:08:59.530
+If you need the help of many
+humans to label the dataset,
+
+216
+00:08:59.530 --> 00:09:01.530
+where do you get these helpers?
+
+217
+00:09:01.530 --> 00:09:03.680
+SageMaker Ground Truth supports
+
+218
+00:09:03.680 --> 00:09:05.780
+three different
+types of labelers.
+
+219
+00:09:05.780 --> 00:09:07.900
+First off, you can rely on
+
+220
+00:09:07.900 --> 00:09:10.579
+a public workforce and on-demand
+
+221
+00:09:10.579 --> 00:09:13.340
+24/7 workforce of over 500,000
+
+222
+00:09:13.340 --> 00:09:15.530
+independent contractors
+worldwide powered
+
+223
+00:09:15.530 --> 00:09:17.255
+by the Amazon Mechanical Turk.
+
+224
+00:09:17.255 --> 00:09:20.555
+Second, you can create a
+private pool of workers.
+
+225
+00:09:20.555 --> 00:09:23.285
+These could be employees of
+your company for example.
+
+226
+00:09:23.285 --> 00:09:26.110
+Sometimes, the data that
+needs labeling contains
+
+227
+00:09:26.110 --> 00:09:29.805
+sensitive information that is
+not to be exposed publicly.
+
+228
+00:09:29.805 --> 00:09:32.020
+Finally, Ground Truth supports
+
+229
+00:09:32.020 --> 00:09:33.830
+external third party vendors of
+
+230
+00:09:33.830 --> 00:09:37.055
+labeling services who you
+can contract via the tool.
+
+231
+00:09:37.055 --> 00:09:39.650
+Another important value
+out of Ground Truth is
+
+232
+00:09:39.650 --> 00:09:41.180
+the ability to learn while
+
+233
+00:09:41.180 --> 00:09:42.905
+the human labeling
+is in progress.
+
+234
+00:09:42.905 --> 00:09:44.720
+This is called active learning.
+
+235
+00:09:44.720 --> 00:09:47.870
+If the active learning
+model built in real time is
+
+236
+00:09:47.870 --> 00:09:49.430
+confident that it
+can automatically
+
+237
+00:09:49.430 --> 00:09:51.340
+label image it will do so,
+
+238
+00:09:51.340 --> 00:09:53.060
+and if it's not, it will
+
+239
+00:09:53.060 --> 00:09:55.085
+still send it to a human labeler.
+
+240
+00:09:55.085 --> 00:09:57.470
+For large datasets,
+this feature can
+
+241
+00:09:57.470 --> 00:10:00.215
+dramatically reduce the
+overall labeling cost.
+
+242
+00:10:00.215 --> 00:10:03.230
+All right, after this quick
+overview we're ready to jump
+
+243
+00:10:03.230 --> 00:10:06.575
+into AWS console and actually
+start the hands-on part.
+
+244
+00:10:06.575 --> 00:10:08.840
+The very first thing
+we need to do is
+
+245
+00:10:08.840 --> 00:10:11.650
+download the Jupyter notebook
+from the link shown.
+
+246
+00:10:11.650 --> 00:10:13.640
+Jupyter notebooks
+are also known as
+
+247
+00:10:13.640 --> 00:10:16.280
+IPython notebooks and
+hence the file extension
+
+248
+00:10:16.280 --> 00:10:17.930
+of IPY and B.
+
+249
+00:10:17.930 --> 00:10:20.375
+We will use this file shortly.
+
+250
+00:10:20.375 --> 00:10:23.885
+Once you're inside AWS console,
+
+251
+00:10:23.885 --> 00:10:26.315
+the first thing to
+look at is the region.
+
+252
+00:10:26.315 --> 00:10:29.105
+In my case, I'm using
+the Oregon region.
+
+253
+00:10:29.105 --> 00:10:30.590
+That's where I will also create
+
+254
+00:10:30.590 --> 00:10:33.725
+all the buckets to
+access my data.
+
+255
+00:10:33.725 --> 00:10:37.865
+The next thing we want to do
+is go to Amazon SageMaker.
+
+256
+00:10:37.865 --> 00:10:40.400
+I have it conveniently here in
+
+257
+00:10:40.400 --> 00:10:42.170
+the recently visited
+services but you
+
+258
+00:10:42.170 --> 00:10:45.090
+can also type it directly.
+
+259
+00:10:47.250 --> 00:10:50.440
+Looking in the left
+navigation bar,
+
+260
+00:10:50.440 --> 00:10:51.940
+you see the four sections
+
+261
+00:10:51.940 --> 00:10:53.515
+that we've already talked about.
+
+262
+00:10:53.515 --> 00:10:57.175
+Ground-truth allows
+you to label the data.
+
+263
+00:10:57.175 --> 00:11:00.220
+Notebook section
+manages the notebooks.
+
+264
+00:11:00.220 --> 00:11:04.060
+Training is about kicking off
+model training and finally,
+
+265
+00:11:04.060 --> 00:11:07.195
+inference is about
+deployment of models
+
+266
+00:11:07.195 --> 00:11:11.770
+and running predictions
+against these end points.
+
+267
+00:11:11.770 --> 00:11:16.165
+What we need to do first
+is create a notebook.
+
+268
+00:11:16.165 --> 00:11:18.475
+So we'll click on
+notebook instances.
+
+269
+00:11:18.475 --> 00:11:19.690
+You could see that I already have
+
+270
+00:11:19.690 --> 00:11:23.545
+some notebooks here
+in a stopped state.
+
+271
+00:11:23.545 --> 00:11:27.729
+I will then go to create
+a notebook instance,
+
+272
+00:11:27.729 --> 00:11:33.730
+give it a name. Something
+like SageMaker-course.
+
+273
+00:11:33.730 --> 00:11:36.910
+We can leave the instance type as
+
+274
+00:11:36.910 --> 00:11:41.665
+the default and other
+parameters as well.
+
+275
+00:11:41.665 --> 00:11:45.280
+The important thing for us
+is to supply the IAM role.
+
+276
+00:11:45.280 --> 00:11:49.180
+If you already have a
+role that's suitable,
+
+277
+00:11:49.180 --> 00:11:52.300
+great but usually you
+may need to create one.
+
+278
+00:11:52.300 --> 00:11:55.105
+So we'll click Create a new role.
+
+279
+00:11:55.105 --> 00:11:57.610
+In this case you can
+leave all the settings as
+
+280
+00:11:57.610 --> 00:12:00.430
+the default except for this one,
+
+281
+00:12:00.430 --> 00:12:02.470
+'Choose any S3 bucket'.
+
+282
+00:12:02.470 --> 00:12:04.690
+This will allow you to access
+
+283
+00:12:04.690 --> 00:12:08.380
+S3 buckets and not be restricted
+to some specific ones.
+
+284
+00:12:08.380 --> 00:12:10.270
+Later on, you can be
+more restrictive.
+
+285
+00:12:10.270 --> 00:12:12.010
+So we'll create this role.
+
+286
+00:12:12.010 --> 00:12:17.185
+Success. Leave the other
+attributes to be the defaults.
+
+287
+00:12:17.185 --> 00:12:20.755
+We'll click the 'Create
+notebook' instance.
+
+288
+00:12:20.755 --> 00:12:25.300
+You could see that this
+notebook is starting.
+
+289
+00:12:25.300 --> 00:12:28.510
+It may take a couple of
+minutes for it to start.
+
+290
+00:12:28.510 --> 00:12:31.015
+As we can see our notebook
+
+291
+00:12:31.015 --> 00:12:33.265
+SageMaker-course is ready to go.
+
+292
+00:12:33.265 --> 00:12:38.000
+So we'll just click on
+'Open Jupyter lab' link.
+
+293
+00:12:38.490 --> 00:12:41.600
+Let it all load.
+
+294
+00:12:41.820 --> 00:12:44.785
+This is the place
+where we need to
+
+295
+00:12:44.785 --> 00:12:49.015
+upload the Demo.ipynb file.
+
+296
+00:12:49.015 --> 00:12:55.100
+So we'll click on the
+upload button. Choose demo.
+
+297
+00:12:56.940 --> 00:12:59.380
+This is our notebook.
+
+298
+00:12:59.380 --> 00:13:02.120
+We just need to
+double-click on it.
+
+299
+00:13:02.730 --> 00:13:08.245
+Close the Launcher
+off and there we go.
+
+300
+00:13:08.245 --> 00:13:11.230
+So what you're seeing here
+is a Jupyter notebook.
+
+301
+00:13:11.230 --> 00:13:13.960
+If you're not familiar
+with Jupyter notebooks is
+
+302
+00:13:13.960 --> 00:13:16.555
+just a way for you to combine
+
+303
+00:13:16.555 --> 00:13:19.450
+text explanations
+with code that you
+
+304
+00:13:19.450 --> 00:13:22.510
+can run right inside
+the notebook.
+
+305
+00:13:22.510 --> 00:13:24.415
+We're not going to
+be spending time
+
+306
+00:13:24.415 --> 00:13:26.380
+reading the text here.
+
+307
+00:13:26.380 --> 00:13:29.995
+Instead, I'll be explaining
+things and you can take time
+
+308
+00:13:29.995 --> 00:13:33.925
+and go through the
+explanations at home.
+
+309
+00:13:33.925 --> 00:13:35.980
+So the very first
+thing that we need to
+
+310
+00:13:35.980 --> 00:13:39.130
+do is to scroll down
+
+311
+00:13:39.130 --> 00:13:41.500
+to the very first cell and
+you can see that cells are
+
+312
+00:13:41.500 --> 00:13:44.710
+highlighted with the
+blue bars on the left.
+
+313
+00:13:44.710 --> 00:13:47.620
+There's our first code cell.
+
+314
+00:13:47.620 --> 00:13:49.915
+In fact it's not even Python.
+
+315
+00:13:49.915 --> 00:13:53.770
+It's just shell commands
+to download the
+
+316
+00:13:53.770 --> 00:13:57.565
+dataset.zip file and
+unzip all the contents.
+
+317
+00:13:57.565 --> 00:13:58.750
+For us to execute it,
+
+318
+00:13:58.750 --> 00:14:01.270
+we need to press Shift and Enter.
+
+319
+00:14:01.270 --> 00:14:04.120
+You will see an asterisk.
+
+320
+00:14:04.120 --> 00:14:06.325
+Once the asterisk is showing,
+
+321
+00:14:06.325 --> 00:14:08.755
+it means the code is
+running. Once that's done.
+
+322
+00:14:08.755 --> 00:14:11.440
+You get to see the
+number which is
+
+323
+00:14:11.440 --> 00:14:12.700
+the first cell to be
+
+324
+00:14:12.700 --> 00:14:15.160
+executed and of course
+the output as well.
+
+325
+00:14:15.160 --> 00:14:17.365
+On the left, you see
+
+326
+00:14:17.365 --> 00:14:20.050
+all the images that
+have been unzipped.
+
+327
+00:14:20.050 --> 00:14:22.495
+In fact, you could
+just take a look.
+
+328
+00:14:22.495 --> 00:14:24.235
+Double-click on any of these.
+
+329
+00:14:24.235 --> 00:14:26.050
+You could see images of bees.
+
+330
+00:14:26.050 --> 00:14:28.270
+That's a good sign.
+
+331
+00:14:28.270 --> 00:14:30.715
+These are the images we want.
+
+332
+00:14:30.715 --> 00:14:34.105
+Just to understand exactly
+what was in that zip.
+
+333
+00:14:34.105 --> 00:14:36.160
+To understand the structure
+a little bit better,
+
+334
+00:14:36.160 --> 00:14:42.490
+we can go to the next cell
+and just list the contents.
+
+335
+00:14:42.490 --> 00:14:47.665
+In addition to the
+500 images of bees.
+
+336
+00:14:47.665 --> 00:14:50.140
+We'll just see the
+tail of them here.
+
+337
+00:14:50.140 --> 00:14:52.960
+We also have a test sub folder.
+
+338
+00:14:52.960 --> 00:14:54.520
+In there, we have
+
+339
+00:14:54.520 --> 00:14:58.075
+10 test images that we'll
+use for testing later on.
+
+340
+00:14:58.075 --> 00:15:01.600
+Additionally, we have the
+output.manifest file.
+
+341
+00:15:01.600 --> 00:15:05.200
+This contains the results
+of a ground truth
+
+342
+00:15:05.200 --> 00:15:07.870
+labeling job for all 500 images
+
+343
+00:15:07.870 --> 00:15:10.280
+of bees that are present
+in this dataset.
+
+344
+00:15:10.280 --> 00:15:13.050
+You see as we'll try to kick
+
+345
+00:15:13.050 --> 00:15:15.780
+off a labeling job
+through SageMaker.
+
+346
+00:15:15.780 --> 00:15:19.665
+We'll just have it labeled
+assemble of images, say 10.
+
+347
+00:15:19.665 --> 00:15:21.450
+But for you to train a model,
+
+348
+00:15:21.450 --> 00:15:23.550
+we need many more
+images and therefore
+
+349
+00:15:23.550 --> 00:15:26.170
+a complete labeled dataset
+
+350
+00:15:26.170 --> 00:15:29.290
+is provided with all
+500 images labeled.
+
+351
+00:15:29.290 --> 00:15:33.970
+Moving right along, in the
+next cell we need to supply
+
+352
+00:15:33.970 --> 00:15:37.180
+the S3 bucket that
+will be used for
+
+353
+00:15:37.180 --> 00:15:40.375
+both reading the
+images and as well,
+
+354
+00:15:40.375 --> 00:15:42.580
+writing the output of
+
+355
+00:15:42.580 --> 00:15:45.280
+labeling job and model
+training and so on.
+
+356
+00:15:45.280 --> 00:15:47.530
+So this is our working bucket.
+
+357
+00:15:47.530 --> 00:15:52.585
+We must create it in the
+same region as SageMaker.
+
+358
+00:15:52.585 --> 00:15:54.730
+Remember we chose Oregon.
+
+359
+00:15:54.730 --> 00:15:56.515
+So I already have
+
+360
+00:15:56.515 --> 00:16:01.315
+my denisb-SageMaker-Oregon
+bucket created.
+
+361
+00:16:01.315 --> 00:16:04.315
+You will need to
+create your own bucket
+
+362
+00:16:04.315 --> 00:16:07.495
+with your own name in the
+region that you chose.
+
+363
+00:16:07.495 --> 00:16:09.820
+So let's execute this cell.
+
+364
+00:16:09.820 --> 00:16:12.730
+Finally, what we need
+to do before we start
+
+365
+00:16:12.730 --> 00:16:15.610
+labeling is to upload all of
+
+366
+00:16:15.610 --> 00:16:19.870
+those 500 images into
+the bucket using
+
+367
+00:16:19.870 --> 00:16:24.550
+the S3 sync command
+which I've just done.
+
+368
+00:16:24.550 --> 00:16:26.290
+Now, in fact because I've
+
+369
+00:16:26.290 --> 00:16:28.960
+uploaded these images
+into this bucket before,
+
+370
+00:16:28.960 --> 00:16:31.405
+the sync doesn't need
+to do much work.
+
+371
+00:16:31.405 --> 00:16:34.240
+In your case, you may
+see many, many lines.
+
+372
+00:16:34.240 --> 00:16:38.065
+Essentially one line for
+every one of those files.
+
+373
+00:16:38.065 --> 00:16:44.560
+Great. We're now ready to move
+on to labeling the images.
+
+374
+00:16:44.560 --> 00:16:49.540
+I have provided a handy cheat
+sheet where you can grab
+
+375
+00:16:49.540 --> 00:16:51.760
+some pieces of useful
+information when we're
+
+376
+00:16:51.760 --> 00:16:53.080
+configuring the labeling job
+
+377
+00:16:53.080 --> 00:16:54.820
+but we'll see that in a moment.
+
+378
+00:16:54.820 --> 00:16:58.580
+So I'm going to go
+back to the console.
+
+379
+00:16:58.740 --> 00:17:02.215
+Instead of the notebook section.
+
+380
+00:17:02.215 --> 00:17:06.505
+I'm going to look at the
+labeling jobs section.
+
+381
+00:17:06.505 --> 00:17:09.310
+You can see some previously
+executed labeling jobs
+
+382
+00:17:09.310 --> 00:17:10.734
+that have been completed
+
+383
+00:17:10.734 --> 00:17:13.120
+but we will click Create
+
+384
+00:17:13.120 --> 00:17:16.480
+labeling job button.
+Give it a name.
+
+385
+00:17:16.480 --> 00:17:24.620
+Something like 'Bees sample'.
+
+386
+00:17:27.150 --> 00:17:29.560
+The next thing we need to do is
+
+387
+00:17:29.560 --> 00:17:32.320
+provide the location
+of all those images.
+
+388
+00:17:32.320 --> 00:17:35.320
+Well, remember we've just
+uploaded those images.
+
+389
+00:17:35.320 --> 00:17:39.475
+But instead of providing
+just the location, usually,
+
+390
+00:17:39.475 --> 00:17:42.010
+a manifest file is required that
+
+391
+00:17:42.010 --> 00:17:45.100
+describes that information or
+contains that information.
+
+392
+00:17:45.100 --> 00:17:48.205
+We have a handy wizard link here.
+
+393
+00:17:48.205 --> 00:17:51.680
+So we click on Create
+manifest file.
+
+394
+00:17:51.960 --> 00:17:54.550
+We'll point to the location
+
+395
+00:17:54.550 --> 00:18:06.370
+of images
+denisb-SageMaker-oregon/ input/.
+
+396
+00:18:06.370 --> 00:18:09.040
+Make sure to add a
+forward slash at
+
+397
+00:18:09.040 --> 00:18:11.275
+the end and the default
+images is right.
+
+398
+00:18:11.275 --> 00:18:13.030
+So we'll just click Create.
+
+399
+00:18:13.030 --> 00:18:15.940
+We need to wait a
+little bit before
+
+400
+00:18:15.940 --> 00:18:17.890
+the manifest file is created and
+
+401
+00:18:17.890 --> 00:18:20.740
+we will confirm it. All right.
+
+402
+00:18:20.740 --> 00:18:22.420
+We can see that the manifest
+
+403
+00:18:22.420 --> 00:18:24.625
+has been effectively created,
+
+404
+00:18:24.625 --> 00:18:27.130
+500 objects were
+found which is great.
+
+405
+00:18:27.130 --> 00:18:28.525
+These are the images we want.
+
+406
+00:18:28.525 --> 00:18:31.480
+So we'll just say
+Use this manifest.
+
+407
+00:18:31.480 --> 00:18:34.075
+You could see immediately that
+
+408
+00:18:34.075 --> 00:18:40.495
+this manifest file was
+filled into this box for us.
+
+409
+00:18:40.495 --> 00:18:44.830
+Next, we need to provide
+the location of the output.
+
+410
+00:18:44.830 --> 00:18:52.700
+I can just copy this
+location and say Output.
+
+411
+00:18:53.760 --> 00:18:56.170
+For IAM role, choose
+
+412
+00:18:56.170 --> 00:18:58.940
+the same role you've
+created earlier.
+
+413
+00:19:02.730 --> 00:19:06.835
+Now, for additional
+configuration,
+
+414
+00:19:06.835 --> 00:19:09.670
+recall that instead of doing
+
+415
+00:19:09.670 --> 00:19:12.790
+a full 500 images labeling job,
+
+416
+00:19:12.790 --> 00:19:15.475
+we're going to pick a subsample
+
+417
+00:19:15.475 --> 00:19:17.560
+just for demonstration purposes.
+
+418
+00:19:17.560 --> 00:19:21.775
+So I'll say random
+sample of size two,
+
+419
+00:19:21.775 --> 00:19:23.515
+and that's in percentages.
+
+420
+00:19:23.515 --> 00:19:26.230
+So two percent of
+500 is ten images,
+
+421
+00:19:26.230 --> 00:19:29.570
+and we'll click the
+Create subset button.
+
+422
+00:19:31.680 --> 00:19:35.635
+There you go, ten
+objects selected,
+
+423
+00:19:35.635 --> 00:19:39.670
+we'll hit the use
+this subset button.
+
+424
+00:19:39.670 --> 00:19:41.545
+It's actually important
+that you do that
+
+425
+00:19:41.545 --> 00:19:44.110
+because otherwise the
+subset is not chosen.
+
+426
+00:19:44.110 --> 00:19:45.925
+So once we click here,
+
+427
+00:19:45.925 --> 00:19:48.670
+you should see that
+the manifest file
+
+428
+00:19:48.670 --> 00:19:52.240
+is replaced with the
+sample manifest.
+
+429
+00:19:52.240 --> 00:19:54.040
+The reason I say that that's
+
+430
+00:19:54.040 --> 00:19:56.665
+important is because
+if you don't do it,
+
+431
+00:19:56.665 --> 00:19:58.720
+then the labeling job for
+
+432
+00:19:58.720 --> 00:20:02.485
+the entire set of 500
+images will be kicked off,
+
+433
+00:20:02.485 --> 00:20:05.380
+and that's potentially
+more costly and
+
+434
+00:20:05.380 --> 00:20:08.410
+we'll see what the
+cost is in a moment.
+
+435
+00:20:08.410 --> 00:20:10.975
+Next, we need to
+supply the task type.
+
+436
+00:20:10.975 --> 00:20:12.955
+As we've discussed earlier,
+
+437
+00:20:12.955 --> 00:20:14.620
+we're talking about
+object detection
+
+438
+00:20:14.620 --> 00:20:17.665
+here and bounding
+boxes around objects.
+
+439
+00:20:17.665 --> 00:20:18.940
+So we'll need to pick
+
+440
+00:20:18.940 --> 00:20:25.010
+the bounding box task and
+click the Next button.
+
+441
+00:20:26.040 --> 00:20:28.615
+So the next decision for us
+
+442
+00:20:28.615 --> 00:20:30.790
+is which worker pool to choose,
+
+443
+00:20:30.790 --> 00:20:34.960
+who are going to be the
+people labeling your images.
+
+444
+00:20:34.960 --> 00:20:38.770
+We can choose from
+the public workforce,
+
+445
+00:20:38.770 --> 00:20:42.220
+these are the contractors
+who are powered
+
+446
+00:20:42.220 --> 00:20:47.485
+by Amazon Mechanical
+Turk, 24/7 workforce.
+
+447
+00:20:47.485 --> 00:20:51.880
+You can also choose
+a private workforce.
+
+448
+00:20:51.880 --> 00:20:53.920
+It's possible that
+your images contain
+
+449
+00:20:53.920 --> 00:20:56.260
+some sensitive information that
+
+450
+00:20:56.260 --> 00:20:58.585
+you don't want to
+reveal to the public,
+
+451
+00:20:58.585 --> 00:21:00.670
+and that could be
+a better option.
+
+452
+00:21:00.670 --> 00:21:02.770
+You can create that
+pool yourself by
+
+453
+00:21:02.770 --> 00:21:06.115
+inviting people and
+then curating it.
+
+454
+00:21:06.115 --> 00:21:09.535
+So fully managed by you.
+
+455
+00:21:09.535 --> 00:21:15.385
+Then you also have an option
+of contracting a vendor.
+
+456
+00:21:15.385 --> 00:21:17.500
+There are several vendors that
+
+457
+00:21:17.500 --> 00:21:20.485
+integrate with sage
+maker ground-truth and
+
+458
+00:21:20.485 --> 00:21:23.695
+each vendor has their
+own specific features
+
+459
+00:21:23.695 --> 00:21:26.365
+and benefits that you
+could choose from.
+
+460
+00:21:26.365 --> 00:21:28.975
+We're going to go with
+the public workforce
+
+461
+00:21:28.975 --> 00:21:30.235
+for this demonstration,
+
+462
+00:21:30.235 --> 00:21:34.000
+and clearly we need to decide
+how much we're going to
+
+463
+00:21:34.000 --> 00:21:38.350
+pay the labelers for
+each labeling task.
+
+464
+00:21:38.350 --> 00:21:40.735
+There is a guideline here,
+
+465
+00:21:40.735 --> 00:21:43.315
+that if your time
+estimate as let say
+
+466
+00:21:43.315 --> 00:21:44.890
+eight to ten seconds then
+
+467
+00:21:44.890 --> 00:21:48.055
+3.6 cents is a
+reasonable price to pay,
+
+468
+00:21:48.055 --> 00:21:50.170
+and and so on and so forth.
+
+469
+00:21:50.170 --> 00:21:52.330
+So for some very
+challenging tasks
+
+470
+00:21:52.330 --> 00:21:55.300
+you can pay more money,
+
+471
+00:21:55.300 --> 00:21:58.510
+and of course the more money
+you're paying for a job,
+
+472
+00:21:58.510 --> 00:22:00.730
+the more labelers are going to
+
+473
+00:22:00.730 --> 00:22:04.030
+be motivated to complete
+the task faster,
+
+474
+00:22:04.030 --> 00:22:07.600
+and the more labelers
+are going to be drawn to
+
+475
+00:22:07.600 --> 00:22:09.384
+your task and therefore
+
+476
+00:22:09.384 --> 00:22:12.640
+your labeling will be
+completed faster overall.
+
+477
+00:22:12.640 --> 00:22:15.160
+The next thing we need to
+do is certify that there's
+
+478
+00:22:15.160 --> 00:22:18.564
+no adult content in those images,
+
+479
+00:22:18.564 --> 00:22:24.955
+and that we understand that
+this is a public workforce,
+
+480
+00:22:24.955 --> 00:22:26.440
+we don't have any personally
+
+481
+00:22:26.440 --> 00:22:28.795
+identifiable information
+in the images and so on.
+
+482
+00:22:28.795 --> 00:22:32.530
+So that's what we do.
+There's a small box
+
+483
+00:22:32.530 --> 00:22:35.365
+here to enable automated
+data labeling.
+
+484
+00:22:35.365 --> 00:22:37.750
+Now, this is useful when you have
+
+485
+00:22:37.750 --> 00:22:41.575
+a very large dataset or a
+moderately large dataset,
+
+486
+00:22:41.575 --> 00:22:46.120
+and in our case we only
+have a 500 images,
+
+487
+00:22:46.120 --> 00:22:49.660
+and in fact for this
+sampling labeling job
+
+488
+00:22:49.660 --> 00:22:50.770
+we'll just use 10.
+
+489
+00:22:50.770 --> 00:22:54.445
+So we are not going
+to be able to benefit
+
+490
+00:22:54.445 --> 00:22:59.300
+from automated data labeling
+so we'll leave this off.
+
+491
+00:23:01.470 --> 00:23:05.455
+Clicking on additional
+configuration,
+
+492
+00:23:05.455 --> 00:23:07.390
+this is a bit of
+
+493
+00:23:07.390 --> 00:23:09.550
+interesting information
+because we can decide
+
+494
+00:23:09.550 --> 00:23:11.260
+how many workers get to see
+
+495
+00:23:11.260 --> 00:23:13.810
+the same exact image
+and get to label it.
+
+496
+00:23:13.810 --> 00:23:15.190
+So by default,
+
+497
+00:23:15.190 --> 00:23:20.410
+five different people will
+label the same exact image,
+
+498
+00:23:20.410 --> 00:23:22.660
+and then a consolidated label is
+
+499
+00:23:22.660 --> 00:23:25.660
+computed to provide a
+better overall label,
+
+500
+00:23:25.660 --> 00:23:26.935
+a more accurate label.
+
+501
+00:23:26.935 --> 00:23:30.790
+But of course you're going
+to be paying every one of
+
+502
+00:23:30.790 --> 00:23:33.325
+those five workers
+the same amount
+
+503
+00:23:33.325 --> 00:23:35.785
+specified here, 3.6 cents.
+
+504
+00:23:35.785 --> 00:23:38.950
+Therefore, you need
+to decide what's
+
+505
+00:23:38.950 --> 00:23:41.530
+the right number of labelers to
+
+506
+00:23:41.530 --> 00:23:45.190
+get the accuracy that
+you need to achieve,
+
+507
+00:23:45.190 --> 00:23:49.630
+and five is a reasonable option.
+
+508
+00:23:49.630 --> 00:23:51.520
+You can go with three,
+you can go with
+
+509
+00:23:51.520 --> 00:23:53.170
+more but because we're doing
+
+510
+00:23:53.170 --> 00:23:55.810
+a demonstration here
+we'll just drop
+
+511
+00:23:55.810 --> 00:23:59.125
+it to one and leave it as such.
+
+512
+00:23:59.125 --> 00:24:00.970
+Moving on to the next section,
+
+513
+00:24:00.970 --> 00:24:02.830
+this is actually
+unexciting section
+
+514
+00:24:02.830 --> 00:24:05.290
+because we're configuring
+
+515
+00:24:05.290 --> 00:24:07.810
+the visual tool that
+the labelers will
+
+516
+00:24:07.810 --> 00:24:11.515
+use and you can see the
+different sections here.
+
+517
+00:24:11.515 --> 00:24:13.975
+First we need to describe
+what is the task.
+
+518
+00:24:13.975 --> 00:24:15.774
+So there's a brief description,
+
+519
+00:24:15.774 --> 00:24:19.615
+and here's where the
+handy cheat sheet
+
+520
+00:24:19.615 --> 00:24:23.950
+is useful to copy and paste.
+
+521
+00:24:23.950 --> 00:24:27.955
+Those task descriptions
+and other information.
+
+522
+00:24:27.955 --> 00:24:30.070
+So we're asking labelers to
+
+523
+00:24:30.070 --> 00:24:34.340
+draw a bounding box around a bee,
+
+524
+00:24:35.490 --> 00:24:39.130
+then we need to provide
+
+525
+00:24:39.130 --> 00:24:42.805
+the label here while we
+only have one class,
+
+526
+00:24:42.805 --> 00:24:46.040
+so it's going to be bee,
+
+527
+00:24:46.500 --> 00:24:49.150
+and for good and bad examples we
+
+528
+00:24:49.150 --> 00:24:51.205
+need to provide
+descriptions as well.
+
+529
+00:24:51.205 --> 00:24:53.755
+What constitutes a good example?
+
+530
+00:24:53.755 --> 00:24:56.365
+We want to make sure that
+
+531
+00:24:56.365 --> 00:24:59.950
+all parts of the
+insect are included,
+
+532
+00:24:59.950 --> 00:25:06.050
+and the bounding box is
+tight around the insect.
+
+533
+00:25:07.770 --> 00:25:14.050
+Whereas, a bad
+example is when parts
+
+534
+00:25:14.050 --> 00:25:20.290
+of the bee are excluded
+or the box is too big.
+
+535
+00:25:20.290 --> 00:25:22.180
+Okay, so these are
+just text descriptions
+
+536
+00:25:22.180 --> 00:25:24.205
+but we can also provide images,
+
+537
+00:25:24.205 --> 00:25:26.320
+and what you need to do is
+
+538
+00:25:26.320 --> 00:25:28.615
+click to the right
+of this gray box,
+
+539
+00:25:28.615 --> 00:25:30.430
+hit the Delete button,
+
+540
+00:25:30.430 --> 00:25:33.625
+and then insert a new image.
+
+541
+00:25:33.625 --> 00:25:36.770
+We need to copy the URL.
+
+542
+00:25:42.870 --> 00:25:50.570
+There is the example
+of good label,
+
+543
+00:25:53.490 --> 00:26:01.250
+and do the same here,
+delete, insert.
+
+544
+00:26:03.240 --> 00:26:06.145
+That's an example of a bad label,
+
+545
+00:26:06.145 --> 00:26:09.970
+you see the boxes a bit wider
+and some parts of the bee;
+
+546
+00:26:09.970 --> 00:26:13.610
+the wing and the leg
+is not included.
+
+547
+00:26:13.830 --> 00:26:18.010
+Great. Not only we
+can configure it,
+
+548
+00:26:18.010 --> 00:26:19.330
+but we can also preview it.
+
+549
+00:26:19.330 --> 00:26:21.310
+So if I hit the Preview button,
+
+550
+00:26:21.310 --> 00:26:24.010
+we see the UI that
+the labelers will
+
+551
+00:26:24.010 --> 00:26:26.500
+be able to see and moreover,
+
+552
+00:26:26.500 --> 00:26:29.290
+we can try to draw
+a bounding boxes.
+
+553
+00:26:29.290 --> 00:26:33.160
+So the box tool is
+setup and I can just
+
+554
+00:26:33.160 --> 00:26:42.730
+try to imitate this,
+
+555
+00:26:42.730 --> 00:26:43.990
+make the box a little tighter,
+
+556
+00:26:43.990 --> 00:26:45.580
+and now this looks good.
+
+557
+00:26:45.580 --> 00:26:48.310
+But again, I can hit
+the submit button,
+
+558
+00:26:48.310 --> 00:26:51.070
+but nothing happens since
+it's just a demonstration,
+
+559
+00:26:51.070 --> 00:26:56.260
+we only see the JSON
+document that will be
+
+560
+00:26:56.260 --> 00:26:58.750
+produced as a result with
+
+561
+00:26:58.750 --> 00:27:02.305
+the details of the bounding box,
+
+562
+00:27:02.305 --> 00:27:04.480
+dimensions, the class label,
+
+563
+00:27:04.480 --> 00:27:07.430
+and overall image dimensions.
+
+564
+00:27:07.710 --> 00:27:13.135
+Great. So once we are satisfied
+that the UI looks good,
+
+565
+00:27:13.135 --> 00:27:16.340
+we can hit the Submit button,
+
+566
+00:27:16.350 --> 00:27:21.745
+and our bees-sample labeling
+job is now in progress.
+
+567
+00:27:21.745 --> 00:27:23.980
+This may take some time.
+
+568
+00:27:23.980 --> 00:27:25.810
+It could be minutes,
+
+569
+00:27:25.810 --> 00:27:28.615
+it could be even longer,
+
+570
+00:27:28.615 --> 00:27:31.930
+much depends on how available
+
+571
+00:27:31.930 --> 00:27:36.640
+are the lablers in
+the public pool.
+
+572
+00:27:36.640 --> 00:27:39.010
+So there's a bit
+of a gamble here.
+
+573
+00:27:39.010 --> 00:27:42.640
+But usually, they complete
+in a matter of minutes.
+
+574
+00:27:42.640 --> 00:27:47.365
+So we can wait
+until this is done.
+
+575
+00:27:47.365 --> 00:27:49.240
+But I can also look at
+
+576
+00:27:49.240 --> 00:27:51.610
+the results of my
+previous labeling job,
+
+577
+00:27:51.610 --> 00:27:53.170
+a similar labeling job,
+
+578
+00:27:53.170 --> 00:27:56.330
+so we can move on.
+
+579
+00:27:57.630 --> 00:28:01.495
+If I look in the
+console for example,
+
+580
+00:28:01.495 --> 00:28:03.775
+there is the bees job,
+
+581
+00:28:03.775 --> 00:28:05.960
+I can click on it.
+
+582
+00:28:06.360 --> 00:28:11.140
+You can see that
+
+583
+00:28:11.140 --> 00:28:14.169
+all 10 images have
+
+584
+00:28:14.169 --> 00:28:17.335
+results bounding boxes
+and they're pretty good.
+
+585
+00:28:17.335 --> 00:28:18.985
+This is an interesting image
+
+586
+00:28:18.985 --> 00:28:20.830
+because it's an entire beehive.
+
+587
+00:28:20.830 --> 00:28:23.725
+So there's lots and lots
+and lots of tiny bees,
+
+588
+00:28:23.725 --> 00:28:26.200
+so we can't really
+expect a labeler to
+
+589
+00:28:26.200 --> 00:28:31.060
+draw thousands of boxes
+here and as a result,
+
+590
+00:28:31.060 --> 00:28:34.480
+I think that person
+just chose to draw
+
+591
+00:28:34.480 --> 00:28:37.960
+a big box around
+the beehive itself.
+
+592
+00:28:37.960 --> 00:28:42.325
+Again, this is a normal situation
+
+593
+00:28:42.325 --> 00:28:43.420
+that you will encounter
+
+594
+00:28:43.420 --> 00:28:45.940
+these exceptional
+cases on any dataset,
+
+595
+00:28:45.940 --> 00:28:48.220
+that's real machine learning.
+
+596
+00:28:48.220 --> 00:28:52.750
+So we can review the results
+here in the console,
+
+597
+00:28:52.750 --> 00:28:55.180
+but I've also prepared
+some cells in
+
+598
+00:28:55.180 --> 00:28:58.090
+the notebook to
+achieve the same thing
+
+599
+00:28:58.090 --> 00:29:00.640
+just to show you that you can
+
+600
+00:29:00.640 --> 00:29:02.200
+do a lot of things
+programmatically
+
+601
+00:29:02.200 --> 00:29:03.325
+and through the console.
+
+602
+00:29:03.325 --> 00:29:04.660
+The one thing we need to do is
+
+603
+00:29:04.660 --> 00:29:06.925
+supply the labeling job name.
+
+604
+00:29:06.925 --> 00:29:13.130
+I believe that was bees, exactly.
+
+605
+00:29:19.500 --> 00:29:23.125
+We just need to run the cell.
+
+606
+00:29:23.125 --> 00:29:26.380
+One thing the cell is doing is,
+
+607
+00:29:26.380 --> 00:29:33.400
+actually, printing the lines
+from the manifest file.
+
+608
+00:29:33.400 --> 00:29:37.555
+This is the manifest file
+from the labeling job.
+
+609
+00:29:37.555 --> 00:29:40.945
+This manifest is in
+the JSON lines format,
+
+610
+00:29:40.945 --> 00:29:45.250
+where every line is a
+well-formed JSON document,
+
+611
+00:29:45.250 --> 00:29:48.220
+and each line corresponds to
+
+612
+00:29:48.220 --> 00:29:50.965
+the result of a particular
+image being labeled.
+
+613
+00:29:50.965 --> 00:29:55.555
+So you can see over
+here that there is
+
+614
+00:29:55.555 --> 00:29:58.270
+a source-ref attribute that
+
+615
+00:29:58.270 --> 00:30:02.720
+contains the s3
+location of the image.
+
+616
+00:30:02.970 --> 00:30:08.395
+Then we have the name of the
+labeling job, which is bees,
+
+617
+00:30:08.395 --> 00:30:11.230
+pointing to a structure
+
+618
+00:30:11.230 --> 00:30:13.360
+that contains the
+results of labeling,
+
+619
+00:30:13.360 --> 00:30:15.820
+and that's called annotations.
+
+620
+00:30:15.820 --> 00:30:19.045
+You have the class_id,
+which is zero,
+
+621
+00:30:19.045 --> 00:30:20.710
+zero is just the first class,
+
+622
+00:30:20.710 --> 00:30:22.870
+we only have one class bees.
+
+623
+00:30:22.870 --> 00:30:24.880
+We have the dimensions in
+
+624
+00:30:24.880 --> 00:30:27.250
+the position of the bounding box,
+
+625
+00:30:27.250 --> 00:30:29.980
+and then of course, we
+have the same image size.
+
+626
+00:30:29.980 --> 00:30:33.835
+So this is not very different
+from what we've seen
+
+627
+00:30:33.835 --> 00:30:40.660
+earlier in the output
+from the labeling UI.
+
+628
+00:30:40.660 --> 00:30:42.760
+All right. Let's define in
+
+629
+00:30:42.760 --> 00:30:46.345
+the next cell a function to
+show the annotated image,
+
+630
+00:30:46.345 --> 00:30:51.350
+we're using the matplotlib
+library in Python.
+
+631
+00:30:51.390 --> 00:30:54.340
+Now, that the
+function is defined,
+
+632
+00:30:54.340 --> 00:30:56.260
+we can actually go
+
+633
+00:30:56.260 --> 00:31:00.310
+through all the lines
+in the manifest file
+
+634
+00:31:00.310 --> 00:31:05.650
+and show the 10 images
+
+635
+00:31:05.650 --> 00:31:09.080
+that were labeled,
+and there it is.
+
+636
+00:31:13.800 --> 00:31:16.645
+Now, that we have
+labeled the dataset,
+
+637
+00:31:16.645 --> 00:31:18.505
+in preparation for
+model training,
+
+638
+00:31:18.505 --> 00:31:20.890
+it's time for us to
+review some details about
+
+639
+00:31:20.890 --> 00:31:23.455
+the computer vision problem
+of object detection.
+
+640
+00:31:23.455 --> 00:31:26.290
+Given a photo containing
+one or more objects,
+
+641
+00:31:26.290 --> 00:31:29.125
+our goal is to find that
+tight bounding box around
+
+642
+00:31:29.125 --> 00:31:30.760
+every object that the model can
+
+643
+00:31:30.760 --> 00:31:33.925
+identify together with the
+corresponding class label.
+
+644
+00:31:33.925 --> 00:31:36.190
+In this picture, three objects of
+
+645
+00:31:36.190 --> 00:31:38.545
+different classes are
+identified: a dog,
+
+646
+00:31:38.545 --> 00:31:40.360
+a bicycle, and a car.
+
+647
+00:31:40.360 --> 00:31:43.180
+Each bounding box is
+described by the position
+
+648
+00:31:43.180 --> 00:31:45.670
+of the top-left corner:
+x and y coordinates,
+
+649
+00:31:45.670 --> 00:31:47.575
+as well as height and width.
+
+650
+00:31:47.575 --> 00:31:50.755
+These could be expressed in
+absolute numbers of pixels,
+
+651
+00:31:50.755 --> 00:31:52.390
+or as percentages relative to
+
+652
+00:31:52.390 --> 00:31:55.075
+the overall image
+width and height.
+
+653
+00:31:55.075 --> 00:31:57.550
+This means that for
+a neural network
+
+654
+00:31:57.550 --> 00:31:59.170
+to detect many different objects,
+
+655
+00:31:59.170 --> 00:32:00.625
+it must be able to produce
+
+656
+00:32:00.625 --> 00:32:02.695
+a separate output
+for each object,
+
+657
+00:32:02.695 --> 00:32:04.180
+incorporating the bounding box
+
+658
+00:32:04.180 --> 00:32:05.785
+location and the class label,
+
+659
+00:32:05.785 --> 00:32:09.055
+as well as the corresponding
+classification confidence.
+
+660
+00:32:09.055 --> 00:32:11.725
+Intuitively, we can
+imagine the process of
+
+661
+00:32:11.725 --> 00:32:14.950
+object detection as occurring
+in two separate steps.
+
+662
+00:32:14.950 --> 00:32:17.860
+One step is proposing
+interesting regions,
+
+663
+00:32:17.860 --> 00:32:19.285
+where the object might be,
+
+664
+00:32:19.285 --> 00:32:21.670
+and another is classifying
+objects in the region
+
+665
+00:32:21.670 --> 00:32:24.385
+by also generating
+bounding boxes.
+
+666
+00:32:24.385 --> 00:32:26.260
+One approach is to first apply
+
+667
+00:32:26.260 --> 00:32:28.195
+pixel-level sub-segmentation
+
+668
+00:32:28.195 --> 00:32:29.980
+and then apply a
+greedy algorithm for
+
+669
+00:32:29.980 --> 00:32:32.125
+merging together similar regions.
+
+670
+00:32:32.125 --> 00:32:34.960
+Once larger sub-regions
+have been obtained,
+
+671
+00:32:34.960 --> 00:32:36.250
+candidate regions for where
+
+672
+00:32:36.250 --> 00:32:38.440
+the object might
+reside are proposed.
+
+673
+00:32:38.440 --> 00:32:41.125
+We can see that a TV, a TV stand,
+
+674
+00:32:41.125 --> 00:32:42.940
+and a woman are already
+contained wholly
+
+675
+00:32:42.940 --> 00:32:45.205
+within their own
+respective sub-regions.
+
+676
+00:32:45.205 --> 00:32:48.340
+Turns out, such a
+two-step process can
+
+677
+00:32:48.340 --> 00:32:51.415
+be optimized to be completed
+in a single forward pass.
+
+678
+00:32:51.415 --> 00:32:55.735
+Namely, via the so-called
+single-shot detectors or SSDs.
+
+679
+00:32:55.735 --> 00:32:59.125
+All of this happens within
+a single neural network.
+
+680
+00:32:59.125 --> 00:33:01.390
+Here's an example of a
+network topology for
+
+681
+00:33:01.390 --> 00:33:02.890
+an SSD network based on
+
+682
+00:33:02.890 --> 00:33:05.590
+VGG 16 convolutional
+neural network.
+
+683
+00:33:05.590 --> 00:33:08.575
+Different SSD
+topologies also exist.
+
+684
+00:33:08.575 --> 00:33:11.185
+For example, based on
+ResNet-50 network.
+
+685
+00:33:11.185 --> 00:33:14.530
+Such SSD systems have shown
+superior performance,
+
+686
+00:33:14.530 --> 00:33:17.635
+both in terms of accuracy
+and the inference speed.
+
+687
+00:33:17.635 --> 00:33:19.420
+Speaking of accuracy, how do we
+
+688
+00:33:19.420 --> 00:33:22.420
+measure if the model
+produced good results?
+
+689
+00:33:22.420 --> 00:33:24.010
+Remember, that unlike
+
+690
+00:33:24.010 --> 00:33:26.110
+traditional machine
+learning classifiers,
+
+691
+00:33:26.110 --> 00:33:27.490
+not only the model needs to
+
+692
+00:33:27.490 --> 00:33:29.410
+produce an accurate
+classification,
+
+693
+00:33:29.410 --> 00:33:31.690
+for example a dog,
+but also generate
+
+694
+00:33:31.690 --> 00:33:34.630
+an accurate tight bounding
+box around the object.
+
+695
+00:33:34.630 --> 00:33:38.020
+The bounding box could
+be off by a few pixels,
+
+696
+00:33:38.020 --> 00:33:39.280
+or could be emitting part of
+
+697
+00:33:39.280 --> 00:33:41.920
+the object or being a
+completely wrong place.
+
+698
+00:33:41.920 --> 00:33:45.190
+How do we then compare accuracy
+of different algorithms?
+
+699
+00:33:45.190 --> 00:33:48.460
+One idea is to take the
+predicted bounding box and
+
+700
+00:33:48.460 --> 00:33:50.200
+the true bounding box and measure
+
+701
+00:33:50.200 --> 00:33:52.585
+the degree to which
+these boxes overlap.
+
+702
+00:33:52.585 --> 00:33:55.975
+For instance, we could compute
+the ratio of two areas;
+
+703
+00:33:55.975 --> 00:33:59.950
+intersection area divided
+by Union area or IoU.
+
+704
+00:33:59.950 --> 00:34:01.630
+It's obvious to see that for
+
+705
+00:34:01.630 --> 00:34:03.340
+perfectly matching
+bounding boxes,
+
+706
+00:34:03.340 --> 00:34:04.750
+this ratio will be one,
+
+707
+00:34:04.750 --> 00:34:07.105
+whereas for non-intersecting
+bounding boxes,
+
+708
+00:34:07.105 --> 00:34:08.350
+it will be zero.
+
+709
+00:34:08.350 --> 00:34:11.860
+Now, in fact the metric
+that is actually used is
+
+710
+00:34:11.860 --> 00:34:16.225
+called MAP or mean
+average precision.
+
+711
+00:34:16.225 --> 00:34:18.850
+It's outside the scope of
+this course to describe
+
+712
+00:34:18.850 --> 00:34:21.640
+exactly how map
+metric is computed.
+
+713
+00:34:21.640 --> 00:34:23.350
+But suffice it to say that it's
+
+714
+00:34:23.350 --> 00:34:25.540
+also based on the IoU concept.
+
+715
+00:34:25.540 --> 00:34:26.320
+So you should have
+
+716
+00:34:26.320 --> 00:34:28.600
+the right intuition
+about how it works.
+
+717
+00:34:28.600 --> 00:34:31.180
+Okay. Now we're ready to train
+
+718
+00:34:31.180 --> 00:34:34.405
+the object detection model
+in Amazon sage Maker.
+
+719
+00:34:34.405 --> 00:34:36.430
+We're now ready to start
+
+720
+00:34:36.430 --> 00:34:39.295
+training our object
+detection model.
+
+721
+00:34:39.295 --> 00:34:41.170
+For that, we're going to use
+
+722
+00:34:41.170 --> 00:34:43.840
+a built-in object
+detection algorithm
+
+723
+00:34:43.840 --> 00:34:47.035
+based on the ResNet-50
+neural network topology.
+
+724
+00:34:47.035 --> 00:34:48.700
+We will see the details of how to
+
+725
+00:34:48.700 --> 00:34:50.405
+configure that in a moment.
+
+726
+00:34:50.405 --> 00:34:53.370
+But first, we need to
+split our dataset in
+
+727
+00:34:53.370 --> 00:34:55.410
+two parts: one is
+
+728
+00:34:55.410 --> 00:34:57.270
+going to be used for
+training the model.
+
+729
+00:34:57.270 --> 00:34:59.205
+Out of the 500 images,
+
+730
+00:34:59.205 --> 00:35:01.415
+we will take 400 for training,
+
+731
+00:35:01.415 --> 00:35:03.715
+and then 100 remaining images
+
+732
+00:35:03.715 --> 00:35:05.680
+are going to be used
+for validation,
+
+733
+00:35:05.680 --> 00:35:08.140
+which means that every time
+
+734
+00:35:08.140 --> 00:35:11.125
+a new epoch has gone
+by in the training,
+
+735
+00:35:11.125 --> 00:35:14.380
+we will evaluate
+the training model
+
+736
+00:35:14.380 --> 00:35:16.120
+based on that validation dataset
+
+737
+00:35:16.120 --> 00:35:18.115
+and to see how well it's doing.
+
+738
+00:35:18.115 --> 00:35:20.590
+This gives us an
+assessment of whether
+
+739
+00:35:20.590 --> 00:35:23.170
+we should continue
+training or stop.
+
+740
+00:35:23.170 --> 00:35:27.080
+So I will execute this cell.
+
+741
+00:35:30.370 --> 00:35:33.050
+We see training samples, 400,
+
+742
+00:35:33.050 --> 00:35:37.190
+validation samples,
+100, as expected.
+
+743
+00:35:37.190 --> 00:35:41.030
+Now we need to upload
+
+744
+00:35:41.030 --> 00:35:44.300
+these two manifest files
+that we've produced in
+
+745
+00:35:44.300 --> 00:35:47.540
+the process to our S3 Bucket,
+
+746
+00:35:47.540 --> 00:35:49.970
+which is the standard
+location where
+
+747
+00:35:49.970 --> 00:35:53.640
+SageMaker is looking for things.
+
+748
+00:35:54.490 --> 00:35:58.685
+We can see that our
+uploads have succeeded.
+
+749
+00:35:58.685 --> 00:36:04.295
+We'll be using these
+handy S3 URLs shortly.
+
+750
+00:36:04.295 --> 00:36:08.000
+I will be using the console
+to start the training job.
+
+751
+00:36:08.000 --> 00:36:09.739
+But I've also provided
+
+752
+00:36:09.739 --> 00:36:12.545
+a code option where you
+could just execute the cell,
+
+753
+00:36:12.545 --> 00:36:14.480
+and exactly the same
+things I will do in
+
+754
+00:36:14.480 --> 00:36:17.375
+the console will be run in code.
+
+755
+00:36:17.375 --> 00:36:19.490
+That's often faster.
+
+756
+00:36:19.490 --> 00:36:22.265
+So once you've done this once,
+
+757
+00:36:22.265 --> 00:36:26.240
+you can rerun the cell
+many times to kick off
+
+758
+00:36:26.240 --> 00:36:28.175
+many different training jobs
+
+759
+00:36:28.175 --> 00:36:30.860
+with exact same configuration.
+
+760
+00:36:30.860 --> 00:36:33.200
+So from the console,
+
+761
+00:36:33.200 --> 00:36:37.504
+we've gone through
+the Labeling section,
+
+762
+00:36:37.504 --> 00:36:39.230
+we've seen the Notebook section.
+
+763
+00:36:39.230 --> 00:36:41.645
+Now, we move on to
+Training section.
+
+764
+00:36:41.645 --> 00:36:44.150
+I click on the Training jobs,
+
+765
+00:36:44.150 --> 00:36:50.450
+and click Create training job.
+
+766
+00:36:50.590 --> 00:36:52.820
+I need to, as usual,
+
+767
+00:36:52.820 --> 00:37:00.150
+give it some kind of
+name, bees-training-job.
+
+768
+00:37:00.430 --> 00:37:04.880
+I will pick the same IAM role,
+
+769
+00:37:04.880 --> 00:37:07.565
+and we will be using
+
+770
+00:37:07.565 --> 00:37:11.090
+a built-in SageMaker
+algorithm that we'll need to
+
+771
+00:37:11.090 --> 00:37:14.615
+specify out of the many
+algorithms that we have.
+
+772
+00:37:14.615 --> 00:37:17.370
+We're going to use
+Object Detection.
+
+773
+00:37:18.400 --> 00:37:22.580
+Next, we need to
+select an input mode.
+
+774
+00:37:22.580 --> 00:37:25.475
+This is defining how
+
+775
+00:37:25.475 --> 00:37:29.824
+your training algorithm
+is obtaining data,
+
+776
+00:37:29.824 --> 00:37:31.490
+images in our case.
+
+777
+00:37:31.490 --> 00:37:32.840
+If you choose File,
+
+778
+00:37:32.840 --> 00:37:36.695
+it means that the entire
+dataset needs to be
+
+779
+00:37:36.695 --> 00:37:40.925
+downloaded onto the box that
+is performing the training.
+
+780
+00:37:40.925 --> 00:37:43.040
+But we can choose Pipe mode,
+
+781
+00:37:43.040 --> 00:37:45.605
+which delivers the data
+
+782
+00:37:45.605 --> 00:37:48.860
+in just-in-time
+streaming fashion.
+
+783
+00:37:48.860 --> 00:37:51.110
+That's, in fact, what
+we need to supply
+
+784
+00:37:51.110 --> 00:37:53.330
+here for the object
+detection algorithm.
+
+785
+00:37:53.330 --> 00:37:56.119
+Based on the algorithm
+that was selected,
+
+786
+00:37:56.119 --> 00:37:58.220
+SageMaker already knows what
+
+787
+00:37:58.220 --> 00:38:00.050
+metrics are going
+to be published.
+
+788
+00:38:00.050 --> 00:38:02.870
+For us, the two metrics
+
+789
+00:38:02.870 --> 00:38:04.550
+are going to be
+especially interesting.
+
+790
+00:38:04.550 --> 00:38:07.025
+First of all, it's the
+train:progress metric.
+
+791
+00:38:07.025 --> 00:38:11.690
+How many epochs off training
+have already been completed,
+
+792
+00:38:11.690 --> 00:38:15.350
+so I can know how
+many more to go,
+
+793
+00:38:15.350 --> 00:38:19.670
+and validation:mAP,
+mean average precision.
+
+794
+00:38:19.670 --> 00:38:21.860
+This determines, as I was
+
+795
+00:38:21.860 --> 00:38:24.560
+trying to explain, the accuracy.
+
+796
+00:38:24.560 --> 00:38:26.930
+So the closer this to one,
+
+797
+00:38:26.930 --> 00:38:29.510
+the more accurate
+the predictions and
+
+798
+00:38:29.510 --> 00:38:32.120
+the bounding boxes are,
+
+799
+00:38:32.120 --> 00:38:34.340
+and the closer to zero,
+
+800
+00:38:34.340 --> 00:38:36.050
+the less accurate or completely
+
+801
+00:38:36.050 --> 00:38:38.240
+inaccurate the results are.
+
+802
+00:38:38.240 --> 00:38:42.710
+Next, we need to select
+the instance type,
+
+803
+00:38:42.710 --> 00:38:44.870
+which will be used for training.
+
+804
+00:38:44.870 --> 00:38:48.005
+Remember, when we're kicking
+off training in SageMaker,
+
+805
+00:38:48.005 --> 00:38:49.205
+it's going to start
+
+806
+00:38:49.205 --> 00:38:50.585
+a completely new instance
+
+807
+00:38:50.585 --> 00:38:52.670
+of the type that
+was specified here.
+
+808
+00:38:52.670 --> 00:38:54.740
+For object detection, we actually
+
+809
+00:38:54.740 --> 00:38:56.900
+need a machine with a GPU.
+
+810
+00:38:56.900 --> 00:39:01.925
+So I'll select p2.xlarge,
+
+811
+00:39:01.925 --> 00:39:06.470
+leave the other
+attributes the same.
+
+812
+00:39:06.470 --> 00:39:09.545
+We're now moving to the
+Hyperparameter section.
+
+813
+00:39:09.545 --> 00:39:12.440
+This is an important
+section because we get to
+
+814
+00:39:12.440 --> 00:39:15.920
+decide here how to configure
+the training algorithm.
+
+815
+00:39:15.920 --> 00:39:19.550
+First of all, we get to
+choose the network topology.
+
+816
+00:39:19.550 --> 00:39:22.685
+There are two available:
+VGG16 and ResNet-50.
+
+817
+00:39:22.685 --> 00:39:24.560
+I've already mentioned ResNet-50.
+
+818
+00:39:24.560 --> 00:39:26.345
+This is what we're
+going to go with.
+
+819
+00:39:26.345 --> 00:39:29.390
+Next, we need to
+decide if we're going
+
+820
+00:39:29.390 --> 00:39:32.345
+to train from scratch,
+
+821
+00:39:32.345 --> 00:39:35.360
+in other words from no
+previous knowledge,
+
+822
+00:39:35.360 --> 00:39:38.060
+or start with a
+pre-trained model.
+
+823
+00:39:38.060 --> 00:39:39.830
+Now, we only have
+
+824
+00:39:39.830 --> 00:39:42.440
+400 images that we're going
+to be using for training.
+
+825
+00:39:42.440 --> 00:39:47.165
+That's usually not enough to
+achieve meaningful results.
+
+826
+00:39:47.165 --> 00:39:50.150
+Just imagine that a machine has
+
+827
+00:39:50.150 --> 00:39:53.435
+never seen any
+images of anything,
+
+828
+00:39:53.435 --> 00:39:55.970
+and you are showing
+400 images of bees
+
+829
+00:39:55.970 --> 00:39:58.745
+expecting it to identify bees.
+
+830
+00:39:58.745 --> 00:40:01.475
+That's an extremely
+difficult task.
+
+831
+00:40:01.475 --> 00:40:03.095
+What typically is done,
+
+832
+00:40:03.095 --> 00:40:04.610
+is that we train or
+
+833
+00:40:04.610 --> 00:40:09.530
+pre-train this model on a
+large variety of images.
+
+834
+00:40:09.530 --> 00:40:12.755
+Sometimes millions of images
+of different objects.
+
+835
+00:40:12.755 --> 00:40:13.970
+It could be cars,
+
+836
+00:40:13.970 --> 00:40:17.810
+birds, bicycles, and so on.
+
+837
+00:40:17.810 --> 00:40:21.130
+This network has learned to
+
+838
+00:40:21.130 --> 00:40:24.895
+recognize certain
+features in those images.
+
+839
+00:40:24.895 --> 00:40:27.730
+Maybe certain curves,
+certain shapes,
+
+840
+00:40:27.730 --> 00:40:31.555
+and these become the
+rudimentary building blocks
+
+841
+00:40:31.555 --> 00:40:34.105
+out of which other objects
+can be recognized.
+
+842
+00:40:34.105 --> 00:40:37.690
+So now, we're going to use
+a pre-trained network,
+
+843
+00:40:37.690 --> 00:40:39.910
+we'll choose one for yes.
+
+844
+00:40:39.910 --> 00:40:41.950
+Next, we need to supply
+
+845
+00:40:41.950 --> 00:40:43.630
+the number of classes,
+that's simple.
+
+846
+00:40:43.630 --> 00:40:46.375
+We only have one class of bees.
+
+847
+00:40:46.375 --> 00:40:49.870
+Remember, I was talking about
+epochs, how many epochs?
+
+848
+00:40:49.870 --> 00:40:53.325
+How many rounds of
+training are needed?
+
+849
+00:40:53.325 --> 00:40:57.200
+We can leave the 30
+here as the default.
+
+850
+00:40:57.200 --> 00:40:59.270
+We'll leave learning rate,
+
+851
+00:40:59.270 --> 00:41:01.460
+and optimizer, and momentum,
+
+852
+00:41:01.460 --> 00:41:04.110
+and others as the defaults.
+
+853
+00:41:04.120 --> 00:41:07.865
+The minibatch size, I'll adjust.
+
+854
+00:41:07.865 --> 00:41:12.920
+This basically defines
+how many images
+
+855
+00:41:12.920 --> 00:41:17.915
+are used in a minibatch
+during a training round.
+
+856
+00:41:17.915 --> 00:41:20.615
+If you have lots
+and lots of images,
+
+857
+00:41:20.615 --> 00:41:23.780
+it's more efficient to
+have a larger batch size.
+
+858
+00:41:23.780 --> 00:41:29.000
+It's also utilizing
+your GPU better.
+
+859
+00:41:29.000 --> 00:41:33.605
+But because we have a
+relatively small dataset here,
+
+860
+00:41:33.605 --> 00:41:36.230
+I'll just pick a
+minibatch size of
+
+861
+00:41:36.230 --> 00:41:41.540
+one image being shown to
+the network at a time,
+
+862
+00:41:41.540 --> 00:41:44.660
+and need to supply the
+number of training samples.
+
+863
+00:41:44.660 --> 00:41:47.105
+Well, it's 400.
+
+864
+00:41:47.105 --> 00:41:49.460
+We'll leave the rest
+of the attributes
+
+865
+00:41:49.460 --> 00:41:51.605
+to be the defaults.
+
+866
+00:41:51.605 --> 00:41:54.005
+Great. In the next section,
+
+867
+00:41:54.005 --> 00:41:57.680
+we need to supply the location
+of the training data,
+
+868
+00:41:57.680 --> 00:41:59.675
+where they all are.
+
+869
+00:41:59.675 --> 00:42:02.255
+So we need to define
+two channels.
+
+870
+00:42:02.255 --> 00:42:04.070
+One is the train channel.
+
+871
+00:42:04.070 --> 00:42:07.070
+Again, the input mode
+is going to be Pipe.
+
+872
+00:42:07.070 --> 00:42:13.010
+We're going to wrap the records
+in the RecordIO format.
+
+873
+00:42:13.010 --> 00:42:14.210
+Don't worry about this. This is
+
+874
+00:42:14.210 --> 00:42:15.905
+just a requirement
+of the algorithm.
+
+875
+00:42:15.905 --> 00:42:17.795
+That if you're using
+object detection,
+
+876
+00:42:17.795 --> 00:42:19.745
+the records need to be wrapped.
+
+877
+00:42:19.745 --> 00:42:21.650
+Luckily, this is all handled
+
+878
+00:42:21.650 --> 00:42:23.630
+for us automatically
+by SageMaker.
+
+879
+00:42:23.630 --> 00:42:28.820
+Next, the data type is
+AugmentedManifestFile.
+
+880
+00:42:28.820 --> 00:42:32.525
+That's how the data is provided.
+
+881
+00:42:32.525 --> 00:42:36.050
+We need to explain to
+
+882
+00:42:36.050 --> 00:42:38.900
+SageMaker what attributes should
+
+883
+00:42:38.900 --> 00:42:41.795
+be expected in that
+augmented manifest file.
+
+884
+00:42:41.795 --> 00:42:46.770
+Remember, we looked at them
+earlier, one was source-ref.
+
+885
+00:42:49.230 --> 00:42:53.230
+The other was the name
+of the labeling job.
+
+886
+00:42:53.230 --> 00:42:57.040
+Because I'm using the results of
+
+887
+00:42:57.040 --> 00:43:00.204
+the full labeling job
+a full 500 images,
+
+888
+00:43:00.204 --> 00:43:05.260
+the labeling job name at
+that time was B's 500,
+
+889
+00:43:05.260 --> 00:43:09.250
+and that's exactly what you
+need to supply given the data
+
+890
+00:43:09.250 --> 00:43:10.450
+set and that output
+
+891
+00:43:10.450 --> 00:43:12.910
+manifest file that
+is provided to you.
+
+892
+00:43:12.910 --> 00:43:15.100
+Finally, we need to supply
+
+893
+00:43:15.100 --> 00:43:18.070
+the S3 location of
+those manifest files.
+
+894
+00:43:18.070 --> 00:43:22.370
+Remember, in our
+Jupyter notebook,
+
+895
+00:43:22.710 --> 00:43:26.350
+the URLs were printed,
+
+896
+00:43:26.350 --> 00:43:28.790
+so I can just copy,
+
+897
+00:43:30.090 --> 00:43:32.740
+paste the train, and then I
+
+898
+00:43:32.740 --> 00:43:34.420
+will need to add
+a second channel,
+
+899
+00:43:34.420 --> 00:43:36.415
+which is the validation channel,
+
+900
+00:43:36.415 --> 00:43:39.590
+change the name to validation,
+
+901
+00:43:43.770 --> 00:43:50.875
+choose pipe again, record
+IO, augmented manifest file,
+
+902
+00:43:50.875 --> 00:44:00.430
+same exact attributes, and the
+
+903
+00:44:00.430 --> 00:44:03.350
+location we can copy
+
+904
+00:44:04.440 --> 00:44:11.080
+our notebook and we're
+done with that section.
+
+905
+00:44:11.080 --> 00:44:15.340
+Now, for the output
+of our training job,
+
+906
+00:44:15.340 --> 00:44:18.940
+this is going to be
+the model artifacts.
+
+907
+00:44:18.940 --> 00:44:21.430
+We can just supply
+
+908
+00:44:21.430 --> 00:44:26.600
+the output folder that
+we've used before.
+
+909
+00:44:27.960 --> 00:44:30.715
+No need to supply encryption,
+
+910
+00:44:30.715 --> 00:44:35.395
+leave tags empty, and I'll
+just hit create training job.
+
+911
+00:44:35.395 --> 00:44:41.660
+So we'll see our training
+job is starting.
+
+912
+00:44:41.790 --> 00:44:44.665
+It definitely can take some time
+
+913
+00:44:44.665 --> 00:44:47.020
+if you dealing with
+very large data sets,
+
+914
+00:44:47.020 --> 00:44:50.125
+some training jobs
+could take weeks even.
+
+915
+00:44:50.125 --> 00:44:52.420
+This is probably expected to be
+
+916
+00:44:52.420 --> 00:44:54.925
+completed in tens of minutes,
+
+917
+00:44:54.925 --> 00:44:59.500
+so instead of us waiting
+for the job to complete,
+
+918
+00:44:59.500 --> 00:45:01.060
+I can show you the results from
+
+919
+00:45:01.060 --> 00:45:03.085
+previous job that was completed.
+
+920
+00:45:03.085 --> 00:45:07.279
+If we go back to our notebook,
+
+921
+00:45:07.980 --> 00:45:11.455
+I can provide a job name here,
+
+922
+00:45:11.455 --> 00:45:16.550
+and describe a status.
+
+923
+00:45:16.580 --> 00:45:21.135
+So this job is currently running,
+
+924
+00:45:21.135 --> 00:45:26.705
+I pasted here, it's in progress,
+
+925
+00:45:26.705 --> 00:45:33.490
+and I can find some
+previous job that I've run,
+
+926
+00:45:33.490 --> 00:45:36.860
+for example bees training,
+
+927
+00:45:39.480 --> 00:45:43.255
+and that has certainly completed,
+
+928
+00:45:43.255 --> 00:45:45.625
+and we can try to review
+
+929
+00:45:45.625 --> 00:45:48.145
+the results of this training job.
+
+930
+00:45:48.145 --> 00:45:51.190
+What does that mean?
+Training has completed,
+
+931
+00:45:51.190 --> 00:45:53.950
+which means we have
+the model artifacts.
+
+932
+00:45:53.950 --> 00:45:56.320
+We need to then
+create that model,
+
+933
+00:45:56.320 --> 00:45:58.090
+package that model, and
+
+934
+00:45:58.090 --> 00:46:00.235
+deploy to an endpoint
+for example,
+
+935
+00:46:00.235 --> 00:46:04.030
+to be able to run some
+predictions against it,
+
+936
+00:46:04.030 --> 00:46:07.540
+or some object detection
+tasks against it.
+
+937
+00:46:07.540 --> 00:46:09.445
+So in my next cell,
+
+938
+00:46:09.445 --> 00:46:11.665
+this is exactly what happens.
+
+939
+00:46:11.665 --> 00:46:14.935
+Given the training job name
+which are provided earlier,
+
+940
+00:46:14.935 --> 00:46:18.470
+the model artifacts
+will be fetched,
+
+941
+00:46:23.850 --> 00:46:28.975
+and we'll create a
+configuration for an end point,
+
+942
+00:46:28.975 --> 00:46:34.285
+which is a real-time endpoint
+
+943
+00:46:34.285 --> 00:46:39.295
+against which you can
+run your predictions,
+
+944
+00:46:39.295 --> 00:46:41.965
+and once the
+configuration is ready,
+
+945
+00:46:41.965 --> 00:46:47.599
+we need to actually
+invoke create endpoint,
+
+946
+00:46:47.880 --> 00:46:50.980
+this step may take some minutes,
+
+947
+00:46:50.980 --> 00:46:54.520
+so the next section simply
+prints the status of
+
+948
+00:46:54.520 --> 00:46:58.945
+the endpoint that
+I've defined earlier.
+
+949
+00:46:58.945 --> 00:47:04.550
+If we want this one
+that was just created,
+
+950
+00:47:06.960 --> 00:47:10.250
+we can enter it here,
+
+951
+00:47:10.290 --> 00:47:13.585
+comment out the previous one,
+
+952
+00:47:13.585 --> 00:47:18.385
+and we can see that
+this is now creating.
+
+953
+00:47:18.385 --> 00:47:21.985
+Let's wait for our endpoint
+to finish the creation.
+
+954
+00:47:21.985 --> 00:47:25.435
+Let's refresh it a few times,
+
+955
+00:47:25.435 --> 00:47:29.499
+and we can see that the
+endpoint now is in service,
+
+956
+00:47:29.499 --> 00:47:36.710
+therefore we can start running
+predictions against it.
+
+957
+00:47:36.990 --> 00:47:40.165
+So the first thing that
+we're going to do,
+
+958
+00:47:40.165 --> 00:47:42.400
+is look at the 10,
+test images just
+
+959
+00:47:42.400 --> 00:47:45.175
+refresh that they're
+there for a reason.
+
+960
+00:47:45.175 --> 00:47:47.935
+These are the 10 test
+images we're going to use.
+
+961
+00:47:47.935 --> 00:47:51.995
+They were never seen by
+the machine learning model
+
+962
+00:47:51.995 --> 00:47:56.125
+before or during
+training, completely new.
+
+963
+00:47:56.125 --> 00:47:59.200
+I need a bit of a
+helper function that
+
+964
+00:47:59.200 --> 00:48:02.860
+will unpack the results
+of a service call,
+
+965
+00:48:02.860 --> 00:48:07.375
+endpoint call, so we can then
+plot those results nicely,
+
+966
+00:48:07.375 --> 00:48:09.175
+figure out what is
+the class label?
+
+967
+00:48:09.175 --> 00:48:10.480
+Where is the height? The width,
+
+968
+00:48:10.480 --> 00:48:12.740
+the length, and so on.
+
+969
+00:48:12.740 --> 00:48:17.350
+Now, moving on to
+the actual plotting,
+
+970
+00:48:17.350 --> 00:48:21.625
+let's just execute the cell,
+
+971
+00:48:21.625 --> 00:48:23.710
+and there are the images.
+
+972
+00:48:23.710 --> 00:48:26.920
+Well, if you look carefully,
+
+973
+00:48:26.920 --> 00:48:29.875
+we don't see that
+many bounding boxes.
+
+974
+00:48:29.875 --> 00:48:32.770
+There's one here that's
+not too terrible,
+
+975
+00:48:32.770 --> 00:48:38.390
+but then in a lot of other
+photos you don't see much.
+
+976
+00:48:38.700 --> 00:48:41.980
+There's one that's not
+so bad here as well.
+
+977
+00:48:41.980 --> 00:48:48.820
+The reason is, that we
+have a parameter here,
+
+978
+00:48:48.820 --> 00:48:51.460
+that determines what is
+
+979
+00:48:51.460 --> 00:48:54.400
+the minimum confidence
+threshold to use,
+
+980
+00:48:54.400 --> 00:48:59.140
+and 0.5 could be a bit high,
+
+981
+00:48:59.140 --> 00:49:02.365
+so we could try
+
+982
+00:49:02.365 --> 00:49:06.730
+seeing bounding boxes
+with lower confidence,
+
+983
+00:49:06.730 --> 00:49:08.560
+and then the other parameter
+here is how many of
+
+984
+00:49:08.560 --> 00:49:13.045
+those best bounding boxes
+
+985
+00:49:13.045 --> 00:49:16.855
+that are over the
+threshold should be shown.
+
+986
+00:49:16.855 --> 00:49:19.730
+So if we rerun this again,
+
+987
+00:49:19.950 --> 00:49:22.750
+we can see bounding
+box has started to
+
+988
+00:49:22.750 --> 00:49:27.085
+appear and this red
+one is not so bad,
+
+989
+00:49:27.085 --> 00:49:29.380
+there clearly is some
+misses like that green one,
+
+990
+00:49:29.380 --> 00:49:31.580
+there's no B there.
+
+991
+00:49:32.070 --> 00:49:37.130
+These two point to
+the right direction,
+
+992
+00:49:38.070 --> 00:49:41.620
+and here we still
+
+993
+00:49:41.620 --> 00:49:44.890
+see no bounding box even
+at the lower confidence.
+
+994
+00:49:44.890 --> 00:49:50.420
+This image is also a
+bit difficult, clearly.
+
+995
+00:49:50.820 --> 00:49:55.190
+That one is pretty accurate.
+
+996
+00:49:57.330 --> 00:50:01.645
+Similar here, one of them
+is doing a good job.
+
+997
+00:50:01.645 --> 00:50:07.070
+There are many bees here but
+it sees some in the image.
+
+998
+00:50:08.700 --> 00:50:13.870
+We can control the output
+of the prediction.
+
+999
+00:50:13.870 --> 00:50:18.580
+We can decide what confidence
+to use for our purposes.
+
+1000
+00:50:18.580 --> 00:50:21.610
+But again, remember
+that we've just
+
+1001
+00:50:21.610 --> 00:50:24.640
+had 400 images of
+bees for training,
+
+1002
+00:50:24.640 --> 00:50:28.045
+and when we configured
+our training job,
+
+1003
+00:50:28.045 --> 00:50:29.950
+all those hyperparameters, we
+
+1004
+00:50:29.950 --> 00:50:31.810
+pretty much kept the defaults,
+
+1005
+00:50:31.810 --> 00:50:33.715
+we didn't change
+much and in fact,
+
+1006
+00:50:33.715 --> 00:50:35.875
+when you don't know
+where to start,
+
+1007
+00:50:35.875 --> 00:50:38.440
+stick with the defaults and
+see what the results are.
+
+1008
+00:50:38.440 --> 00:50:41.020
+All right. At this point,
+
+1009
+00:50:41.020 --> 00:50:46.030
+what we typically do is try
+to figure out if there's
+
+1010
+00:50:46.030 --> 00:50:48.820
+a better set of
+hyperparameters that we could
+
+1011
+00:50:48.820 --> 00:50:52.000
+use to achieve more
+accurate results,
+
+1012
+00:50:52.000 --> 00:50:55.255
+or maybe 400 images
+is just not enough,
+
+1013
+00:50:55.255 --> 00:50:57.280
+and you need to go
+back and obtain
+
+1014
+00:50:57.280 --> 00:51:00.865
+more images and train
+for longer time,
+
+1015
+00:51:00.865 --> 00:51:03.580
+for many more epochs before
+
+1016
+00:51:03.580 --> 00:51:06.505
+we get the desired
+level of accuracy.
+
+1017
+00:51:06.505 --> 00:51:10.060
+This is exactly the
+time for us to talk
+
+1018
+00:51:10.060 --> 00:51:12.520
+about hyperparameter
+optimization which
+
+1019
+00:51:12.520 --> 00:51:13.975
+is the next section.
+
+1020
+00:51:13.975 --> 00:51:15.655
+As you have seen in the demo,
+
+1021
+00:51:15.655 --> 00:51:16.705
+we need to supply
+
+1022
+00:51:16.705 --> 00:51:18.400
+many different
+hyperparameters for
+
+1023
+00:51:18.400 --> 00:51:20.710
+our object detection
+built-in algorithm.
+
+1024
+00:51:20.710 --> 00:51:22.180
+If you don't have lots of
+
+1025
+00:51:22.180 --> 00:51:23.980
+experience for a
+particular algorithms,
+
+1026
+00:51:23.980 --> 00:51:25.240
+and machine learning problem,
+
+1027
+00:51:25.240 --> 00:51:27.160
+it will likely be very
+difficult for you
+
+1028
+00:51:27.160 --> 00:51:29.530
+to decide what set of
+parameters is best.
+
+1029
+00:51:29.530 --> 00:51:30.835
+The reality is that
+
+1030
+00:51:30.835 --> 00:51:33.535
+even the most experienced
+and trained practitioners,
+
+1031
+00:51:33.535 --> 00:51:36.295
+often need to explore the
+space of hyperparameters to
+
+1032
+00:51:36.295 --> 00:51:39.595
+see which ones affect the
+model performance the most.
+
+1033
+00:51:39.595 --> 00:51:41.740
+That's why we have added a way to
+
+1034
+00:51:41.740 --> 00:51:44.680
+automatically find the best
+set of hyper-parameters,
+
+1035
+00:51:44.680 --> 00:51:47.590
+a feature called
+automated model tuning.
+
+1036
+00:51:47.590 --> 00:51:49.480
+In the industry this
+is also known as
+
+1037
+00:51:49.480 --> 00:51:52.240
+hyperparameter
+optimization or HPO.
+
+1038
+00:51:52.240 --> 00:51:53.800
+Hyperparameters exist in
+
+1039
+00:51:53.800 --> 00:51:55.735
+most machine learning algorithms.
+
+1040
+00:51:55.735 --> 00:51:57.490
+In the case of deep
+learning which
+
+1041
+00:51:57.490 --> 00:51:59.005
+is based on neural networks,
+
+1042
+00:51:59.005 --> 00:52:01.840
+typical hyperparameters
+consists of the learning rate,
+
+1043
+00:52:01.840 --> 00:52:05.020
+the network topology, for
+instance the number of layers
+
+1044
+00:52:05.020 --> 00:52:06.880
+and dropout or regularization
+
+1045
+00:52:06.880 --> 00:52:08.770
+as means of dealing
+with overfitting.
+
+1046
+00:52:08.770 --> 00:52:11.350
+For more traditional decision
+tree-based algorithms
+
+1047
+00:52:11.350 --> 00:52:13.465
+such as popular XG boost,
+
+1048
+00:52:13.465 --> 00:52:16.359
+these could be the number
+of trees in the ensemble,
+
+1049
+00:52:16.359 --> 00:52:19.990
+the maximum depth of the
+tree or boosting step size.
+
+1050
+00:52:19.990 --> 00:52:21.820
+For clustering, it
+could be the number
+
+1051
+00:52:21.820 --> 00:52:23.485
+of clusters and so on.
+
+1052
+00:52:23.485 --> 00:52:26.410
+Each hyperparameter has
+a corresponding set of
+
+1053
+00:52:26.410 --> 00:52:29.740
+possible values and altogether
+the hyperparameters for
+
+1054
+00:52:29.740 --> 00:52:32.770
+a particular algorithm for
+my hyperparameter space
+
+1055
+00:52:32.770 --> 00:52:34.510
+that we need to explore to
+
+1056
+00:52:34.510 --> 00:52:36.655
+find the best point
+in that space.
+
+1057
+00:52:36.655 --> 00:52:39.430
+The effect on performance
+can be quite dramatic.
+
+1058
+00:52:39.430 --> 00:52:41.830
+What you see here
+is the effect of
+
+1059
+00:52:41.830 --> 00:52:44.320
+different combinations of
+two hyperparameters of
+
+1060
+00:52:44.320 --> 00:52:46.570
+embedding size and hidden size
+
+1061
+00:52:46.570 --> 00:52:48.160
+on the resulting validation
+
+1062
+00:52:48.160 --> 00:52:50.500
+F1 score which characterizes
+
+1063
+00:52:50.500 --> 00:52:52.705
+the accuracy of the
+resulting model.
+
+1064
+00:52:52.705 --> 00:52:55.060
+Embedding size in
+this case could be
+
+1065
+00:52:55.060 --> 00:52:56.980
+the dimensionality of
+the word embedding
+
+1066
+00:52:56.980 --> 00:52:59.110
+in a natural language
+processing problem,
+
+1067
+00:52:59.110 --> 00:53:00.700
+while the hidden size could be
+
+1068
+00:53:00.700 --> 00:53:03.400
+the size of the hidden
+layer in a neural network.
+
+1069
+00:53:03.400 --> 00:53:05.320
+The resulting difference between
+
+1070
+00:53:05.320 --> 00:53:08.935
+a validation F1 score
+of 87 versus 95,
+
+1071
+00:53:08.935 --> 00:53:10.360
+could be the
+difference between an
+
+1072
+00:53:10.360 --> 00:53:13.270
+acceptable or an unacceptable
+Machine Learning model.
+
+1073
+00:53:13.270 --> 00:53:15.160
+What's shown here is the space
+
+1074
+00:53:15.160 --> 00:53:16.795
+for just two hyperparameters,
+
+1075
+00:53:16.795 --> 00:53:18.640
+but usually we have many more.
+
+1076
+00:53:18.640 --> 00:53:20.380
+It quickly becomes difficult to
+
+1077
+00:53:20.380 --> 00:53:22.795
+understand and explore
+the space by hand,
+
+1078
+00:53:22.795 --> 00:53:25.135
+which is what researchers
+often had to do
+
+1079
+00:53:25.135 --> 00:53:28.090
+before automated
+hyperparameter optimization.
+
+1080
+00:53:28.090 --> 00:53:31.420
+Additionally, hyperparameters
+are typically not
+
+1081
+00:53:31.420 --> 00:53:32.950
+independent of each
+other in terms of
+
+1082
+00:53:32.950 --> 00:53:34.765
+their combined
+effect on the model.
+
+1083
+00:53:34.765 --> 00:53:36.700
+A changing one would likely
+
+1084
+00:53:36.700 --> 00:53:39.205
+affect how another
+influences the model.
+
+1085
+00:53:39.205 --> 00:53:41.680
+Often the only way for you to
+
+1086
+00:53:41.680 --> 00:53:43.780
+know how the model
+is going to react to
+
+1087
+00:53:43.780 --> 00:53:45.910
+something different
+is to make changes
+
+1088
+00:53:45.910 --> 00:53:48.535
+to hyperparameters and
+train a new model.
+
+1089
+00:53:48.535 --> 00:53:50.950
+Exploring this space
+exhaustively in
+
+1090
+00:53:50.950 --> 00:53:53.830
+this way is usually going
+to be quite costly.
+
+1091
+00:53:53.830 --> 00:53:57.055
+So what are the typical
+approaches to model tuning?
+
+1092
+00:53:57.055 --> 00:53:58.660
+We've already talked about
+
+1093
+00:53:58.660 --> 00:54:00.445
+the problems with
+manual approach,
+
+1094
+00:54:00.445 --> 00:54:02.500
+at best it's inconsistent and
+
+1095
+00:54:02.500 --> 00:54:05.020
+relies on a lot of
+previous experience.
+
+1096
+00:54:05.020 --> 00:54:07.210
+Early attempts at
+automation relied
+
+1097
+00:54:07.210 --> 00:54:09.145
+on various brute
+force approaches.
+
+1098
+00:54:09.145 --> 00:54:11.710
+One idea is to simply
+divide the ranges of
+
+1099
+00:54:11.710 --> 00:54:14.395
+the hyperparameters into
+same size intervals,
+
+1100
+00:54:14.395 --> 00:54:15.565
+and then effectively do
+
+1101
+00:54:15.565 --> 00:54:18.280
+a grid search as shown in
+the top right picture.
+
+1102
+00:54:18.280 --> 00:54:19.810
+The problem with this approach
+
+1103
+00:54:19.810 --> 00:54:21.610
+is that usually
+some parameters are
+
+1104
+00:54:21.610 --> 00:54:23.290
+highly important to improving
+
+1105
+00:54:23.290 --> 00:54:25.360
+the performance,
+and others are not.
+
+1106
+00:54:25.360 --> 00:54:26.920
+But the grid search approach
+
+1107
+00:54:26.920 --> 00:54:28.180
+as shown in this picture only
+
+1108
+00:54:28.180 --> 00:54:29.770
+samples three different values
+
+1109
+00:54:29.770 --> 00:54:31.360
+of the important parameter.
+
+1110
+00:54:31.360 --> 00:54:33.340
+If instead, we were to use
+
+1111
+00:54:33.340 --> 00:54:35.830
+the same total number
+of nine measurements,
+
+1112
+00:54:35.830 --> 00:54:37.540
+but instead of grid,
+
+1113
+00:54:37.540 --> 00:54:39.520
+chose the positions randomly,
+
+1114
+00:54:39.520 --> 00:54:41.320
+we would sample the
+important parameter
+
+1115
+00:54:41.320 --> 00:54:42.895
+in nine different places.
+
+1116
+00:54:42.895 --> 00:54:45.130
+There's also Sobel
+algorithm used to
+
+1117
+00:54:45.130 --> 00:54:47.680
+generate the so-called
+quasi-random numbers.
+
+1118
+00:54:47.680 --> 00:54:49.690
+These are better than
+pseudorandom numbers,
+
+1119
+00:54:49.690 --> 00:54:51.070
+and that they sample the space
+
+1120
+00:54:51.070 --> 00:54:54.080
+more evenly, avoiding clustering.
+
+1121
+00:54:54.420 --> 00:54:57.805
+While also offering
+random search,
+
+1122
+00:54:57.805 --> 00:54:59.980
+SageMaker it provides
+a smarter approach
+
+1123
+00:54:59.980 --> 00:55:02.440
+based on Bayesian optimization.
+
+1124
+00:55:02.440 --> 00:55:04.450
+The exact details
+of this algorithm
+
+1125
+00:55:04.450 --> 00:55:06.655
+is outside the scope
+of this course,
+
+1126
+00:55:06.655 --> 00:55:08.290
+but it's based on Gaussian
+
+1127
+00:55:08.290 --> 00:55:10.090
+process regression which provides
+
+1128
+00:55:10.090 --> 00:55:12.325
+estimated bands for
+objective parameter
+
+1129
+00:55:12.325 --> 00:55:14.440
+in the yet to be explored areas,
+
+1130
+00:55:14.440 --> 00:55:15.940
+and the algorithm chooses
+
+1131
+00:55:15.940 --> 00:55:18.575
+the most promising
+area to explore next.
+
+1132
+00:55:18.575 --> 00:55:20.100
+Now that we understand
+
+1133
+00:55:20.100 --> 00:55:22.395
+the theory of hyperparameter
+optimization,
+
+1134
+00:55:22.395 --> 00:55:25.500
+let's see how this actually
+works in SageMaker.
+
+1135
+00:55:25.500 --> 00:55:29.370
+For model tuning, I will go
+back to the console and we'll
+
+1136
+00:55:29.370 --> 00:55:33.055
+kick off another set of
+training jobs actually,
+
+1137
+00:55:33.055 --> 00:55:38.560
+or a model tuning job that
+initiates many training jobs
+
+1138
+00:55:38.560 --> 00:55:41.200
+that sample the
+hyperparameter space and
+
+1139
+00:55:41.200 --> 00:55:45.130
+let you find the best
+combination of parameters.
+
+1140
+00:55:45.130 --> 00:55:48.655
+We'll go to the same
+training section,
+
+1141
+00:55:48.655 --> 00:55:52.610
+except we'll choose
+hyperparameter tuning jobs.
+
+1142
+00:55:52.950 --> 00:55:55.630
+We'll go and create
+
+1143
+00:55:55.630 --> 00:55:58.750
+hyperparameter tuning
+job, click that button.
+
+1144
+00:55:58.750 --> 00:56:04.220
+Of course as always we
+need to provide a name.
+
+1145
+00:56:04.290 --> 00:56:07.255
+Choose the IAM role.
+
+1146
+00:56:07.255 --> 00:56:09.220
+A lot of the things
+that we need to
+
+1147
+00:56:09.220 --> 00:56:11.050
+supply here are very
+similar to what
+
+1148
+00:56:11.050 --> 00:56:13.300
+we've done with the
+regular Training and I
+
+1149
+00:56:13.300 --> 00:56:16.494
+will go ahead and
+pick the same values
+
+1150
+00:56:16.494 --> 00:56:19.030
+and will spend more time talking
+
+1151
+00:56:19.030 --> 00:56:20.500
+about what's new and
+
+1152
+00:56:20.500 --> 00:56:22.360
+what's different about
+hyperparameter training.
+
+1153
+00:56:22.360 --> 00:56:24.490
+We still need to
+supply the algorithm,
+
+1154
+00:56:24.490 --> 00:56:27.080
+is going to be object detection.
+
+1155
+00:56:27.090 --> 00:56:33.350
+It's still going to be the
+pipe mode. Click Next.
+
+1156
+00:56:34.860 --> 00:56:37.675
+When we described
+
+1157
+00:56:37.675 --> 00:56:42.370
+the hyperparameter
+optimization process,
+
+1158
+00:56:42.370 --> 00:56:44.185
+we talked about
+different options.
+
+1159
+00:56:44.185 --> 00:56:46.705
+Bayesian methods, Random,
+
+1160
+00:56:46.705 --> 00:56:49.210
+both are supported
+in SageMaker but
+
+1161
+00:56:49.210 --> 00:56:52.495
+we'll stick with Bayesian as
+
+1162
+00:56:52.495 --> 00:56:57.265
+potentially more intelligent
+way of going about things.
+
+1163
+00:56:57.265 --> 00:56:59.260
+Our objective metric is
+
+1164
+00:56:59.260 --> 00:57:01.360
+automatically suggested for us
+
+1165
+00:57:01.360 --> 00:57:03.055
+which is the mean
+average precision,
+
+1166
+00:57:03.055 --> 00:57:08.065
+and we want to
+maximize that metric.
+
+1167
+00:57:08.065 --> 00:57:13.465
+We can say that training
+jobs could stop earlier,
+
+1168
+00:57:13.465 --> 00:57:14.890
+if SageMaker is able to
+
+1169
+00:57:14.890 --> 00:57:16.780
+determine that there is
+no reason to continue.
+
+1170
+00:57:16.780 --> 00:57:18.430
+It seems like our accuracy for
+
+1171
+00:57:18.430 --> 00:57:21.325
+this specific training
+job is dropping off.
+
+1172
+00:57:21.325 --> 00:57:23.650
+So we'll say auto,
+
+1173
+00:57:23.650 --> 00:57:25.930
+and we're now getting to
+
+1174
+00:57:25.930 --> 00:57:28.240
+the hyperparameter
+configuration screen
+
+1175
+00:57:28.240 --> 00:57:29.560
+except that it's
+a little bit more
+
+1176
+00:57:29.560 --> 00:57:31.345
+complicated than last time.
+
+1177
+00:57:31.345 --> 00:57:34.390
+Let's look at the similar parts.
+
+1178
+00:57:34.390 --> 00:57:37.255
+Well first of all for each
+of those hyperparameters,
+
+1179
+00:57:37.255 --> 00:57:43.630
+you can still supply
+your choices.
+
+1180
+00:57:43.630 --> 00:57:47.510
+So for num classes
+we have one class,
+
+1181
+00:57:47.940 --> 00:57:52.165
+epochs we have 30 epochs.
+
+1182
+00:57:52.165 --> 00:58:00.520
+But, if we don't choose
+static or fixed really value,
+
+1183
+00:58:00.520 --> 00:58:04.135
+we're able to supply
+a range instead.
+
+1184
+00:58:04.135 --> 00:58:05.935
+By doing so we're letting
+
+1185
+00:58:05.935 --> 00:58:08.680
+sageMaker sample values in
+
+1186
+00:58:08.680 --> 00:58:12.490
+that range to figure out
+what the best value is.
+
+1187
+00:58:12.490 --> 00:58:14.830
+So we'll choose continuous here,
+
+1188
+00:58:14.830 --> 00:58:17.350
+and we need to supply the min
+
+1189
+00:58:17.350 --> 00:58:20.185
+and max values, for
+the learning rate.
+
+1190
+00:58:20.185 --> 00:58:24.205
+Okay. So what are these
+values? How do I find them?
+
+1191
+00:58:24.205 --> 00:58:27.655
+If we go to the SageMaker
+documentation for
+
+1192
+00:58:27.655 --> 00:58:29.830
+object detection
+hyperparameter tuning and I
+
+1193
+00:58:29.830 --> 00:58:33.025
+have this tab opened,
+
+1194
+00:58:33.025 --> 00:58:37.405
+then it does give
+you suggestions.
+
+1195
+00:58:37.405 --> 00:58:40.180
+In fact it tells you that,
+
+1196
+00:58:40.180 --> 00:58:42.430
+the biggest impact is
+
+1197
+00:58:42.430 --> 00:58:44.830
+typically seen by
+adjusting minibatch size,
+
+1198
+00:58:44.830 --> 00:58:46.420
+learning rate and optimizer.
+
+1199
+00:58:46.420 --> 00:58:49.420
+It doesn't mean that you
+should never look into
+
+1200
+00:58:49.420 --> 00:58:52.885
+other parameters but
+it's just a suggestion.
+
+1201
+00:58:52.885 --> 00:58:57.340
+Here, for the typical
+hyperparameters
+
+1202
+00:58:57.340 --> 00:58:58.360
+that had changed there was
+
+1203
+00:58:58.360 --> 00:59:00.775
+a suggestion off the
+min and max value.
+
+1204
+00:59:00.775 --> 00:59:04.180
+Therefore, for learning rate,
+
+1205
+00:59:04.180 --> 00:59:07.795
+these are the values
+that we can provide.
+
+1206
+00:59:07.795 --> 00:59:20.250
+Going back to the console, 0.5.
+
+1207
+00:59:20.250 --> 00:59:22.410
+Because of a dramatic
+difference in scale here,
+
+1208
+00:59:22.410 --> 00:59:26.205
+I think it's good to leave
+a logarithmic scale.
+
+1209
+00:59:26.205 --> 00:59:31.290
+We also have the optimizer.
+
+1210
+00:59:31.290 --> 00:59:32.745
+In the previous training job,
+
+1211
+00:59:32.745 --> 00:59:34.680
+the optimizer we chose was
+
+1212
+00:59:34.680 --> 00:59:37.455
+SGD or Stochastic
+Gradient Descent.
+
+1213
+00:59:37.455 --> 00:59:40.530
+There are some other methods
+that are also available,
+
+1214
+00:59:40.530 --> 00:59:42.920
+like adam and so on.
+
+1215
+00:59:42.920 --> 00:59:47.185
+Again if you don't know
+what is a better optimizer,
+
+1216
+00:59:47.185 --> 00:59:49.360
+just let the system optimize
+
+1217
+00:59:49.360 --> 00:59:51.595
+for you or figure it out for you
+
+1218
+00:59:51.595 --> 00:59:54.820
+by supplying the entire list
+
+1219
+00:59:54.820 --> 00:59:57.295
+of four available optimizers,
+
+1220
+00:59:57.295 --> 00:59:58.990
+and that means, see
+
+1221
+00:59:58.990 --> 01:00:04.100
+yet another hyperparameter
+that SageMaker will use.
+
+1222
+01:00:04.410 --> 01:00:07.450
+Momentum and weight decay.
+
+1223
+01:00:07.450 --> 01:00:14.240
+In this case I've decided
+not to optimize them.
+
+1224
+01:00:14.430 --> 01:00:17.125
+Rely on the static values.
+
+1225
+01:00:17.125 --> 01:00:20.110
+These are the ones that
+we supplied last time.
+
+1226
+01:00:20.110 --> 01:00:22.674
+But the minibatch
+size is interesting,
+
+1227
+01:00:22.674 --> 01:00:28.850
+and so it can go
+from one to say 32.
+
+1228
+01:00:29.210 --> 01:00:33.310
+Let's see if we can get
+
+1229
+01:00:33.310 --> 01:00:36.070
+a better performance or
+
+1230
+01:00:36.070 --> 01:00:37.870
+a more optimal value
+
+1231
+01:00:37.870 --> 01:00:40.690
+than the one that we were
+previously supplying.
+
+1232
+01:00:40.690 --> 01:00:45.685
+Finally, we provide the same 400,
+
+1233
+01:00:45.685 --> 01:00:49.630
+a number of training samples and
+
+1234
+01:00:49.630 --> 01:00:52.840
+leave the rest of the
+attributes to be the same.
+
+1235
+01:00:52.840 --> 01:00:54.400
+I click the Next button,
+
+1236
+01:00:54.400 --> 01:00:55.510
+and here you see the
+
+1237
+01:00:55.510 --> 01:00:59.020
+same channel configuration
+that we need to go through.
+
+1238
+01:00:59.020 --> 01:01:00.130
+Let's do it quickly,
+
+1239
+01:01:00.130 --> 01:01:03.350
+and it's going to be exactly
+the same like last time.
+
+1240
+01:01:12.030 --> 01:01:15.800
+The location. Let me copy.
+
+1241
+01:01:24.090 --> 01:01:28.195
+There is also a handy
+possibility for you to clone
+
+1242
+01:01:28.195 --> 01:01:30.190
+a previous training job
+in which case a lot
+
+1243
+01:01:30.190 --> 01:01:32.395
+of these parameters that
+you are filling here,
+
+1244
+01:01:32.395 --> 01:01:35.995
+will be automatically set
+
+1245
+01:01:35.995 --> 01:01:39.380
+to the same values
+you've used before.
+
+1246
+01:02:08.520 --> 01:02:12.445
+Okay, hit the Next button,
+
+1247
+01:02:12.445 --> 01:02:14.530
+and we move to
+
+1248
+01:02:14.530 --> 01:02:16.870
+the next section that
+is somewhat familiar.
+
+1249
+01:02:16.870 --> 01:02:20.260
+First, we need to choose
+the instance type,
+
+1250
+01:02:20.260 --> 01:02:27.050
+and for this, we're going to
+choose the same p2 xlarge.
+
+1251
+01:02:28.050 --> 01:02:30.700
+The next section
+of resource limits
+
+1252
+01:02:30.700 --> 01:02:32.620
+is actually quite important.
+
+1253
+01:02:32.620 --> 01:02:34.870
+In the maximum of training jobs,
+
+1254
+01:02:34.870 --> 01:02:39.040
+you get to decide how
+many training jobs
+
+1255
+01:02:39.040 --> 01:02:44.500
+the hyperparameter
+optimization will kick off,
+
+1256
+01:02:44.500 --> 01:02:47.650
+and that's your way to control
+
+1257
+01:02:47.650 --> 01:02:51.325
+how much of the hyperparameter
+space will be explored.
+
+1258
+01:02:51.325 --> 01:02:54.130
+Also, of course it controls how
+
+1259
+01:02:54.130 --> 01:02:57.684
+much it's going to
+cost overall because
+
+1260
+01:02:57.684 --> 01:03:01.390
+every training job will
+consume a certain amount
+
+1261
+01:03:01.390 --> 01:03:05.590
+of GPU and will be contributing
+to the overall cost.
+
+1262
+01:03:05.590 --> 01:03:09.880
+So for the purposes of
+demonstration, I'll just use 10.
+
+1263
+01:03:09.880 --> 01:03:14.485
+The next section is maximum
+parallel training jobs,
+
+1264
+01:03:14.485 --> 01:03:18.940
+and would just
+configure how many of
+
+1265
+01:03:18.940 --> 01:03:21.070
+these 10 can run in
+
+1266
+01:03:21.070 --> 01:03:24.235
+parallel if you had
+access to many GPUs.
+
+1267
+01:03:24.235 --> 01:03:25.990
+But be careful about the limits.
+
+1268
+01:03:25.990 --> 01:03:28.270
+You may have certain
+limits in the accounts
+
+1269
+01:03:28.270 --> 01:03:31.270
+of the number of GPU instances
+you can use concurrently.
+
+1270
+01:03:31.270 --> 01:03:33.115
+So I'll keep this as one.
+
+1271
+01:03:33.115 --> 01:03:35.275
+For the purposes of
+the demonstration.
+
+1272
+01:03:35.275 --> 01:03:38.810
+I'll create the jobs.
+
+1273
+01:03:41.070 --> 01:03:44.320
+That's each of the training jobs.
+
+1274
+01:03:44.320 --> 01:03:48.475
+So the entire
+hyperparameter tuning job,
+
+1275
+01:03:48.475 --> 01:03:50.110
+will finish when
+
+1276
+01:03:50.110 --> 01:03:53.440
+all those training jobs
+have been completed.
+
+1277
+01:03:53.440 --> 01:03:57.160
+So we might need to wait
+here for quite some time.
+
+1278
+01:03:57.160 --> 01:04:00.160
+Therefore instead of waiting,
+
+1279
+01:04:00.160 --> 01:04:01.870
+we can just look
+at the results of
+
+1280
+01:04:01.870 --> 01:04:04.480
+the previously
+completed tuning job,
+
+1281
+01:04:04.480 --> 01:04:09.685
+like this one here to see
+what the outcome was.
+
+1282
+01:04:09.685 --> 01:04:13.255
+If I click on the
+test tuning job,
+
+1283
+01:04:13.255 --> 01:04:17.630
+you can see that it took
+an hour and 44 minutes.
+
+1284
+01:04:18.660 --> 01:04:23.470
+The interesting thing to look at,
+
+1285
+01:04:23.470 --> 01:04:26.080
+is the objective metric value
+
+1286
+01:04:26.080 --> 01:04:28.000
+for all those training jobs.
+
+1287
+01:04:28.000 --> 01:04:31.750
+We can see the duration of
+time that each of those took,
+
+1288
+01:04:31.750 --> 01:04:39.685
+and we can see also the best
+outcome is right here, 0.47.
+
+1289
+01:04:39.685 --> 01:04:41.890
+That's higher than
+what we had with
+
+1290
+01:04:41.890 --> 01:04:48.110
+our single training job
+that we examined earlier.
+
+1291
+01:04:49.740 --> 01:04:54.400
+The other attempts were
+not so successful.
+
+1292
+01:04:54.400 --> 01:04:58.720
+You could see that after
+six minutes of running,
+
+1293
+01:04:58.720 --> 01:05:00.790
+the value of the
+objective metric in
+
+1294
+01:05:00.790 --> 01:05:03.085
+this job was so poor that
+
+1295
+01:05:03.085 --> 01:05:05.980
+SageMaker decided to stop
+that there's no point
+
+1296
+01:05:05.980 --> 01:05:08.755
+in trying to continue
+epoch after epoch,
+
+1297
+01:05:08.755 --> 01:05:11.950
+because we get a much better
+results somewhere else.
+
+1298
+01:05:11.950 --> 01:05:13.570
+So this is another benefit of
+
+1299
+01:05:13.570 --> 01:05:15.520
+kicking off hyperparameter
+optimization.
+
+1300
+01:05:15.520 --> 01:05:18.340
+That early stopping
+means that you're
+
+1301
+01:05:18.340 --> 01:05:22.060
+actually saving yourself time and
+
+1302
+01:05:22.060 --> 01:05:26.575
+saving costs by stopping
+earlier and not
+
+1303
+01:05:26.575 --> 01:05:29.530
+continuing with exploring paths
+
+1304
+01:05:29.530 --> 01:05:32.080
+that are not going to
+lead to great results.
+
+1305
+01:05:32.080 --> 01:05:37.390
+Okay, so if this job
+produced the best results,
+
+1306
+01:05:37.390 --> 01:05:39.625
+what are the relevant
+hyperparameters?
+
+1307
+01:05:39.625 --> 01:05:41.950
+If we click on the job itself,
+
+1308
+01:05:41.950 --> 01:05:44.330
+and then scroll down,
+
+1309
+01:05:44.490 --> 01:05:48.160
+we can see that the
+learning rate for
+
+1310
+01:05:48.160 --> 01:05:51.765
+this tuning job was 0.002.
+
+1311
+01:05:51.765 --> 01:05:54.420
+So it's higher than the
+default that was chosen,
+
+1312
+01:05:54.420 --> 01:05:58.080
+it means that the neural
+network was converging faster,
+
+1313
+01:05:58.080 --> 01:06:00.630
+and then the minibatch
+size was picked to
+
+1314
+01:06:00.630 --> 01:06:03.555
+be two instead of the one
+that we supplied earlier.
+
+1315
+01:06:03.555 --> 01:06:05.470
+Okay, interesting.
+
+1316
+01:06:05.470 --> 01:06:08.920
+So how can we see
+the results of this?
+
+1317
+01:06:08.920 --> 01:06:11.170
+Well, we can do the
+same thing here.
+
+1318
+01:06:11.170 --> 01:06:12.970
+We can take the model artifacts
+
+1319
+01:06:12.970 --> 01:06:15.130
+that this training job produced,
+
+1320
+01:06:15.130 --> 01:06:18.010
+package them, deploy
+them to an endpoint,
+
+1321
+01:06:18.010 --> 01:06:21.040
+and examine the outcome.
+
+1322
+01:06:21.040 --> 01:06:26.190
+In fact, I have done
+that previously.
+
+1323
+01:06:26.190 --> 01:06:28.910
+So let's try this.
+
+1324
+01:06:28.910 --> 01:06:32.900
+If I look at the endpoints,
+
+1325
+01:06:33.810 --> 01:06:37.405
+I believe it's this one here.
+
+1326
+01:06:37.405 --> 01:06:41.470
+So I can just copy the
+name of my endpoint.
+
+1327
+01:06:41.470 --> 01:06:43.420
+That is in service.
+
+1328
+01:06:43.420 --> 01:06:47.590
+Go back to my notebook,
+
+1329
+01:06:47.590 --> 01:06:49.705
+scroll to the section where
+
+1330
+01:06:49.705 --> 01:06:54.110
+we checked the endpoints status.
+
+1331
+01:06:54.510 --> 01:06:56.560
+In fact, it's exactly
+
+1332
+01:06:56.560 --> 01:07:00.110
+the one that I have here
+in the comments too.
+
+1333
+01:07:01.320 --> 01:07:04.375
+Statuses and service.
+
+1334
+01:07:04.375 --> 01:07:06.880
+We can just move on
+
+1335
+01:07:06.880 --> 01:07:09.190
+to the plotting part
+where we're going to
+
+1336
+01:07:09.190 --> 01:07:12.805
+execute or run those
+10 test images
+
+1337
+01:07:12.805 --> 01:07:15.250
+against the same endpoint,
+
+1338
+01:07:15.250 --> 01:07:19.430
+and see what the outcome is.
+
+1339
+01:07:22.500 --> 01:07:26.050
+We're definitely seeing
+better quality results.
+
+1340
+01:07:26.050 --> 01:07:31.525
+You can see that this bee
+is well taken care of.
+
+1341
+01:07:31.525 --> 01:07:38.650
+There is some boxes here that
+clearly not point to a bee.
+
+1342
+01:07:38.650 --> 01:07:41.530
+But that's also possible.
+
+1343
+01:07:41.530 --> 01:07:44.035
+This one is not so bad.
+
+1344
+01:07:44.035 --> 01:07:46.150
+This one is decent.
+
+1345
+01:07:46.150 --> 01:07:47.665
+Even in this image,
+
+1346
+01:07:47.665 --> 01:07:50.455
+it sees a bee somewhere here.
+
+1347
+01:07:50.455 --> 01:07:52.600
+The entire flower looks
+a little bit like
+
+1348
+01:07:52.600 --> 01:07:55.285
+a bee so I think the
+system is confused.
+
+1349
+01:07:55.285 --> 01:07:58.150
+This image remains to be hard.
+
+1350
+01:07:58.150 --> 01:08:01.310
+But here it did a good job.
+
+1351
+01:08:01.410 --> 01:08:08.395
+Okay, and also not so bad.
+
+1352
+01:08:08.395 --> 01:08:09.970
+Even here where you have
+
+1353
+01:08:09.970 --> 01:08:11.995
+many bees I had highlighted some,
+
+1354
+01:08:11.995 --> 01:08:15.685
+and provided a general
+area for the bee.
+
+1355
+01:08:15.685 --> 01:08:19.840
+So you could see that
+we've managed to achieve
+
+1356
+01:08:19.840 --> 01:08:22.390
+more accurate results by
+
+1357
+01:08:22.390 --> 01:08:26.260
+executing automatic model
+tuning, with SageMaker.
+
+1358
+01:08:26.260 --> 01:08:28.570
+Where we didn't
+really have to know
+
+1359
+01:08:28.570 --> 01:08:32.155
+any kind of background on what
+each hyperparameter means.
+
+1360
+01:08:32.155 --> 01:08:35.065
+How it affects the accuracy.
+
+1361
+01:08:35.065 --> 01:08:38.305
+We're just lead
+SageMaker do the job.
+
+1362
+01:08:38.305 --> 01:08:41.470
+I think the next
+step from here would
+
+1363
+01:08:41.470 --> 01:08:45.310
+be to maybe try different
+network topologies,
+
+1364
+01:08:45.310 --> 01:08:47.710
+and to try to grab more images
+
+1365
+01:08:47.710 --> 01:08:51.130
+from the iNaturalist website.
+
+1366
+01:08:51.130 --> 01:08:53.275
+So instead of 400,
+
+1367
+01:08:53.275 --> 01:08:59.095
+let's grab 2,000 more and
+try to rerun the training.
+
+1368
+01:08:59.095 --> 01:09:03.730
+But I will leave this as a
+take home exercise for you.
+
+1369
+01:09:03.730 --> 01:09:06.760
+One thing I almost forgot.
+
+1370
+01:09:06.760 --> 01:09:08.515
+It's the cleanup section.
+
+1371
+01:09:08.515 --> 01:09:11.830
+Once you've done your
+experimentation,
+
+1372
+01:09:11.830 --> 01:09:15.880
+there's lots of resources that
+you can actually shut down
+
+1373
+01:09:15.880 --> 01:09:20.725
+every endpoint that's running
+is actually instance,
+
+1374
+01:09:20.725 --> 01:09:23.050
+that's running and it's
+consuming resources.
+
+1375
+01:09:23.050 --> 01:09:26.545
+So here's a quick
+way to clean it up.
+
+1376
+01:09:26.545 --> 01:09:29.620
+Delete all the unnecessary
+resources so you don't
+
+1377
+01:09:29.620 --> 01:09:32.650
+have to pay money
+for unused stuff.
+
+1378
+01:09:32.650 --> 01:09:36.085
+This completes our demonstration.
+
+1379
+01:09:36.085 --> 01:09:38.755
+We have now come to
+the end of our course.
+
+1380
+01:09:38.755 --> 01:09:40.120
+I hope you're eager to try
+
+1381
+01:09:40.120 --> 01:09:41.710
+SageMaker ground-truth and object
+
+1382
+01:09:41.710 --> 01:09:43.510
+detection on your own dataset.
+
+1383
+01:09:43.510 --> 01:09:45.020
+To give you an idea,
+
+1384
+01:09:45.020 --> 01:09:46.830
+why don't you complement
+the images of
+
+1385
+01:09:46.830 --> 01:09:49.409
+honey bees with those off wasps,
+
+1386
+01:09:49.409 --> 01:09:52.800
+similarly downloaded from the
+same iNaturalist website,
+
+1387
+01:09:52.800 --> 01:09:55.170
+and then build an
+object detector that
+
+1388
+01:09:55.170 --> 01:09:57.450
+can tell apart bees from wasps.
+
+1389
+01:09:57.450 --> 01:09:59.615
+Wouldn't that be cool. So I
+
+1390
+01:09:59.615 --> 01:10:02.380
+hope you learned something
+useful. Thanks for watching.
+
+1391
+01:10:02.380 --> 01:10:04.150
+Again, my name is Denis Batalov,
+
+1392
+01:10:04.150 --> 01:10:06.460
+don't forget to connect
+on Twitter or LinkedIn,
+
+1393
+01:10:06.460 --> 01:10:09.830
+would love to hear your
+feedback about this course.
